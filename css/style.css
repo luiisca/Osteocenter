@@ -1,4 +1,5 @@
 @import url("common.blocks/positioning.css");
+@import url("common.blocks/button--wsp.css");
 /**************************/
 /* HEADER */
 /**************************/
@@ -198,6 +199,7 @@
 
   padding: 3.2rem;
   padding-bottom: 0;
+  margin-bottom: 9.6rem;
 }
 .biography__img {
   width: 30%;
