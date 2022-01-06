@@ -5,6 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Principio del widget de enlace de Calendly -->
+    <link
+      href="https://assets.calendly.com/assets/external/widget.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://assets.calendly.com/assets/external/widget.js"
+      type="text/javascript"
+      async
+    ></script>
+    <!-- Final del widget de enlace de Calendly -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,7 +27,6 @@
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/style.css" />
 
-    
     <script
       src="https://kit.fontawesome.com/eb496ab1a0.js"
       crossorigin="anonymous"
@@ -48,7 +59,14 @@
           <li><a class="main-nav-link" href="#">Por que elegirnos?</a></li>
           <li><a class="main-nav-link" href="#">Contáctanos</a></li>
           <li><a class="main-nav-link" href="#">Blog</a></li>
-          <li><a class="main-nav-link nav-cta" href="#">Pide una cita</a></li>
+          <li>
+            <a
+              href=""
+              class="main-nav-link nav-cta"
+              onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luiscaf3r/testing'});return false;"
+              >Pide una cita</a
+            >
+          </li>
         </ul>
       </nav>
     </header>
@@ -65,8 +83,13 @@
               de fracturas, reconstrucciones óseas, Prótesis de caderas, tumores
               óseos y músculo esquelético.
             </p>
-            <a href="#" class="btn btn--full margin-right-sm">Pide una cita</a>
-            <a href="#" class="btn btn--outline">Más sobre mí &darr;</a>
+            <a
+              href=""
+              class="main-nav-link nav-cta"
+              onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luiscaf3r/testing'});return false;"
+              >Pide una cita</a
+            >
+            <a href="#biography" class="btn btn--outline">Más sobre mí &darr;</a>
             <div class="delivered-meals">
               <div class="delivered-imgs">
                 <img src="img/customers/customer-1.jpg" alt="Customer photo" />
@@ -150,7 +173,7 @@
         </div>
       </section>
 
-      <section class="biography">
+      <section id="biography" class="biography">
         <div class="biography-container container">
           <img
             src="img/hero.png"
@@ -570,7 +593,11 @@
       <div class="container grid grid--footer">
         <div class="logo-col">
           <a href="#" class="footer-logo">
-            <img class="logo" alt="Omnifood logo" src="img/osteocenter-logo.png" />
+            <img
+              class="logo"
+              alt="Omnifood logo"
+              src="img/osteocenter-logo.png"
+            />
           </a>
 
           <ul class="social-links">
@@ -640,12 +667,13 @@
         </nav>
       </div>
     </footer>
+
     <a
-        href="https://web.whatsapp.com/send?phone=+51969780055&text=Hola.%20Me%20gustaría%20que me%20contactaran%20para%20poder%20resolver%20unas%20dudas."
-        class="button--whatsapp test"
-        target="_blank"
-      >
-        <i class="fa fa-whatsapp icono"></i>
+      href="https://web.whatsapp.com/send?phone=+51969780055&text=Hola.%20Me%20gustaría%20que me%20contactaran%20para%20poder%20resolver%20unas%20dudas."
+      class="button--whatsapp test"
+      target="_blank"
+    >
+      <i class="fa fa-whatsapp icono"></i>
     </a>
   </body>
 </html>
