@@ -1,5 +1,6 @@
-@import url("common.blocks/positioning.css");
-@import url("common.blocks/button--wsp.css");
+@import url("./common.blocks/positioning.css");
+@import url("./common.blocks/button--wsp.css");
+
 /**************************/
 /* HEADER */
 /**************************/
