@@ -1,43 +1,22 @@
 import styled, {css} from 'styled-components';
+import tw from 'tailwind-styled-components';
 
-const Button = styled.button`
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px #000000;
-  transition: all 0.3s ease;
-  &:hover {
-    box-shadow: 0px 0px 20px #000000;
-  }
-  &:active {
-    box-shadow: 0px 0px 10px #000000;
-  }
+const Button = tw.button`
+  flex
+  inline-flex
+  items-center
+  border
+  border-transparent
+  text-xs
+  font-medium
+  rounded-md
+  shadow-md
+  text-white
+  p-2
+  m-2
 
-  ${props => {
-    if (props.primary) {
-      return css`
-        background-color: #333F4B;
-        &:hover {
-          box-shadow: 0px 0px 20px #000000;
-        }`
-    }
-    if (props.secondary) {
-      return css`
-      background-color: salmon;
-      &:hover {
-        box-shadow: 0px 0px 20px #000000;
-        transform: scale(1.1);
-      }`
-    }
-  }}
+  hover:bg-indigo-600
+  ${props => props.primary ? 'bg-indigo-400' : 'bg-indigo-300'}
  `
 
 export default Button;
