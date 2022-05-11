@@ -1,5 +1,6 @@
 {
   "name": "osteocenter",
+<<<<<<< HEAD
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -18,3 +19,23 @@
     "vite": "^2.9.2"
   }
 }
+=======
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "devDependencies": {
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6"
+  }
+}
+>>>>>>> d09a521 (Migrate project to nextjs)
