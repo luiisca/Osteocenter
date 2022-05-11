@@ -14,8 +14,9 @@ const Button = tw.button`
   text-white
   p-2
   m-2
+  transition-all
 
-  hover:bg-indigo-600
+  hover:bg-indigo-500
   ${props => props.primary ? 'bg-indigo-400' : 'bg-indigo-300'}
  `
 
