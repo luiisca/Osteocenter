@@ -17,7 +17,7 @@ const Layout = ({children}) => {
 
       </Head>
       <main>
-        <Button> Click me!</Button>
+        <Button primary> Click me!</Button>
 
         {/*{children} */}
       </main>

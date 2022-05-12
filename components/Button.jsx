@@ -4,7 +4,7 @@ const Button = styled.button(props => [
   css`
     background-color: salmon;
     &:hover {
-    background-color: #ff0000;
+      background-color: yellow;
     };
   `,
   tw`text-xs font-medium text-white`,
@@ -13,8 +13,8 @@ const Button = styled.button(props => [
   tw`p-2 m-2`,
   tw`items-center rounded-md`,
   tw`shadow-md`,
-  // tw`hover:bg-indigo-500`,
-  props.primary ? tw`bg-indigo-400` : 'bg-indigo-300'
+  tw`hover:bg-indigo-500`,
+  props.primary ? tw`bg-pink-80` : 'bg-indigo-300'
 ]);
 // const Button = styled.button({
 //   backgroundColor: 'salmon',
