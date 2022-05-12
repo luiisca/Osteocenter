@@ -7,14 +7,14 @@ const Button = styled.button(props => [
       background-color: yellow;
     };
   `,
-  tw`text-xs font-medium text-white`,
+  // tw`text-lg text-white`,
   tw`flex inline-flex w-full`,
   tw`border border-transparent`,
-  tw`p-[12px] m-[11px]`,
-  tw`items-center rounded-md`,
+  tw`p-2 m-2`,
+  tw`items-center rounded-[9px]`,
   tw`shadow-md`,
-  tw`hover:bg-indigo-500`,
-  props.primary ? tw`bg-primary-shade-2` : 'bg-indigo-300'
+  tw`hover:bg-primary-shade-1`,
+  props.primary ? tw`bg-primary` : 'bg-indigo-300'
 ]);
 // const Button = styled.button({
 //   backgroundColor: 'salmon',
