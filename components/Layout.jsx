@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import Button from '../components/Button';
+import Button from './Button';
+import Nav from './Nav';
 import Script from 'next/script';
 
 export const siteTitle = 'Osteocenter';
@@ -16,12 +17,13 @@ const Layout = ({children}) => {
         {/* Calendly end */}
       </Head>
       <main>
-        <Button primary> Click me!</Button>
+        <Nav />
 
         {/*{children} */}
       </main>
     </div>
   )
 }
+// <Button href='#'> Click me!</Button>
 
 export default Layout;

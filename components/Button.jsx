@@ -1,29 +1,17 @@
 import tw, {css, styled} from 'twin.macro';
+import StyledLink from './BaseStyle/StyledLink';
 
-const Button = styled.button(props => [
-  css`
-    background-color: salmon;
-    &:hover {
-      background-color: yellow;
-    };
-  `,
-  // tw`text-lg text-white`,
-  tw`flex inline-flex w-full`,
-  tw`border border-transparent`,
-  tw`p-2 m-2`,
-  tw`items-center rounded-[9px]`,
-  tw`shadow-md`,
-  tw`hover:bg-primary-shade-1`,
-  props.primary ? tw`bg-primary` : 'bg-indigo-300'
-]);
-// const Button = styled.button({
-//   backgroundColor: 'salmon',
-//   border: 'none',
-//   ...tw`text-xs font-medium text-purple-500`,
-//   '&:hover': {
-//     ...tw`bg-indigo-500`,
-//   },
-// })
+const Button = styled(StyledLink)`
+  &:link, &:visited {
+    ${tw`px-6 py-3`}
+    ${tw`rounded-[9px]`}
+    ${tw`text-lg font-medium text-white`}
+    ${tw`bg-primary`}
+  }
+  &:hover, &:active {
+    ${tw`bg-primary-shade-1`}
+  }
+ `
 
-export default Button;
 
+export default Button

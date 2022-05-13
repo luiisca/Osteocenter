@@ -355,7 +355,7 @@ template {
 `
 const Global = createGlobalStyle`
   body {
-    ${tw`font-sans text-base font-normal leading-none text-accent-555`}
+    ${tw`font-sans font-normal leading-none text-accent-555`}
   }
 `;
 
