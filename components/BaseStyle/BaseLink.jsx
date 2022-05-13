@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 
-const StyledLink = styled.a(props => [
+const BaseLink = styled.a(props => [
   css`
     &:link, &:visited {
       display: inline-block;
@@ -14,4 +14,4 @@ const StyledLink = styled.a(props => [
   `,
 ])
 
-export default StyledLink;
+export default BaseLink;

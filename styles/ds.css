@@ -1,8 +1,6 @@
-/**************************/
-/* Typography */
-/**************************/
-/* heading */
-.font-heading {
+.heading-primary,
+.heading-secondary,
+.heading-tertiary {
   font-family: "Lora", serif;
   font-weight: 400;
   color: var(--lightest-grey-on-shades);
@@ -11,6 +9,35 @@
   letter-spacing: -0.5px;
 }
 
+.heading-primary {
+  font-size: 5.2rem;
+  line-height: 6rem;
+  margin-bottom: 3.2rem;
+}
+
+.heading-secondary {
+  font-size: 4.4rem;
+  line-height: 1.2;
+  margin-bottom: 9.6rem;
+}
+
+.heading-tertiary {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 3.2rem;
+}
+
+.subheading {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--primary-500);
+  text-transform: uppercase;
+  margin-bottom: .2rem;
+  letter-spacing: 0.75px;
+}
+
+/* HEADING SIZE*/
 .font-heading--xxl {
   font-size: 6rem;
   line-height: 6rem;
@@ -40,7 +67,8 @@
   font-size: 2rem;
   line-height: 2.8rem;
 }
-/* content */
+
+/* FONT CONTENT SIZE */
 .font-content {
   font-weight: 400;
   /* font-family: "Inter", sans-serif; */
@@ -121,44 +149,6 @@
   align-items: center;
 }
 
-.heading-primary,
-.heading-secondary,
-.heading-tertiary {
-  font-family: "Lora", serif;
-  font-weight: 400;
-  color: var(--lightest-grey-on-shades);
-  /* color: #45260a; */
-  /* color: #343a40; */
-  letter-spacing: -0.5px;
-}
-
-.heading-primary {
-  font-size: 5.2rem;
-  line-height: 6rem;
-  margin-bottom: 3.2rem;
-}
-
-.heading-secondary {
-  font-size: 4.4rem;
-  line-height: 1.2;
-  margin-bottom: 9.6rem;
-}
-
-.heading-tertiary {
-  font-size: 3rem;
-  line-height: 1.2;
-  margin-bottom: 3.2rem;
-}
-
-.subheading {
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: var(--primary-500);
-  text-transform: uppercase;
-  margin-bottom: .2rem;
-  letter-spacing: 0.75px;
-}
 
 .btn,
 .btn:link,
