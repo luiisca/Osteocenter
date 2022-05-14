@@ -12,9 +12,10 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Header />
+      {/*
       <Main />
       <Footer />
+      */}
     </Layout>
   )
 }

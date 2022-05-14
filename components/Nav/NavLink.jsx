@@ -11,7 +11,7 @@ const NavLink = ({nextLink, destination, children}) => {
   return (
     nextLink ? (
       <li>
-        <Link href={destination}>
+        <Link href={destination} passHref>
           <StyledNavLink>{children}</StyledNavLink>
         </Link>
       </li>
