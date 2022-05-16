@@ -12,8 +12,8 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      {/*
       <Main />
+      {/*
       <Footer />
       */}
     </Layout>
