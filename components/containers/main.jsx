@@ -13,7 +13,6 @@ const Main = () => {
       <Section hero>
         <Hero />
       </Section>
-
     </Fragment>
   )
 }

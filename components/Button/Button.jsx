@@ -4,12 +4,13 @@ import {BaseLink} from '../BaseStyle';
 const Button = styled(BaseLink)(props => [
   css`
     &:link, &:visited {
-      ${tw`px-6 py-3`}
+      ${tw`px-8 py-4`}
       ${tw`rounded-[9px]`}
-      ${tw`text-lg font-medium text-white`}
+      ${tw`text-lg font-medium text-white leading-[20px]`}
+      ${props.nav && tw`px-6 py-3 leading-[18px]`}
       ${props.cta && tw`bg-primary`}
       ${props.hero && tw`font-semibold`}
-      ${props.outline && tw`px-8 py-4 text-xl font-semibold bg-white text-accent-555`}
+      ${props.outline && tw`text-xl leading-[20px] font-semibold bg-white text-accent-555`}
     }
     &:hover, &:active {
       ${props.cta && tw`bg-primary-shade-1`}

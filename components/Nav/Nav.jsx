@@ -13,7 +13,7 @@ const Nav = () => {
         <NavLink destination='#'>Por que elegirnos?</NavLink>
         <NavLink destination='#'>Contáctanos</NavLink>
         <NavLink nextLink destination='/blog'>Blog</NavLink>
-        <li><Button cta href='#'>Pide una cita</Button></li>
+        <li><Button nav cta href='#'>Pide una cita</Button></li>
       </StyledNavList>
     </nav>
   )
