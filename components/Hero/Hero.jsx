@@ -1,10 +1,11 @@
 import tw, {css, styled} from 'twin.macro';
+import {BaseContainer} from '../BaseStyle';
 
 import {Button, Heading} from '../../components';
 import CustomerPictures from './CustomerPictures';
 import HeroImage from './HeroImage';
 
-const Container = tw.div`max-w-screen-2xl mx-auto px-8 grid grid-cols-2 gap-2.5 items-center justify-items-end`
+const Container = tw(BaseContainer)`max-w-screen-2xl grid grid-cols-2 gap-2.5 items-center justify-items-end`
 const Text = tw.p`text-xl mb-12`
 
 const Hero = () => {
@@ -21,7 +22,6 @@ const Hero = () => {
         <Button outline href="#biography">Más sobre mí &darr;</Button>
         <CustomerPictures />
       </div>
-
       <HeroImage />
     </Container>
   )

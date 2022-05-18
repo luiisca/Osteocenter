@@ -1,0 +1,41 @@
+import {useState} from 'react';
+import tw, {css, styled} from 'twin.macro';
+
+import Education from './Education';
+import Experience from './Experience';
+
+const Container = tw.div`flex gap-24`
+const Button = styled.button(({active}) => [
+  tw`block px-5 py-8 text-base`,
+  css`
+    ${tw`text-[#6c6c6c]`}
+    border-left: #b4b2b2 solid 1.8px;
+    cursor: pointer;
+  `,
+  active && css`
+    ${tw`text-[#010d17]`}
+    border-left: #172632 solid 1.9px;
+  `
+])
+
+const Tabs = () => {
+  const [activeBttn, setActiveBttn] = useState(1)
+  const handleToggle = (bttn) => {
+    setActiveBttn(bttn)
+    console.log(bttn)
+  }
+
+  return (
+    <Container>
+      <div>
+        <Button onClick={() => handleToggle(1)} active={activeBttn === 1}>Estudios</Button>
+        <Button onClick={() => handleToggle(2)} active={activeBttn === 2}>Experiencia</Button>
+      </div>
+
+      {activeBttn === 1 && <Education />}
+      {activeBttn === 2 && <Experience />}
+    </Container >
+  )
+}
+
+export default Tabs
