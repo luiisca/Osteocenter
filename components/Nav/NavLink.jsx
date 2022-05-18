@@ -1,4 +1,5 @@
-import PageLink from "../PageLink"
+import {PageLink} from "../Elements"
+
 const NavLink = ({nextLink, destination, children}) => {
   return (
     <li><PageLink nextLink={nextLink} destination={destination}>{children}</PageLink></li>

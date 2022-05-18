@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
 
-import Heading from '../Heading';
+import {Heading} from '../Elements';
 import {ImgWrap} from './style';
 
 const Text = styled.p((props) => [

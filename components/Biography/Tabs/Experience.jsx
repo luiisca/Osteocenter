@@ -1,5 +1,5 @@
-import Card from './Card';
-import {Container} from './style';
+import Card from '../Card';
+import {Container} from '../style';
 
 const Experience = () => {
   return (
