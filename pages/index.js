@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 import Layout, {siteTitle} from '../components/Layout';
-import Header from '../components/sections/header'
-import Main from '../components/sections/main'
-import Footer from '../components/sections/footer'
+import Header from '../components/Sections/header';
+import Main from '../components/Sections/main';
+import Footer from '../components/Sections/footer';
 
 export default function Home() {
   return (
