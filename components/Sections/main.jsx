@@ -4,6 +4,7 @@ import Hero from '../Hero';
 import Values from '../Values';
 import Biography from '../Biography';
 import Steps from '../Steps';
+import Testimonials from '../Testimonials';
 
 const Section = styled.section(props => [
   tw`py-24`,
@@ -23,14 +24,13 @@ const Main = () => {
       </Section>
       <Section biography>
         <Biography />
-
       </Section>
       <Section>
         <Steps />
       </Section>
-      {/*
-      */}
-
+      <Section>
+        <Testimonials />
+      </Section>
     </Fragment>
   )
 }

@@ -12,7 +12,7 @@ const Steps = () => {
     <Container>
       <div>
         <Heading as='span' subHeading>Proceso</Heading>
-        <Heading secondary>La atención que mereces</Heading>
+        <Heading as='h2' secondary tw='mb-12'>La atención que mereces</Heading>
       </div>
 
       <StepsContainer>

@@ -4,6 +4,7 @@ import tw, {css, styled} from 'twin.macro';
 const Number = tw.p`text-8xl font-semibold text-[#ddd] mb-3`
 const ImgWrap = styled.div(() => [
   tw`justify-self-center w-[clamp(200px, 80%, 400px)]`,
+  tw`rounded-[9px] overflow-hidden`
 ])
 
 const Step = ({src, name, num, children}) => {

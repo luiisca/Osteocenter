@@ -5,7 +5,7 @@ import Education from './Education';
 import Experience from './Experience';
 
 const Container = tw.div`flex gap-24`
-const Button = styled.button(({active}) => [
+const TabButton = styled.button(({active}) => [
   tw`block px-5 py-8 text-base`,
   css`
     ${tw`text-[#6c6c6c]`}
@@ -28,8 +28,8 @@ const Tabs = () => {
   return (
     <Container>
       <div>
-        <Button onClick={() => handleToggle(1)} active={activeBttn === 1}>Estudios</Button>
-        <Button onClick={() => handleToggle(2)} active={activeBttn === 2}>Experiencia</Button>
+        <TabButton onClick={() => handleToggle(1)} active={activeBttn === 1}>Estudios</TabButton>
+        <TabButton onClick={() => handleToggle(2)} active={activeBttn === 2}>Experiencia</TabButton>
       </div>
 
       {activeBttn === 1 && <Education />}
