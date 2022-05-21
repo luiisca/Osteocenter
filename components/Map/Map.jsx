@@ -1,13 +1,14 @@
+import React from 'react';
 import {useState, useEffect, useRef} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {createCustomEqual} from "fast-equals";
-// import {isLatLngLiteral} from "@googlemaps/typescript-guards";
 
-const Container = tw.div`w-[900px] h-[500px]`
+const Container = tw.div`my-0 mx-auto rounded-2xl w-[900px] h-[500px]`
 
-const Map = ({...options}) => {
+const Map = ({children, ...options}) => {
   const [map, setMap] = useState()
   const ref = useRef(null)
+
   useEffect(() => {
     if (!map) {
       setMap(new window.google.maps.Map(ref.current, {}));
@@ -21,8 +22,34 @@ const Map = ({...options}) => {
   }, [map, options])
 
   return (
-    <Container ref={ref} />
+    <div>
+      <Container ref={ref} />
+      <Marker position={{lat: -12.1193972, lng: -77.0339762}} map={map} />
+    </div>
   )
+}
+
+const Marker = ({position}) => {
+  const [marker, setMarker] = useState()
+
+  useEffect(() => {
+    if (!marker) {
+      setMarker(new google.maps.Marker())
+    }
+
+    return () => {
+      if (marker) {
+        marker.setMap(null)
+      }
+    }
+  }, [marker])
+  useEffect(() => {
+    if (marker) {
+      marker.setOptions(position)
+    }
+  }, [marker, position])
+
+  return null
 }
 
 // React does not do deep comparisons
@@ -34,8 +61,6 @@ const deepCompareEqualsForMaps = createCustomEqual((deepEqual) => (a, b) => {
   ) {
     return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
   }
-  // TODO extend to other types
-  // use fast-equals for other objects
   return deepEqual(a, b);
 });
 
