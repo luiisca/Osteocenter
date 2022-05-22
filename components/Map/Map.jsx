@@ -1,80 +1,70 @@
-import React from 'react';
-import {useState, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {createCustomEqual} from "fast-equals";
+import {GoogleMap, Marker, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
-const Container = tw.div`my-0 mx-auto rounded-2xl w-[900px] h-[500px]`
-
-const Map = ({children, ...options}) => {
-  const [map, setMap] = useState()
-  const ref = useRef(null)
-
-  useEffect(() => {
-    if (!map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
+const Container = styled.div(() => [
+  tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
+  css`
+    box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
+    &:hover {
+      box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
     }
-  }, [ref, map])
+  `,
+])
 
-  useDeepCompareEffectForMaps(() => {
-    if (map) {
-      map.setOptions(options)
-    }
-  }, [map, options])
+const StyleGoogleMap = {
+  height: '100%',
+}
 
+const Spinner = () => {
   return (
-    <div>
-      <Container ref={ref} />
-      <Marker position={{lat: -12.1193972, lng: -77.0339762}} map={map} />
-    </div>
+    <h1>Loading...</h1>
   )
 }
 
-const Marker = ({position}) => {
-  const [marker, setMarker] = useState()
-
+const Test = () => {
+  const map = useGoogleMap()
   useEffect(() => {
-    if (!marker) {
-      setMarker(new google.maps.Marker())
-    }
-
-    return () => {
-      if (marker) {
-        marker.setMap(null)
-      }
-    }
-  }, [marker])
-  useEffect(() => {
-    if (marker) {
-      marker.setOptions(position)
-    }
-  }, [marker, position])
+    console.log('useGoogleMap', map)
+  }, [map])
 
   return null
 }
 
-// React does not do deep comparisons
-// Custom deep comparison based on google.maps.LatLng
-const deepCompareEqualsForMaps = createCustomEqual((deepEqual) => (a, b) => {
-  if (
-    a instanceof google.maps.LatLng ||
-    b instanceof google.maps.LatLng
-  ) {
-    return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
-  }
-  return deepEqual(a, b);
-});
+const Map = () => {
+  const {isLoaded, loadError} = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+  })
 
-function useDeepCompareMemoize(value) {
-  const ref = useRef();
+  const onLoad = useCallback((map) => {
+    // console.log(map)
+  })
+  const onMarkerLoad = console.log
 
-  if (!deepCompareEqualsForMaps(value, ref.current)) {
-    ref.current = value;
+  const renderMap = () => {
+    return (
+      <Container>
+        <GoogleMap
+          zoom={14}
+          center={{lat: -12.1193972, lng: -77.0339762}}
+          onLoad={onLoad}
+          mapContainerStyle={StyleGoogleMap}>
+          <Marker
+            label='hello!'
+            position={{lat: -12.1193972, lng: -77.0339762}}
+          />
+        </GoogleMap>
+      </Container>
+    )
   }
-  return ref.current;
+
+  if (loadError) {
+    return <p>Map cannot be loaded</p>
+  }
+
+  return (
+    isLoaded ? renderMap() : <Spinner />
+  )
 }
 
-function useDeepCompareEffectForMaps(callback, dependencies) {
-  useEffect(callback, dependencies.map(useDeepCompareMemoize));
-}
-
-export default Map
+export default React.memo(Map)
