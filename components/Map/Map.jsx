@@ -3,6 +3,7 @@ import tw, {css, styled} from 'twin.macro';
 import {Marker, GoogleMap, DirectionsService, DirectionsRenderer, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
 import Route from './Route';
+import {BUSINESS_LOCATION} from '../../static/js/constants';
 
 const Container = styled.div(() => [
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
@@ -49,7 +50,7 @@ const Map = ({userLocation}) => {
       <Container>
         <GoogleMap
           zoom={14}
-          center={{lat: -12.1193972, lng: -77.0339762}}
+          center={BUSINESS_LOCATION}
           onLoad={onLoad}
           mapContainerStyle={StyleGoogleMap}
         >

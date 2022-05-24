@@ -4,10 +4,13 @@ import {FaRoute} from 'react-icons/fa';
 import {BaseContainer as Container} from '../BaseStyle';
 import {Button, Heading} from '../Elements';
 import Map from '../Map';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const Location = () => {
   const [userLocation, setUserLocation] = useState(null)
   const [positionActive, setPositionActive] = useState(false)
+  const IS_MOBILE = useIsMobile()
+
   const getUserLocation = () => {
     if (navigator.geolocation) {
       !positionActive && (navigator.geolocation.getCurrentPosition(
@@ -40,7 +43,11 @@ const Location = () => {
       <Heading as='span' subHeading>Ubicación</Heading>
       <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
       <Map userLocation={userLocation} />
-      <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
+      {IS_MOBILE ? (
+        <Button type='text' href={`google.com`}>Instrucciones</Button>
+      ) : (
+        <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
+      )}
     </Container>
   )
 }
