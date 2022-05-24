@@ -2,6 +2,8 @@ import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {Marker, GoogleMap, DirectionsService, DirectionsRenderer, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
+import Route from './Route';
+
 const Container = styled.div(() => [
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
   css`
@@ -35,18 +37,12 @@ const Map = ({userLocation}) => {
   const {isLoaded, loadError} = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   })
-  const [directionsResult, setDirectionsResult] = useState(null)
-
-  const directionsCallback = (response) => {
-    if (response?.status == 'OK') {
-      setDirectionsResult(response)
-    }
-  }
 
   const onLoad = useCallback((map) => {
-    // console.log(map)
+    // console.log(map);
   })
   const onMarkerLoad = console.log
+
 
   const renderMap = () => {
     return (
@@ -57,22 +53,7 @@ const Map = ({userLocation}) => {
           onLoad={onLoad}
           mapContainerStyle={StyleGoogleMap}
         >
-          {userLocation && (
-            directionsResult == null ? (
-              <DirectionsService
-                options={{
-                  origin: userLocation,
-                  destination: {lat: -12.1193972, lng: -77.0339762},
-                  travelMode: 'DRIVING',
-                }}
-                callback={directionsCallback} />
-            ) : (
-              <DirectionsRenderer options={{
-                directions: directionsResult
-              }} />
-            )
-          )}
-          <Marker position={{lat: -12.1193972, lng: -77.0339762}} />
+          <Route userLocation={userLocation} />
         </GoogleMap>
       </Container>
     )
@@ -90,7 +71,3 @@ const Map = ({userLocation}) => {
 
 export default React.memo(Map)
 
-
-// DirectionsService.route() open a request, accepts options obj and callback()
-// The callback will return a DirectionsResult object and a DirectionsStatus code
-// You can pass this DirectionsResult obt to a DirectionsRenderer object to display it on the map
