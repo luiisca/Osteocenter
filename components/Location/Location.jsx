@@ -5,6 +5,7 @@ import {BaseContainer as Container} from '../BaseStyle';
 import {Button, Heading} from '../Elements';
 import Map from '../Map';
 import useIsMobile from '../../hooks/useIsMobile';
+import {BUSINESS_LOCATION} from '../../static/js/constants';
 
 const Location = () => {
   const [userLocation, setUserLocation] = useState(null)
@@ -44,9 +45,11 @@ const Location = () => {
       <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
       <Map userLocation={userLocation} />
       {IS_MOBILE ? (
-        <Button type='text' href={`google.com`}>Instrucciones</Button>
+        <Button type='text' cta target='_blank' href={`https://www.google.com/maps/dir/${userLocation?.lat},${userLocation?.lng}/${BUSINESS_LOCATION.lat},${BUSINESS_LOCATION.lng}`}>Instrucciones</Button>
       ) : (
-        <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
+        <>
+          <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
+        </>
       )}
     </Container>
   )
