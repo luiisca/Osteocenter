@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {FaRoute} from 'react-icons/fa';
 import {BaseContainer as Container} from '../BaseStyle';
@@ -8,9 +8,9 @@ import useIsMobile from '../../hooks/useIsMobile';
 import {BUSINESS_LOCATION} from '../../static/js/constants';
 
 const Location = () => {
+  const IS_MOBILE = useIsMobile();
   const [userLocation, setUserLocation] = useState(null)
   const [positionActive, setPositionActive] = useState(false)
-  const IS_MOBILE = useIsMobile()
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -44,13 +44,12 @@ const Location = () => {
       <Heading as='span' subHeading>Ubicación</Heading>
       <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
       <Map userLocation={userLocation} />
-      {IS_MOBILE ? (
+      {IS_MOBILE && userLocation ? (
         <Button type='text' cta target='_blank' href={`https://www.google.com/maps/dir/${userLocation?.lat},${userLocation?.lng}/${BUSINESS_LOCATION.lat},${BUSINESS_LOCATION.lng}`}>Instrucciones</Button>
       ) : (
-        <>
-          <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
-        </>
+        <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
       )}
+      <h1>{IS_MOBILE ? 'It is Mobile' : 'It is not Mobile'}</h1>
     </Container>
   )
 }
