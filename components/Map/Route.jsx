@@ -1,6 +1,6 @@
 import React, {useRef, useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {Marker, GoogleMap, DirectionsService, DirectionsRenderer, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
+import {Marker, useGoogleMap} from '@react-google-maps/api';
 import {BUSINESS_LOCATION} from '../../static/js/constants';
 
 const Route = ({userLocation}) => {
@@ -9,19 +9,10 @@ const Route = ({userLocation}) => {
     directionsService: null,
     directionsRenderer: null,
   });
-  const [directionsResult, setDirectionsResult] = useState(null)
-
-  const directionsCallback = (response) => {
-    if (response?.status == 'OK') {
-      setDirectionsResult(response)
-      console.log(response)
-    }
-  }
 
   const removeDirections = () => {
     ref.current.directionsRenderer?.setMap(null);
     ref.current.directionsRenderer?.setDirections({routes: []});
-    console.log('REMOVED')
   }
 
   if (userLocation) {
@@ -37,7 +28,6 @@ const Route = ({userLocation}) => {
 
     ref.current.directionsService.route(request, function (result, status) {
       if (status == 'OK') {
-        console.log(result);
         ref.current.directionsRenderer.setDirections(result);
       }
     })
