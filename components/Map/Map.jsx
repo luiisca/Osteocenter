@@ -8,7 +8,8 @@ import {BUSINESS_LOCATION, LIBRARIES} from '../../static/js/constants';
 import {useMapContext} from '../../context/MapProvider';
 
 const Container = styled.div(() => [
-  tw`grid grid-cols-[30% auto]`,
+  tw`text-left`,
+  tw`grid grid-cols-[35% auto]`,
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
@@ -60,8 +61,6 @@ const Map = ({userLocation}) => {
   const renderMap = () => {
     return (
       <Container>
-        {/* let's see how many times it rerenders */}
-        {/* if it's too much then memoize */}
         <PlaceDetails>Hello mom</PlaceDetails>
         <GoogleMap
           zoom={14}

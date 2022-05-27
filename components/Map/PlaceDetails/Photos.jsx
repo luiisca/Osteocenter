@@ -5,6 +5,8 @@ import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
 import {Button} from '../../Elements';
 
+import Title from './Title';
+
 const pagesReducer = (state, action) => {
   switch (action.type) {
     case 'PREVIOUS_PAGE':
@@ -26,9 +28,9 @@ const CarContainer = styled.div(({showBttns}) => [
   `,
 ])
 const Carousel = styled.div(({crrPage}) => [
-  tw`flex w-full gap-3 transition-all`,
+  tw`flex w-full gap-4 transition-all`,
   css`
-    transform: translate(calc(${-crrPage}*(100% + 12px)));
+    transform: translate(calc(${-crrPage}*(100% + 16px)));
   `,
 ])
 const ImgWrap = styled.div`
@@ -36,7 +38,6 @@ const ImgWrap = styled.div`
   flex-shrink: 0;
   flex-basis: 100%;
 `
-const Title = tw.h4`text-lg`
 const ArrowButton = styled(Button)(({left, right}) => [
   tw`w-[40px] h-[40px] text-xl`,
   tw`absolute z-[1] top-1/2 translate-y-[-50%]`,

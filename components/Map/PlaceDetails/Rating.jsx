@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 
-const Container = tw.div`flex gap-2`
+const Container = tw.div`flex gap-2 `
 
 const Rating = ({score, qtt}) => {
   return (

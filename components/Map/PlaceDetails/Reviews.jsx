@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
 
+import Title from './Title';
+
 const Separator = styled.div`
 height: 0px;
   border-bottom: 1px solid #e8eaed;
 `
-const Title = tw.h4`text-lg`
 
 const Author = tw.div`flex gap-2`
 const ImgWrap = tw.div`w-[30px] h-[30px]`
