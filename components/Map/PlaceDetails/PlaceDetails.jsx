@@ -9,16 +9,16 @@ import Photos from './Photos';
 import Reviews from './Reviews';
 
 const Container = styled.div(({open}) => [
-  tw`w-full h-full overflow-x-hidden overflow-y-scroll transition-all bg-primary`,
-  tw`p-3`,
+  tw`w-full h-full overflow-x-hidden overflow-y-scroll transition-all bg-primary-tint-1`,
   open && tw`w-1/3`,
 ])
+const Content = tw.div`p-3`
 const Separator = styled.div`
   height: 0px;
   border-bottom: 1px solid #e8eaed;
 `
 
-const ImgWrap = tw.div`relative w-full h-1/5`
+const ImgWrap = tw.div`relative w-full h-2/5`
 const Title = tw.h4`text-lg`
 const Adress = tw.div`flex gap-4 my-3`
 const Opening = tw.div`flex gap-4 my-3`
@@ -37,25 +37,27 @@ const PlaceDetails = () => {
             objectFit='cover'
           />
         </ImgWrap>
-        <Title>{place.details.name}</Title>
-        <Rating />
+        <Content>
+          <Title>{place.details.name}</Title>
+          <Rating />
 
-        <Separator />
+          <Separator />
 
-        <Adress>
-          <GoLocation />
-          <p>{place.details.vicinity}</p>
-        </Adress>
-        <Opening>
-          <BsClock />
-          <p>{place.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
-        </Opening>
+          <Adress>
+            <GoLocation />
+            <p>{place.details.vicinity}</p>
+          </Adress>
+          <Opening>
+            <BsClock />
+            <p>{place.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
+          </Opening>
 
-        <Separator />
+          <Separator />
 
-        <Photos imgs={place.details.photos.slice(1)} />
-        <Reviews reviews={place.details.reviews} />
-        {console.log('PlaceDetails/>', place)}
+          <Photos imgs={place.details.photos.slice(1)} />
+          <Reviews reviews={place.details.reviews} />
+          {console.log('PlaceDetails/>', place)}
+        </Content>
       </Container>
     )
   }
