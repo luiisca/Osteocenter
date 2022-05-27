@@ -8,8 +8,7 @@ import {Button} from '../../Elements';
 const pagesReducer = (state, action) => {
   switch (action.type) {
     case 'PREVIOUS_PAGE':
-      if (state == 0) return state - 1;
-      return -(state - 1);
+      return state - 1;
     case 'NEXT_PAGE':
       return state + 1;
     default:
@@ -17,14 +16,18 @@ const pagesReducer = (state, action) => {
   }
 }
 
-const Container = tw.div`w-full h-1/5`
+const Container = tw.div`w-full h-auto`
 const Carousel = styled.div(({crrPage}) => [
-  tw`flex w-full h-full transition-all`,
+  tw`flex w-full gap-3 transition-all`,
   css`
-    transform: translate(${crrPage * 100}%)
+    transform: translate(calc(${-crrPage}*(100% + 12px)));
   `,
 ])
-const ImgWrap = tw.div`w-full h-full rounded-[9px]`
+const ImgWrap = styled.div`
+  ${tw`overflow-hidden rounded-[9px]`}
+  flex-shrink: 0;
+  flex-basis: 100%;
+`
 const Title = tw.h4`text-lg`
 
 const Photos = ({imgs}) => {
