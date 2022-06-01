@@ -15,11 +15,8 @@ import {Button} from '../Elements';
 
 const HideBttn = styled(Button)(() => [
   tw`w-10 h-10`,
-  tw`absolute top-3 left-[calc(35% - 16px)] z-[2]`,
+  tw`absolute top-3 z-[2]`,
   tw`text-lg`,
-  css`
-    transform: translate(-100%);
-  `,
 ])
 
 const Container = styled.div(() => [
@@ -76,8 +73,15 @@ const Map = ({userLocation}) => {
 
   const mapSpring = useSpring({
     to: {
-      left: place.open ? '35%' : '0',
+      left: place.open ? '35%' : '0%',
       width: place.open ? '65%' : '100%',
+    },
+    config: config.default
+  })
+  const hideBttnSpring = useSpring({
+    to: {
+      left: place.open ? '30%' : '-5%',
+      opacity: place.open ? '1' : '0',
     },
     config: config.default
   })
@@ -87,13 +91,10 @@ const Map = ({userLocation}) => {
       <Container>
         <PlaceDetails />
 
-        {/* Details buttons */}
-        {place.open && !place.invisible && (
-          <HideBttn type='icon'
-            onClick={() => dispatchPlace({type: 'HIDE'})}>
-            <MdClose />
-          </HideBttn>
-        )}
+        <HideBttn type='icon' style={hideBttnSpring}
+          onClick={() => dispatchPlace({type: 'HIDE'})}>
+          <MdClose />
+        </HideBttn>
 
         <GoogleMapContainer style={mapSpring}>
           <GoogleMap
