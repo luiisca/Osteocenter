@@ -1,24 +1,28 @@
-import Button from '../Button';
+import Link from 'next/link';
+import Image from 'next/image';
+
+import tw, {css, styled} from 'twin.macro';
+import Nav from '../Nav';
+import {BaseLink} from '../BaseStyle';
+
+const Container = tw.header`flex justify-between items-center bg-primary-tint-3 h-24 px-12`
+const StyleImgContainer = tw.a`block relative min-w-[200px] h-full`
 
 const Header = () => {
   return (
-    <header class="header">
-      <a href="#">
-        <img class="logo" alt="osteocenter logo" src="img/osteocenter-logo.png" />
-      </a>
-      <nav>
-        <ul class="main-nav-list">
-          <li><a class="main-nav-link" href="#">Nuestros Servicios</a></li>
-          <li><a class="main-nav-link" href="#">Por que elegirnos?</a></li>
-          <li><a class="main-nav-link" href="#">Contáctanos</a></li>
-          <li><a class="main-nav-link" href="#">Blog</a></li>
-          <li>
-            <a href="" class="main-nav-link nav-cta">Pide una cita</a>
-          </li>
-
-        </ul>
-      </nav>
-    </header>
+    <Container>
+      <Link href='/' passHref>
+        <StyleImgContainer>
+          <Image
+            priority='true'
+            layout='fill'
+            objectFit='contain'
+            alt="osteocenter logo"
+            src="/img/osteocenter-logo.png" />
+        </StyleImgContainer>
+      </Link>
+      <Nav />
+    </Container>
   )
 }
 

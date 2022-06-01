@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Script from 'next/script';
+import Header from './containers/header';
 
 import {Nav, Heading} from '../components';
 
@@ -18,12 +19,15 @@ const Layout = ({children}) => {
         {/* Calendly end */}
       </Head>
       <main>
+        <Header />
+        {/*
         <Nav />
         <Heading as='span' subHeading>Hello World!</Heading>
         <Heading primary>Hello World!</Heading>
         <Heading as='h2' secondary>Hello World!</Heading>
         <Heading as='h3' tertiary>Hello World!</Heading>
-
+        */}
+        {children}
         {/*{children} */}
       </main>
     </div>
