@@ -9,7 +9,7 @@ import Photos from './Photos';
 import Reviews from './Reviews';
 
 const Container = styled.div(({open}) => [
-  tw`w-full h-full transition-all bg-primary`,
+  tw`w-full h-full overflow-x-hidden overflow-y-scroll transition-all bg-primary`,
   tw`p-3`,
   open && tw`w-1/3`,
 ])
