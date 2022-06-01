@@ -7,22 +7,27 @@ import Map from '../Map';
 
 const Location = () => {
   const [userLocation, setUserLocation] = useState(null)
+  const [positionActive, setPositionActive] = useState(false)
   const getUserLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      !positionActive && (navigator.geolocation.getCurrentPosition(
         (position) => {
           const pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
           setUserLocation(pos);
+
+          return;
         },
         () => {
-          handleLocationError(true)
+          handleLocationError(true);
         }
-      )
+      ));
+      setPositionActive(!positionActive);
+      setUserLocation(null);
     } else {
-      handleLocationError(false)
+      handleLocationError(false);
     }
   }
 
@@ -34,7 +39,7 @@ const Location = () => {
     <Container tw='text-center'>
       <Heading as='span' subHeading>Ubicación</Heading>
       <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
-      <Map userLocation={userLocation}/>
+      <Map userLocation={userLocation} />
       <Button type='icon' onClick={getUserLocation}><FaRoute /></Button>
     </Container>
   )
