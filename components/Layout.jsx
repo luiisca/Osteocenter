@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Button from '../components/Button';
 
 export const siteTitle = 'Osteocenter';
 const Layout = ({children}) => {
@@ -15,7 +16,10 @@ const Layout = ({children}) => {
         {/* Calendly end */}
 
       </Head>
-      <main>{children}</main>
+      <main>
+        <Button secondary>Click me!</Button>
+        {children}
+      </main>
     </div>
   )
 }
