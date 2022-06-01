@@ -21,14 +21,20 @@ const Container = styled(animated.div)(() => [
   tw`text-sm bg-primary-tint-2`,
   tw`overflow-x-hidden overflow-y-scroll`,
 ])
-const OpenBttn = styled(Button)(() => [
-  tw`w-[25px]`,
+
+const OpenBttnContainer = styled(animated.div)(() => [
+  tw`w-[40px] h-[80px]`,
+  tw`flex items-center justify-items-start`,
   tw`absolute top-1/2 left-[35%] z-[1]`,
-  tw`rounded-none`,
-  tw`rounded-r-sm`,
+  tw`hover:cursor-pointer`,
+
   css`
     transform: translate(0, -50%);
   `
+])
+const OpenBttn = styled(Button)(() => [
+  tw`w-[25px]`,
+  tw`rounded-none rounded-r-sm`,
 ])
 
 const ContentWrap = tw.div`py-3 px-4`
@@ -61,13 +67,13 @@ const PlaceDetails = () => {
     to: {
       left: place.open ? '35%' : '0%',
     },
-    config: config.gentle
+    config: config.default
   })
 
   if (Object.keys(place.details).length > 0) {
     return (
       <Fragment>
-        <Container style={detailsSpring} ref={containerRef}>
+        <Container style={detailsSpring}>
           <ImgWrap>
             <Image
               src={place.details.photos[0].getUrl()}
@@ -106,10 +112,12 @@ const PlaceDetails = () => {
         </Container>
 
         {place.openBttn &&
-          <OpenBttn type='icon' style={openBttnSpring}
+          <OpenBttnContainer style={openBttnSpring}
             onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
-            <MdArrowLeft />
-          </OpenBttn>
+            <OpenBttn type='icon'>
+              <MdArrowLeft />
+            </OpenBttn>
+          </OpenBttnContainer>
         }
       </Fragment>
     )
