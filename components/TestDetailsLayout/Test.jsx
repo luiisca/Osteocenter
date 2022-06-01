@@ -1,6 +1,8 @@
 import tw, {css, styled} from 'twin.macro';
 import TestProvider, {useTestContext} from './TestProvider';
+import {useState} from 'react'
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
+import {useSpring, animated} from 'react-spring';
 
 import {Button} from '../Elements';
 
@@ -21,32 +23,18 @@ const HideBttn = styled(Button)(() => [
 const Container = tw.div`relative w-[900px] h-[500px] rounded-[11px] my-20 mx-auto overflow-hidden`
 
 // animated
-const Details = styled.div(({open, invisible}) => [
+const Details = styled(animated.div)(() => [
   tw`absolute z-[1]`,
   tw`inline-block`,
-  tw`w-[35%] transition-all`,
-
-  css`
-    transform: translate(-100%);
-    opacity: 1;
-  `,
-  invisible && css`
-    opacity: 0;
-    transform: translate(0);
-  `,
-  open && !invisible && css`
-    opacity: 1;
-    transform: translate(0);
-  `,
+  tw`w-[35%]`,
 
   tw`h-full text-xl bg-primary`,
 ])
 
-const Maps = styled.div(({open, invisible}) => [
+const Maps = styled(animated.div)(() => [
   tw`absolute top-0 left-0`,
-  tw`w-full h-full transition-all`,
+  tw`w-full h-full`,
   tw`inline-block`,
-  open && tw`left-[35%] w-[65%]`,
 
   tw`text-xl bg-primary-tint-2`,
 ])
@@ -54,25 +42,34 @@ const Maps = styled.div(({open, invisible}) => [
 
 const Test = () => {
   const {place, dispatchPlace} = useTestContext();
+  const detailsSpring = useSpring({
+    opacity: place.invisible ? 0 : 1,
+    transform: place.open ? 'translate(0%)' : !place.invisible ? 'translate(-100%)' : null,
+  })
+  const mapSpring = useSpring({
+    left: place.open ? '35%' : '0',
+    width: place.open ? '65%' : '100%',
+  })
 
   return (
     <Container>
-      <Details open={place.open} invisible={place.invisible}>
+      <Details style={detailsSpring}>
         Details
       </Details>
       {place.open && !place.invisible && (
         <HideBttn type='icon'
-        onClick={() => dispatchPlace({type: 'HIDE'})}>
-        <MdArrowLeft />
+          onClick={() => dispatchPlace({type: 'HIDE'})}>
+          <MdArrowLeft />
         </HideBttn>
       )}
-      {place.openBttn && (
+      {place.open &&
         <OpenBttn type='icon'
           onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
           <MdArrowLeft />
         </OpenBttn>
-      )}
-      <Maps open={place.open}
+      }
+      <Maps
+        style={mapSpring}
         onClick={() => dispatchPlace({type: 'SHOW_OPEN_BTTN'})}>
         <p>Open: {place.open ? 'true' : 'false'}</p>
         <p>Invisible: {place.invisible ? 'true' : 'false'}</p>
