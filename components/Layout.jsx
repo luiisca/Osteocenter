@@ -11,10 +11,6 @@ const Layout = ({children}) => {
         <link rel="icon" href="/favicon.svg" />
         <meta name="og:title" content={siteTitle} />
         <meta name="description" content="Osteocenter" />
-
-        {/* Calendly start */}
-        <Script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async />
-        {/* Calendly end */}
       </Head>
       <main>
         <Header />
