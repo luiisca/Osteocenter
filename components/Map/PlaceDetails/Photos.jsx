@@ -5,7 +5,7 @@ import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
 import {Button} from '../../Elements';
 
-import Title from './Title';
+import {Title} from './Elements';
 
 const pagesReducer = (state, action) => {
   switch (action.type) {

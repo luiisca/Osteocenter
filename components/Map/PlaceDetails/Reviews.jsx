@@ -1,17 +1,16 @@
 import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
 
-import Title from './Title';
+import {Title, Separator} from './Elements';
 
-const Separator = styled.div`
-height: 0px;
-  border-bottom: 1px solid #e8eaed;
-`
-
-const Author = tw.div`flex gap-2`
-const ImgWrap = tw.div`w-[30px] h-[30px]`
-const Rating = tw.div`flex gap-2`
-const Content = tw.p`mt-2 text-base`
+const Review = tw.div`py-4`
+const Author = styled.div(() => [
+  tw`text-accent-333 text-[15px]`,
+  tw`flex items-center gap-3`,
+])
+const ImgWrap = tw.div`w-8 h-8`
+const Rating = tw.div`flex gap-3 text-sm`
+const Content = tw.p`mt-2 text-sm text-accent-333`
 
 const Reviews = ({reviews}) => {
   return (
@@ -19,13 +18,14 @@ const Reviews = ({reviews}) => {
       <Title>Reviews</Title>
       {reviews.map((review, i) => (
         <>
-          <div>
+          <Review>
             <Author>
               <ImgWrap>
                 <Image
                   src={review.profile_photo_url}
                   alt={`${review.author_name} picture`}
                   layout='responsive'
+                  size='5vw'
                   width='1'
                   height='1'
                 />
@@ -37,7 +37,7 @@ const Reviews = ({reviews}) => {
               <span>{review.relative_time_description}</span>
             </Rating>
             <Content>{review.text}</Content>
-          </div>
+          </Review>
           {!(reviews.length == (i + 1)) && <Separator />}
         </>
       ))}
