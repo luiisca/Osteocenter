@@ -1,10 +1,10 @@
-import {Fragment} from 'react'
-import {GlobalStyle} from '../globalStyling'
+import {Fragment} from 'react';
+import GlobalStyles from '../components/GlobalStyles';
 
 function MyApp({Component, pageProps}) {
   return (
     <Fragment>
-      <GlobalStyle />
+      <GlobalStyles />
       <Component {...pageProps} />
     </Fragment>
   )
