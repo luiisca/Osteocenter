@@ -115,7 +115,7 @@ const PlaceDetails = () => {
           <OpenBttnContainer style={openBttnSpring}
             onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
             <OpenBttn type='icon'>
-              <MdArrowLeft />
+              {place.open ? <MdArrowLeft /> : <MdArrowRight />}
             </OpenBttn>
           </OpenBttnContainer>
         }
