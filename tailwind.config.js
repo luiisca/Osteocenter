@@ -36,12 +36,19 @@ module.exports = {
         500: '#A24F11',
       },
       primary: {
-        100: '#f1f9ff',
-        200: '#e1f3ff',
-        300: '#c9eaff',
-        400: '#74c0fc',
-        500: '#3f9cf5',
-        600: '#3688e3',
+        'tint-3': '#f1f9ff', // 100
+        'tint-2': '#e1f3ff', // 200
+        'tint-1': '#c9eaff',
+        DEFAULT: '#74c0fc', // 400
+        'shade-1': '#3f9cf5',
+        'shade-2': '#3688e3', // 600
+      },
+      accent: {
+        DEFAULT: '#888',
+        'lightest-on-fff': '#767676',
+        'lightest-on-tint-3': '#5f5f5f',
+        '333': '#333333',
+        '555': '#555555',
       }
     },
     spacing: {

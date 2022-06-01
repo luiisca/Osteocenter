@@ -354,8 +354,6 @@ template {
 }
 `
 const Global = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Lora&display=swap');
-
   body {
     font-size: 1rem;
     line-height: 1.5rem;
