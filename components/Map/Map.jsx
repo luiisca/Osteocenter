@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {GoogleMap, Marker, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
+import {Marker, GoogleMap, DirectionsService, DirectionsRenderer, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
 const Container = styled.div(() => [
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
@@ -31,10 +31,17 @@ const Test = () => {
   return null
 }
 
-const Map = () => {
+const Map = ({userLocation}) => {
   const {isLoaded, loadError} = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   })
+  const [directionsResult, setDirectionsResult] = useState(null)
+
+  const directionsCallback = (response) => {
+    if (response?.status == 'OK') {
+      setDirectionsResult(response)
+    }
+  }
 
   const onLoad = useCallback((map) => {
     // console.log(map)
@@ -48,11 +55,24 @@ const Map = () => {
           zoom={14}
           center={{lat: -12.1193972, lng: -77.0339762}}
           onLoad={onLoad}
-          mapContainerStyle={StyleGoogleMap}>
-          <Marker
-            label='hello!'
-            position={{lat: -12.1193972, lng: -77.0339762}}
-          />
+          mapContainerStyle={StyleGoogleMap}
+        >
+          {userLocation && (
+            directionsResult == null ? (
+              <DirectionsService
+                options={{
+                  origin: userLocation,
+                  destination: {lat: -12.1193972, lng: -77.0339762},
+                  travelMode: 'DRIVING',
+                }}
+                callback={directionsCallback} />
+            ) : (
+              <DirectionsRenderer options={{
+                directions: directionsResult
+              }} />
+            )
+          )}
+          <Marker position={{lat: -12.1193972, lng: -77.0339762}} />
         </GoogleMap>
       </Container>
     )
@@ -63,8 +83,14 @@ const Map = () => {
   }
 
   return (
+    // cause useJsApiLoader is async
     isLoaded ? renderMap() : <Spinner />
   )
 }
 
 export default React.memo(Map)
+
+
+// DirectionsService.route() open a request, accepts options obj and callback()
+// The callback will return a DirectionsResult object and a DirectionsStatus code
+// You can pass this DirectionsResult obt to a DirectionsRenderer object to display it on the map
