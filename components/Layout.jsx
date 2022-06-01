@@ -18,19 +18,10 @@ const Layout = ({children}) => {
       </Head>
       <main>
         <Header />
-        {/*
-        <Nav />
-        <Heading as='span' subHeading>Hello World!</Heading>
-        <Heading primary>Hello World!</Heading>
-        <Heading as='h2' secondary>Hello World!</Heading>
-        <Heading as='h3' tertiary>Hello World!</Heading>
-        */}
         {children}
-        {/*{children} */}
       </main>
     </div>
   )
 }
-// <Button href='#'> Click me!</Button>
 
 export default Layout;
