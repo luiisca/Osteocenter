@@ -5,7 +5,8 @@ import {Heading} from '../Elements';
 
 const Container = tw.div`flex flex-col items-center`
 const ImgWrap = styled.div`
-    ${tw`relative max-w-[5rem]`}
+    ${tw`relative w-[5rem]`}
+
     &::before {
       content: '';
       ${tw`block absolute top-[20%] z-[-1] w-4/5 h-4/5 bg-no-repeat bg-contain`}
@@ -21,10 +22,10 @@ const Value = ({name, shapePosition}) => {
         <Image
           src={`/img/icons/${name}.svg`}
           alt={`${name} logo`}
-          layout='raw'
+          layout='responsive'
           size='10vw'
-          width='500'
-          height='500'
+          width='1'
+          height='1'
         />
       </ImgWrap>
       <Heading as='h3' tertiary tw='mb-4 font-sans'>
