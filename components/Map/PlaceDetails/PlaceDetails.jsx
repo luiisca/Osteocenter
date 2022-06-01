@@ -2,7 +2,6 @@ import Image from 'next/image';
 import {Fragment, useRef} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {animated, useSpring, config} from 'react-spring';
-import {Scrollbars} from 'react-custom-scrollbars';
 
 import {GoLocation} from 'react-icons/go';
 import {BsClock} from 'react-icons/bs';
@@ -11,7 +10,8 @@ import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 import {useMapContext} from '../../../context/MapProvider';
 import Photos from './Photos';
 import Reviews from './Reviews';
-import {Button} from '../../Elements';
+import {Button, CustomScrollbar} from '../../Elements';
+
 
 import {Title, Rating, Separator} from './Elements';
 
@@ -51,40 +51,6 @@ const Flex = styled.div((props) => [
     }
   `,
 ])
-const ThumbContainer = styled.div(() => [
-  tw`flex justify-end`,
-  tw`w-full h-full hover:cursor-pointer`,
-])
-const Thumb = styled.div(() => [
-  tw`rounded-[9px] bg-primary-shade-1 hover:bg-primary-shade-2`,
-])
-const Track = styled.div(() => [
-  tw`h-full`,
-  tw`right-0`,
-])
-
-const renderView = ({style, ...props}) => {
-  const viewStyle = {
-    overflowX: 'hidden',
-  }
-  return <div {...props} style={{...style, ...viewStyle}} />
-}
-const renderTrackVertical = ({style, ...props}) => {
-  const trackStyle = {
-    width: '20px',
-  }
-  return <Track {...props} style={{...style, ...trackStyle}} />
-}
-const renderThumbVertical = ({style, ...props}) => {
-  const thumbStyle = {
-    width: '45%',
-  }
-  return (
-    <ThumbContainer>
-      <Thumb {...props} style={{...style, ...thumbStyle}} />
-    </ThumbContainer>
-  )
-}
 
 const PlaceDetails = () => {
   const {place, dispatchPlace} = useMapContext();
@@ -107,13 +73,7 @@ const PlaceDetails = () => {
     return (
       <Fragment>
         <Container style={detailsSpring}>
-          <Scrollbars
-            renderTrackHorizontal={() => <div></div>}
-            renderTrackVertical={renderTrackVertical}
-            renderThumbVertical={renderThumbVertical}
-            autoHide={true}
-            autoHideDuration={1000}
-            renderView={renderView}>
+          <CustomScrollbar hideX autoHide={true}>
             <ImgWrap>
               <Image
                 src={place.details.photos[0].getUrl()}
@@ -149,7 +109,7 @@ const PlaceDetails = () => {
               <Reviews reviews={place.details.reviews} />
             </ContentWrap>
             {console.log('PlaceDetails/>', place)}
-          </Scrollbars>
+          </CustomScrollbar>
         </Container>
 
         {place.openBttn &&

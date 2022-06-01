@@ -7,18 +7,21 @@ import Main from '../components/Sections/main';
 import Footer from '../components/Sections/footer';
 import Test from '../components/TestDetailsLayout/Test';
 import TestProvider from '../components/TestDetailsLayout/TestProvider';
+import {CustomScrollbar} from '../components/Elements';
 
 export default function Home() {
   return (
-    <Layout>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <Main />
-      {/*
-      <Footer />
-      */}
-    </Layout>
+    <CustomScrollbar style={{width: '100vw', height: '100vh'}} autoHide={false}>
+      <Layout>
+        <Head>
+          <title>{siteTitle}</title>
+        </Head>
+        <Main />
+        {/*
+          <Footer />
+          */}
+      </Layout>
+    </CustomScrollbar>
   )
 }
 
