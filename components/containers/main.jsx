@@ -4,7 +4,7 @@ const Main = () => {
       <section class="section-hero">
         <div class="hero">
           <div class="hero-text-box">
-            <h1 class="heading-primary"> Cirugía ortopédica y traumatología con las mejores garantías.</h1>
+            <h1 className="text-sky-400 text-center heading-primary text-3xl font-bold underline"> Cirugía ortopédica y traumatología con las mejores garantías.</h1>
             <p class="hero-description">
               Médico traumatólogo con amplia experiencia en el manejo quirúrgico
               de fracturas, reconstrucciones óseas, Prótesis de caderas, tumores
