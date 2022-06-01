@@ -355,11 +355,7 @@ template {
 `
 const Global = createGlobalStyle`
   body {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-family: 'Roboto', sans-serif;
-    color: 'blue';
-    background-color: #fafafa;
+    ${tw`font-sans text-base font-normal leading-none text-accent-555`}
   }
 `;
 
