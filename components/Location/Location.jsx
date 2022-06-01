@@ -1,11 +1,15 @@
 import {useState, useRef} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {FaRoute} from 'react-icons/fa';
+
 import {BaseContainer as Container} from '../BaseStyle';
 import {Button, Heading} from '../Elements';
-import Map from '../Map';
+
 import useIsMobile from '../../hooks/useIsMobile';
 import {BUSINESS_LOCATION} from '../../static/js/constants';
+
+import Map from '../Map';
+import MapProvider from '../../context/MapProvider';
 
 const Location = () => {
   const IS_MOBILE = useIsMobile();
@@ -43,7 +47,9 @@ const Location = () => {
     <Container tw='text-center'>
       <Heading as='span' subHeading>Ubicación</Heading>
       <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
-      <Map userLocation={userLocation} />
+      <MapProvider>
+        <Map userLocation={userLocation} />
+      </MapProvider>
       {IS_MOBILE && userLocation ? (
         <Button type='text' cta target='_blank' href={`https://www.google.com/maps/dir/${userLocation?.lat},${userLocation?.lng}/${BUSINESS_LOCATION.lat},${BUSINESS_LOCATION.lng}`}>Instrucciones</Button>
       ) : (

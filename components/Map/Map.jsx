@@ -1,11 +1,14 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {Marker, GoogleMap, DirectionsService, DirectionsRenderer, useGoogleMap, useJsApiLoader} from '@react-google-maps/api';
+import {GoogleMap, useJsApiLoader, useGoogleMap} from '@react-google-maps/api';
 
 import Route from './Route';
-import {BUSINESS_LOCATION} from '../../static/js/constants';
+import PlaceDetails from './PlaceDetails';
+import {BUSINESS_LOCATION, LIBRARIES} from '../../static/js/constants';
+import {useMapContext} from '../../context/MapProvider';
 
 const Container = styled.div(() => [
+  tw`grid grid-cols-[30% auto]`,
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
@@ -17,6 +20,7 @@ const Container = styled.div(() => [
 
 const StyleGoogleMap = {
   height: '100%',
+  width: '100%',
 }
 
 const Spinner = () => {
@@ -25,36 +29,50 @@ const Spinner = () => {
   )
 }
 
-const Test = () => {
-  const map = useGoogleMap()
+const DetailsGetter = ({dispatch}) => {
+  console.log('DETAILS RUNNED');
+  const map = useGoogleMap();
   useEffect(() => {
-    console.log('useGoogleMap', map)
-  }, [map])
+    const service = new google.maps.places.PlacesService(map);
+    const fieldsTest = ['icon', 'icon_mask_base_uri', 'icon_background_color']
+    const request = {
+      placeId: 'ChIJnzhbFSTIBZERdvxWvPnibdE',
+      fields: ['name', 'rating', 'user_ratings_total', 'type', 'vicinity', 'opening_hours', 'photos', 'reviews', 'url', ...fieldsTest]
+    };
+    service.getDetails(request, (place, status) => {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        console.log('DETAILS GETTER', place);
+        dispatch({type: 'STORE_DETAILS', details: place});
+      }
+    });
+  }, [])
 
-  return null
+  return null;
 }
 
 const Map = ({userLocation}) => {
   const {isLoaded, loadError} = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  })
-
-  const onLoad = useCallback((map) => {
-    // console.log(map);
-  })
-  const onMarkerLoad = console.log
-
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    libraries: LIBRARIES,
+  });
+  const {place, dispatchPlace} = useMapContext();
 
   const renderMap = () => {
     return (
       <Container>
+        {/* let's see how many times it rerenders */}
+        {/* if it's too much then memoize */}
+        <PlaceDetails>Hello mom</PlaceDetails>
         <GoogleMap
           zoom={14}
           center={BUSINESS_LOCATION}
-          onLoad={onLoad}
           mapContainerStyle={StyleGoogleMap}
         >
-          <Route userLocation={userLocation} />
+          <Route
+            userLocation={userLocation}
+          />
+
+          <DetailsGetter dispatch={dispatchPlace} />
         </GoogleMap>
       </Container>
     )

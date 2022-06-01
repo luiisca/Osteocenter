@@ -54,7 +54,9 @@ const Testimonials = () => {
       <Heading as='h2' secondary>Lo que nuestros pacientes dicen.</Heading>
       <Carousel>
         {page != 1 ? (<Button type='icon' arrow tw='self-center' onClick={() => dispatch({type: 'PREVIOUS_PAGE'})}><BsArrowLeft /></Button>) : (<div></div>)}
+
         <Testimonial name={testimonial.author.name} img={testimonial.author.picture} message={testimonial.message} />
+
         {page != testimonials.length && <Button type='icon' arrow tw='self-center' onClick={() => dispatch({type: 'NEXT_PAGE'})}><BsArrowRight /></Button>}
       </Carousel>
     </Container>

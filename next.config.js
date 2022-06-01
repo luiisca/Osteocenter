@@ -5,7 +5,10 @@ const nextConfig = {
     images: {
       layoutRaw: true,
     }
-  }
+  },
+  images: {
+    domains: ['maps.googleapis.com', 'lh3.googleusercontent.com'],
+  },
 }
 
 module.exports = nextConfig

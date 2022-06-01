@@ -22,7 +22,6 @@ const Tabs = () => {
   const [activeBttn, setActiveBttn] = useState(1)
   const handleToggle = (bttn) => {
     setActiveBttn(bttn)
-    console.log(bttn)
   }
 
   return (
