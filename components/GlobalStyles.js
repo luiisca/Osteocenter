@@ -357,6 +357,19 @@ const Global = createGlobalStyle`
   body {
     ${tw`font-sans font-normal leading-none text-accent-555`}
   }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgb(225,243,255,0.3);
+    ${tw`bg-primary-tint-3`}
+  }
+  ::-webkit-scrollbar-thumb {
+    ${tw`transition-all`}
+    ${tw`bg-primary-shade-1`}
+    ${tw`hover:bg-primary-shade-2`}
+  }
 `;
 
 const GlobalStyles = () => (

@@ -37,15 +37,6 @@ const GoogleMapContainer = styled(animated.div)(() => [
   tw`absolute top-0 left-0`,
   tw`inline-block`,
 ])
-const CollapseBttn = styled(Button)(() => [
-  tw`absolute top-1/2 left-[30%] z-[1]`,
-  tw`rounded-sm`,
-
-  css`
-    transform: translate(0, -50%);
-  `
-])
-
 
 const Spinner = () => {
   return (
