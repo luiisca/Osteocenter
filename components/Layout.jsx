@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import Header from './containers/header';
+import Header from './sections/header';
 
-import {Nav, Heading} from '../components';
+import Nav from './Nav';
+import {Heading} from './Elements';
 
 export const siteTitle = 'Osteocenter';
 

@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 import {BaseList} from '../BaseStyle';
-import Button from '../Button';
+import {Button} from '../Elements';
 import NavLink from './NavLink';
 
 const StyledNavList = tw(BaseList)`flex items-center gap-8`

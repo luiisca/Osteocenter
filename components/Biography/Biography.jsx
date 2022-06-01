@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import tw, {css, styled} from 'twin.macro';
 import {BaseContainer} from '../BaseStyle';
-import Heading from '../Heading';
+import {Heading} from '../Elements';
 import Tabs from './Tabs';
 
 const BackColor = tw(BaseContainer)`max-w-none bg-primary-tint-2 rounded-[11px] p-8 pb-0 my-16`

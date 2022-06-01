@@ -1,5 +1,5 @@
 import tw, {css, styled} from 'twin.macro';
-import {BaseLink} from '../BaseStyle';
+import {BaseLink} from '../../BaseStyle';
 
 const Button = styled(BaseLink)(props => [
   css`

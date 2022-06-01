@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 import {BaseContainer} from '../BaseStyle';
-import Heading from '../Heading';
+import {Heading} from '../Elements';
 import Value from './Value';
 
 const Container = tw(BaseContainer)``

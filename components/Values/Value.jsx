@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
 
-import Heading from '../Heading';
+import {Heading} from '../Elements';
 
 const Container = tw.div`flex flex-col items-center`
 const ImgWrap = styled.div`
