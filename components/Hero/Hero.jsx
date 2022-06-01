@@ -17,8 +17,8 @@ const Hero = () => {
           de fracturas, reconstrucciones óseas, Prótesis de caderas, tumores
           óseos y músculo esquelético.
         </Text>
-        <Button cta hero href="#">Pide una cita</Button>
-        <Button outline destination="#biography">Más sobre mí &darr;</Button>
+        <Button cta hero href="#" tw='mr-4'>Pide una cita</Button>
+        <Button outline href="#biography">Más sobre mí &darr;</Button>
         <CustomerPictures />
       </div>
 
