@@ -2,6 +2,8 @@ import Image from 'next/image';
 import {Fragment, useRef} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {animated, useSpring, config} from 'react-spring';
+import {Scrollbars} from 'react-custom-scrollbars';
+
 import {GoLocation} from 'react-icons/go';
 import {BsClock} from 'react-icons/bs';
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
@@ -9,7 +11,6 @@ import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 import {useMapContext} from '../../../context/MapProvider';
 import Photos from './Photos';
 import Reviews from './Reviews';
-
 import {Button} from '../../Elements';
 
 import {Title, Rating, Separator} from './Elements';
@@ -19,7 +20,6 @@ const Container = styled(animated.div)(() => [
   tw`absolute z-[1] inline-block opacity-100`,
 
   tw`text-sm bg-primary-tint-2`,
-  tw`overflow-x-hidden overflow-y-scroll`,
 ])
 
 const OpenBttnContainer = styled(animated.div)(() => [
@@ -51,10 +51,43 @@ const Flex = styled.div((props) => [
     }
   `,
 ])
+const ThumbContainer = styled.div(() => [
+  tw`flex justify-end`,
+  tw`w-full h-full hover:cursor-pointer`,
+])
+const Thumb = styled.div(() => [
+  tw`rounded-[9px] bg-primary-shade-1 hover:bg-primary-shade-2`,
+])
+const Track = styled.div(() => [
+  tw`h-full`,
+  tw`right-0`,
+])
+
+const renderView = ({style, ...props}) => {
+  const viewStyle = {
+    overflowX: 'hidden',
+  }
+  return <div {...props} style={{...style, ...viewStyle}} />
+}
+const renderTrackVertical = ({style, ...props}) => {
+  const trackStyle = {
+    width: '20px',
+  }
+  return <Track {...props} style={{...style, ...trackStyle}} />
+}
+const renderThumbVertical = ({style, ...props}) => {
+  const thumbStyle = {
+    width: '45%',
+  }
+  return (
+    <ThumbContainer>
+      <Thumb {...props} style={{...style, ...thumbStyle}} />
+    </ThumbContainer>
+  )
+}
 
 const PlaceDetails = () => {
   const {place, dispatchPlace} = useMapContext();
-  const containerRef = useRef()
 
   const detailsSpring = useSpring({
     to: {
@@ -74,41 +107,49 @@ const PlaceDetails = () => {
     return (
       <Fragment>
         <Container style={detailsSpring}>
-          <ImgWrap>
-            <Image
-              src={place.details.photos[0].getUrl()}
-              alt={place.details.name}
-              layout='fill'
-              objectFit='cover'
-            />
-          </ImgWrap>
-          <ContentWrap>
-            <Title main>{place.details.name}</Title>
-            <Rating score={place.details.rating} qtt={place.details.user_ratings_total} />
-          </ContentWrap>
+          <Scrollbars
+            renderTrackHorizontal={() => <div></div>}
+            renderTrackVertical={renderTrackVertical}
+            renderThumbVertical={renderThumbVertical}
+            autoHide={true}
+            autoHideDuration={1000}
+            renderView={renderView}>
+            <ImgWrap>
+              <Image
+                src={place.details.photos[0].getUrl()}
+                alt={place.details.name}
+                layout='fill'
+                objectFit='cover'
+              />
+            </ImgWrap>
+            <ContentWrap>
+              <Title main>{place.details.name}</Title>
+              <Rating score={place.details.rating} qtt={place.details.user_ratings_total} />
+            </ContentWrap>
 
 
-          <ContentWrap>
-            <Separator tw='mb-4' />
-            <Flex icon tw='mb-3'>
-              <GoLocation />
-              <p>{place.details.vicinity}</p>
-            </Flex>
-            <Flex icon>
-              <BsClock />
-              <p>{place.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
-            </Flex>
-            <Separator tw='mt-4' />
-          </ContentWrap>
+            <ContentWrap>
+              <Separator tw='mb-4' />
+              <Flex icon tw='mb-3'>
+                <GoLocation />
+                <p>{place.details.vicinity}</p>
+              </Flex>
+              <Flex icon>
+                <BsClock />
+                <p>{place.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
+              </Flex>
+              <Separator tw='mt-4' />
+            </ContentWrap>
 
 
-          <ContentWrap>
-            <Photos imgs={place.details.photos.slice(1)} />
-          </ContentWrap>
-          <ContentWrap>
-            <Reviews reviews={place.details.reviews} />
-          </ContentWrap>
-          {console.log('PlaceDetails/>', place)}
+            <ContentWrap>
+              <Photos imgs={place.details.photos.slice(1)} />
+            </ContentWrap>
+            <ContentWrap>
+              <Reviews reviews={place.details.reviews} />
+            </ContentWrap>
+            {console.log('PlaceDetails/>', place)}
+          </Scrollbars>
         </Container>
 
         {place.openBttn &&
