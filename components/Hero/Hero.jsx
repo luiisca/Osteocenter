@@ -4,7 +4,7 @@ import {Button, Heading} from '../../components';
 import CustomerPictures from './CustomerPictures';
 import HeroImage from './HeroImage';
 
-const Container = tw.div`max-w-screen-2xl mx-auto py-8 grid grid-cols-2 gap-2.5 items-center justify-items-end`
+const Container = tw.div`max-w-screen-2xl mx-auto px-8 grid grid-cols-2 gap-2.5 items-center justify-items-end`
 const Text = tw.p`text-xl mb-12`
 
 const Hero = () => {
