@@ -3,7 +3,7 @@ import tw, {css, styled} from 'twin.macro';
 import {useSpring, animated, config} from 'react-spring';
 import {GoogleMap, useJsApiLoader, useGoogleMap, Marker} from '@react-google-maps/api';
 
-import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
+import {MdArrowLeft, MdArrowRight, MdClose} from 'react-icons/md';
 
 import MarkerContainer from './MarkerContainer';
 import Route from './Route';
@@ -14,7 +14,9 @@ import {useMapContext} from '../../context/MapProvider';
 import {Button} from '../Elements';
 
 const HideBttn = styled(Button)(() => [
-  tw`absolute top-3 left-[calc(35% - 12px)] z-[2]`,
+  tw`w-10 h-10`,
+  tw`absolute top-3 left-[calc(35% - 16px)] z-[2]`,
+  tw`text-lg`,
   css`
     transform: translate(-100%);
   `,
@@ -89,7 +91,7 @@ const Map = ({userLocation}) => {
         {place.open && !place.invisible && (
           <HideBttn type='icon'
             onClick={() => dispatchPlace({type: 'HIDE'})}>
-            <MdArrowLeft />
+            <MdClose />
           </HideBttn>
         )}
 
