@@ -8,6 +8,8 @@ const placeReducer = (state, action) => {
       return {...state, details: action.details}
     case 'TOGGLE_VISIBILITY':
       return {...state, visible: !state.visible}
+    case 'TOGGLE_COLLAPSE':
+      return {...state, collapse: !state.collapse}
     default:
       return state
   }

@@ -1,15 +1,18 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {GoogleMap, useJsApiLoader, useGoogleMap} from '@react-google-maps/api';
+import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
 import Route from './Route';
 import PlaceDetails from './PlaceDetails';
 import {BUSINESS_LOCATION, LIBRARIES} from '../../static/js/constants';
 import {useMapContext} from '../../context/MapProvider';
 
+import {Button} from '../Elements';
+
 const Container = styled.div(() => [
   tw`text-left`,
-  tw`grid grid-cols-[35% auto]`,
+  tw`relative`,
   tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
@@ -18,11 +21,14 @@ const Container = styled.div(() => [
     }
   `,
 ])
+const CollapseBttn = styled(Button)(() => [
+  tw`absolute top-1/2 left-[30%] z-[1]`,
+  tw`rounded-sm`,
+  css`
+    transform: translate(0, -50%);
+  `
+])
 
-const StyleGoogleMap = {
-  height: '100%',
-  width: '100%',
-}
 
 const Spinner = () => {
   return (
@@ -61,11 +67,18 @@ const Map = ({userLocation}) => {
   const renderMap = () => {
     return (
       <Container>
-        <PlaceDetails>Hello mom</PlaceDetails>
+        <PlaceDetails collapse={place.collapse} />
+        <CollapseBttn type='icon'
+          onClick={() => dispatchPlace({type: 'TOGGLE_COLLAPSE'})}>
+          <MdArrowLeft />
+        </CollapseBttn>
         <GoogleMap
           zoom={14}
           center={BUSINESS_LOCATION}
-          mapContainerStyle={StyleGoogleMap}
+          mapContainerStyle={{
+            height: '100%',
+            width: `${place.collapse ? '100%' : '65%'}`,
+          }}
         >
           <Route
             userLocation={userLocation}
