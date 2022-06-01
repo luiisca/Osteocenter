@@ -24,6 +24,7 @@ const Testimonial = ({name, message, img}) => {
         <ImgWrap>
           <Image
             src={`/img/customers/${img}`}
+            alt={`${name} testimonial`}
             layout='responsive'
             sizes='5vw'
             width='1'
