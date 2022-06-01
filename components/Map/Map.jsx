@@ -1,9 +1,10 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {useSpring, animated} from 'react-spring';
-import {GoogleMap, useJsApiLoader, useGoogleMap} from '@react-google-maps/api';
+import {GoogleMap, useJsApiLoader, useGoogleMap, Marker} from '@react-google-maps/api';
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
+import MarkerContainer from './MarkerContainer';
 import Route from './Route';
 import PlaceDetails from './PlaceDetails';
 import {BUSINESS_LOCATION, LIBRARIES} from '../../static/js/constants';
@@ -12,7 +13,8 @@ import {useMapContext} from '../../context/MapProvider';
 import {Button} from '../Elements';
 
 const OpenBttn = styled(Button)(() => [
-  tw`absolute top-1/2 left-[30%] z-[1]`,
+  tw`w-[25px]`,
+  tw`absolute top-1/2 left-[35%] z-[1]`,
   tw`rounded-sm`,
   css`
     transform: translate(0, -50%);
@@ -103,7 +105,7 @@ const Map = ({userLocation}) => {
             <MdArrowLeft />
           </HideBttn>
         )}
-        {place.open &&
+        {place.openBttn &&
           <OpenBttn type='icon'
             onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
             <MdArrowLeft />
@@ -119,10 +121,10 @@ const Map = ({userLocation}) => {
               width: '100%',
             }}
           >
+            <MarkerContainer />
             <Route
               userLocation={userLocation}
             />
-
             <DetailsGetter dispatch={dispatchPlace} />
           </GoogleMap>
         </GoogleMapContainer>

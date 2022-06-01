@@ -3,6 +3,8 @@ import tw, {css, styled} from 'twin.macro';
 import {Marker, useGoogleMap} from '@react-google-maps/api';
 import {BUSINESS_LOCATION} from '../../static/js/constants';
 
+import MarkerContainer from './MarkerContainer';
+
 const Route = ({userLocation}) => {
   const map = useGoogleMap();
   const ref = useRef({
@@ -34,7 +36,7 @@ const Route = ({userLocation}) => {
   } else {
     removeDirections();
     return (
-      <Marker position={{lat: -12.1193972, lng: -77.0339762}} />
+      <MarkerContainer />
     )
   }
 }
