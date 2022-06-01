@@ -1,14 +1,16 @@
 import tw, {css, styled} from 'twin.macro';
+import {BaseContainer} from '../BaseStyle';
 import Heading from '../Heading';
 import Value from './Value';
 
+const Container = tw(BaseContainer)``
 const Text = tw.p`text-xl m-auto mb-20 max-w-prose`
 
-const ValuesContainer = tw.div`flex justify-center gap-16 mb-8`
+const ValuesContainer = tw.div`flex justify-center gap-16`
 
 const Values = () => {
   return (
-    <div>
+    <Container>
       <Heading as='h2' secondary>
         Cirugía ortopédica y traumatología.
       </Heading>
@@ -21,7 +23,7 @@ const Values = () => {
         <Value name='calidad' shapePosition='center' />
         <Value name='humanidad' shapePosition='right' />
       </ValuesContainer>
-    </div>
+    </Container>
   )
 }
 

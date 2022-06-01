@@ -186,53 +186,52 @@
 /**************************/
 /* BIOGRAFIA */
 /**************************/
-.biography {
-  /* Experimental */
-  background-color: var(--primary-200);
-  border-radius: 11px;
-  margin-left: 6rem;
-  margin-right: 6rem;
-}
-.biography-container {
-  display: flex;
-  align-items: flex-start;
-  gap: 6.4rem;
+/* .biography { */
+/*   /1* Experimental *1/ */
+/*   background-color: var(--primary-200); */
+/*   border-radius: 11px; */
+/*   margin-left: 6rem; */
+/*   margin-right: 6rem; */
+/* } */
+/* .biography-container { */
+/*   display: flex; */
+/*   align-items: flex-start; */
+/*   gap: 6.4rem; */
 
-  padding: 3.2rem;
-  padding-bottom: 0;
-  margin-bottom: 9.6rem;
-}
-.biography__img {
-  width: 30%;
-  border-radius: 11px;
-  transform: rotateY(180deg);
-}
+/*   padding: 3.2rem; */
+/*   padding-bottom: 0; */
+/*   margin-bottom: 9.6rem; */
+/* } */
+/* .biography__img { */
+/*   width: 30%; */
+/*   transform: rotateY(180deg); */
+/* } */
 
-.tab {
-  display: flex;
-  gap: 9.6rem;
-}
-.tab__bttn {
-  display: block;
-  padding: 3rem 2rem;
+/* .tab { */
+/*   display: flex; */
+/*   gap: 9.6rem; */
+/* } */
+/* .tab__bttn { */
+/*   display: block; */
+/*   padding: 3rem 2rem; */
 
-  color: #6c6c6c;
-  border-left: #b4b2b2  solid 1.8px;
+/*   color: #6c6c6c; */
+/*   border-left: #b4b2b2  solid 1.8px; */
 
-  cursor: pointer;
-}
-.tab__bttn--active {
-  color: #010d17;
-  border-left: #172632 solid 1.9px;
-}
+/*   cursor: pointer; */
+/* } */
+/* .tab__bttn--active { */
+/*   color: #010d17; */
+/*   border-left: #172632 solid 1.9px; */
+/* } */
 
-.tab__icon {
-  width: 50px;
-}
-.tab__content-title {
-  font-size: 1.8rem;
-  font-weight: 500;
-}
+/* .tab__icon { */
+/*   width: 50px; */
+/* } */
+/* .tab__content-title { */
+/*   font-size: 1.8rem; */
+/*   font-weight: 500; */
+/* } */
 
 /**************************/
 /* FOOTER */
