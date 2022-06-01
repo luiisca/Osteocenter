@@ -1,5 +1,5 @@
 import tw, {css, styled} from 'twin.macro';
-import {BaseHeading} from './BaseStyle';
+import {BaseHeading} from '../BaseStyle';
 
 const Heading = styled(BaseHeading)(({primary, secondary, tertiary, subHeading}) => [
   primary && tw`text-6xl leading-[1.1] mb-8`,
