@@ -6,8 +6,6 @@ import Header from '../components/containers/header'
 import Main from '../components/containers/main'
 import Footer from '../components/containers/footer'
 
-import styles from '../styles/home.module.css'
-
 export default function Home() {
   return (
     <Layout>

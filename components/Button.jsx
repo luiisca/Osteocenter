@@ -1,6 +1,11 @@
 import styled, {css} from 'styled-components';
 import tw from 'tailwind-styled-components';
 
+// const Button = styled.button`
+//   background-color: red;
+//   color: white;
+//     `;
+
 const Button = tw.button`
   flex
   inline-flex
