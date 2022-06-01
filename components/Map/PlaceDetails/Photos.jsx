@@ -67,6 +67,7 @@ const Photos = ({imgs}) => {
               <Image
                 src={img.getUrl()}
                 layout='responsive'
+                objectFit='cover'
                 width='1'
                 height='1' />
             </ImgWrap>
