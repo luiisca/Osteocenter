@@ -10,37 +10,14 @@ import Reviews from './Reviews';
 
 import {Title, Rating, Separator} from './Elements';
 
-const Container = styled.div(({collapse}) => [
-  tw`w-1/2 h-full overflow-x-hidden overflow-y-scroll text-sm bg-primary-tint-2`,
-  css`
-    animation-duration: 0.2s;
-    animation-name: slidein;
-  `,
-  collapse && css`
-    @keyframes slidein {
-      from {
-        transform: translate(0);
-      }
-      to {
-        transform: translate(-100%);
-      }
-    }
-  `,
-  !collapse && css`
-    @keyframes slidein {
-      from {
-        transform: translate(-100%);
-        width: 0;
-      }
-      1% {
-        transform: translate(0);
-      }
-      to {
-        width: 35%;
-      }
-    }
-  `
+const Container = styled(animated.div)(() => [
+  tw`w-[35%] h-full`,
+  tw`absolute z-[1] inline-block opacity-100`,
+
+  tw`text-sm bg-primary-tint-2`,
+  tw`overflow-x-hidden overflow-y-scroll`,
 ])
+
 const ContentWrap = tw.div`py-3 px-4`
 
 const ImgWrap = tw.div`relative w-full h-2/5`
@@ -56,11 +33,16 @@ const Flex = styled.div((props) => [
   `,
 ])
 
-const PlaceDetails = ({collapse}) => {
+const PlaceDetails = () => {
   const {place, dispatchPlace} = useMapContext();
+  const detailsSpring = useSpring({
+    opacity: place.invisible && 0,
+    transform: place.open ? 'translate(0%)' : 'translate(-100%)',
+  })
+
   if (Object.keys(place.details).length > 0) {
     return (
-      <Container collapse={collapse}>
+      <Container style={detailsSpring}>
         <ImgWrap>
           <Image
             src={place.details.photos[0].getUrl()}

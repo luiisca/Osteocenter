@@ -25,7 +25,7 @@ const Container = tw.div`relative w-[900px] h-[500px] rounded-[11px] my-20 mx-au
 // animated
 const Details = styled(animated.div)(() => [
   tw`absolute z-[1]`,
-  tw`inline-block`,
+  tw`inline-block opacity-100`,
   tw`w-[35%]`,
 
   tw`h-full text-xl bg-primary`,
@@ -43,8 +43,8 @@ const Maps = styled(animated.div)(() => [
 const Test = () => {
   const {place, dispatchPlace} = useTestContext();
   const detailsSpring = useSpring({
-    opacity: place.invisible ? 0 : 1,
-    transform: place.open ? 'translate(0%)' : !place.invisible ? 'translate(-100%)' : null,
+    opacity: place.invisible && 0,
+    transform: place.open ? 'translate(0%)' : 'translate(-100%)',
   })
   const mapSpring = useSpring({
     left: place.open ? '35%' : '0',

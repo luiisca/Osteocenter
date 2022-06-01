@@ -1,4 +1,4 @@
-import {useState, useReducer, useContext, createContext} from 'react';
+import {useReducer, useContext, createContext} from 'react';
 
 const MapContext = createContext();
 
@@ -6,10 +6,12 @@ const placeReducer = (state, action) => {
   switch (action.type) {
     case 'STORE_DETAILS':
       return {...state, details: action.details}
-    case 'TOGGLE_VISIBILITY':
-      return {...state, visible: !state.visible}
-    case 'TOGGLE_COLLAPSE':
-      return {...state, collapse: !state.collapse}
+    case 'HIDE':
+      return {...state, invisible: true, open: false, openBttn: false}
+    case 'TOGGLE_OPEN':
+      return {...state, open: !state.open}
+    case 'SHOW_OPEN_BTTN':
+      return {...state, open: true, openBttn: true, invisible: false}
     default:
       return state
   }
@@ -18,8 +20,9 @@ const placeReducer = (state, action) => {
 const MapProvider = ({children}) => {
   const [place, dispatchPlace] = useReducer(placeReducer, {
     details: {},
-    visible: false,
-    collapse: false,
+    invisible: false,
+    open: false,
+    openBttn: false,
   })
 
   return (
@@ -31,4 +34,3 @@ const MapProvider = ({children}) => {
 
 export const useMapContext = () => useContext(MapContext)
 export default MapProvider
-

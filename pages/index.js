@@ -14,10 +14,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <TestProvider>
-        <Test />
-      </TestProvider>
-      {/*<Main />*/}
+      <Main />
       {/*
       <Footer />
       */}

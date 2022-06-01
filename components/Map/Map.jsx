@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
+import {useSpring, animated} from 'react-spring';
 import {GoogleMap, useJsApiLoader, useGoogleMap} from '@react-google-maps/api';
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
@@ -10,10 +11,25 @@ import {useMapContext} from '../../context/MapProvider';
 
 import {Button} from '../Elements';
 
+const OpenBttn = styled(Button)(() => [
+  tw`absolute top-1/2 left-[30%] z-[1]`,
+  tw`rounded-sm`,
+  css`
+    transform: translate(0, -50%);
+  `
+])
+const HideBttn = styled(Button)(() => [
+  tw`absolute top-3 left-[calc(35% - 12px)] z-[2]`,
+  css`
+    transform: translate(-100%);
+  `,
+])
+
 const Container = styled.div(() => [
   tw`text-left`,
   tw`relative`,
-  tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px] transition-all`,
+  tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px]`,
+
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
     &:hover {
@@ -21,9 +37,15 @@ const Container = styled.div(() => [
     }
   `,
 ])
+const GoogleMapContainer = styled(animated.div)(() => [
+  tw`w-full h-full`,
+  tw`absolute top-0 left-0`,
+  tw`inline-block`,
+])
 const CollapseBttn = styled(Button)(() => [
   tw`absolute top-1/2 left-[30%] z-[1]`,
   tw`rounded-sm`,
+
   css`
     transform: translate(0, -50%);
   `
@@ -64,28 +86,46 @@ const Map = ({userLocation}) => {
   });
   const {place, dispatchPlace} = useMapContext();
 
+  const mapSpring = useSpring({
+    left: place.open ? '35%' : '0',
+    width: place.open ? '65%' : '100%',
+  })
+
   const renderMap = () => {
     return (
       <Container>
-        <PlaceDetails collapse={place.collapse} />
-        <CollapseBttn type='icon'
-          onClick={() => dispatchPlace({type: 'TOGGLE_COLLAPSE'})}>
-          <MdArrowLeft />
-        </CollapseBttn>
-        <GoogleMap
-          zoom={14}
-          center={BUSINESS_LOCATION}
-          mapContainerStyle={{
-            height: '100%',
-            width: `${place.collapse ? '100%' : '65%'}`,
-          }}
-        >
-          <Route
-            userLocation={userLocation}
-          />
+        <PlaceDetails />
 
-          <DetailsGetter dispatch={dispatchPlace} />
-        </GoogleMap>
+        {/* Details buttons */}
+        {place.open && !place.invisible && (
+          <HideBttn type='icon'
+            onClick={() => dispatchPlace({type: 'HIDE'})}>
+            <MdArrowLeft />
+          </HideBttn>
+        )}
+        {place.open &&
+          <OpenBttn type='icon'
+            onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
+            <MdArrowLeft />
+          </OpenBttn>
+        }
+
+        <GoogleMapContainer style={mapSpring}>
+          <GoogleMap
+            zoom={14}
+            center={BUSINESS_LOCATION}
+            mapContainerStyle={{
+              height: '100%',
+              width: '100%',
+            }}
+          >
+            <Route
+              userLocation={userLocation}
+            />
+
+            <DetailsGetter dispatch={dispatchPlace} />
+          </GoogleMap>
+        </GoogleMapContainer>
       </Container>
     )
   }
