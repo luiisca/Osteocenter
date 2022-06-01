@@ -1,7 +1,7 @@
 import tw, {css, styled} from 'twin.macro';
-import StyledLink from './BaseStyle/StyledLink';
+import {BaseLink} from './BaseStyle';
 
-const Button = styled(StyledLink)`
+const Button = styled(BaseLink)`
   &:link, &:visited {
     ${tw`px-6 py-3`}
     ${tw`rounded-[9px]`}

@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 
-const StyledList = styled.ul`
+const BaseList= styled.ul`
   ${tw`list-none`}
 `
-export default StyledList
+export default BaseList 

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 import tw, {css, styled} from 'twin.macro';
-import StyledLink from '../BaseStyle/StyledLink';
+import {BaseLink} from '../BaseStyle';
 
-const StyledNavLink = styled(StyledLink)(props => [
+const StyledNavLink = styled(BaseLink)(props => [
   tw`text-lg font-medium`,
 ])
 

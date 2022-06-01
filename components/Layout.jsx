@@ -1,9 +1,10 @@
 import Head from 'next/head';
-import Button from './Button';
-import Nav from './Nav';
 import Script from 'next/script';
 
+import {Nav, Heading} from '../components';
+
 export const siteTitle = 'Osteocenter';
+
 const Layout = ({children}) => {
   return (
     <div>
@@ -18,6 +19,10 @@ const Layout = ({children}) => {
       </Head>
       <main>
         <Nav />
+        <Heading as='span' subHeading>Hello World!</Heading>
+        <Heading primary>Hello World!</Heading>
+        <Heading as='h2' secondary>Hello World!</Heading>
+        <Heading as='h3' tertiary>Hello World!</Heading>
 
         {/*{children} */}
       </main>
