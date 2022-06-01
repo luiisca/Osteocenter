@@ -1,7 +1,8 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {useSpring, animated} from 'react-spring';
+import {useSpring, animated, config} from 'react-spring';
 import {GoogleMap, useJsApiLoader, useGoogleMap, Marker} from '@react-google-maps/api';
+
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
 import MarkerContainer from './MarkerContainer';
@@ -12,14 +13,6 @@ import {useMapContext} from '../../context/MapProvider';
 
 import {Button} from '../Elements';
 
-const OpenBttn = styled(Button)(() => [
-  tw`w-[25px]`,
-  tw`absolute top-1/2 left-[35%] z-[1]`,
-  tw`rounded-sm`,
-  css`
-    transform: translate(0, -50%);
-  `
-])
 const HideBttn = styled(Button)(() => [
   tw`absolute top-3 left-[calc(35% - 12px)] z-[2]`,
   css`
@@ -89,8 +82,11 @@ const Map = ({userLocation}) => {
   const {place, dispatchPlace} = useMapContext();
 
   const mapSpring = useSpring({
-    left: place.open ? '35%' : '0',
-    width: place.open ? '65%' : '100%',
+    to: {
+      left: place.open ? '35%' : '0',
+      width: place.open ? '65%' : '100%',
+    },
+    config: config.default
   })
 
   const renderMap = () => {
@@ -105,12 +101,6 @@ const Map = ({userLocation}) => {
             <MdArrowLeft />
           </HideBttn>
         )}
-        {place.openBttn &&
-          <OpenBttn type='icon'
-            onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
-            <MdArrowLeft />
-          </OpenBttn>
-        }
 
         <GoogleMapContainer style={mapSpring}>
           <GoogleMap

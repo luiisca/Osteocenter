@@ -1,5 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
 import {BaseLink} from '../../BaseStyle';
+import {useSpring, animated} from 'react-spring';
 
 const Text = styled(BaseLink)(props => [
   css`
@@ -22,7 +23,7 @@ const Text = styled(BaseLink)(props => [
     }
   `,
 ])
-const Icon = styled.button(props => [
+const Icon = styled(animated.button)(props => [
   tw`flex items-center justify-center transition-all`,
   tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
   css`
