@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {Fragment, useRef} from 'react';
+import {Fragment} from 'react';
 import tw, {css, styled} from 'twin.macro';
 import {animated, useSpring, config} from 'react-spring';
 
@@ -8,11 +8,10 @@ import {BsClock} from 'react-icons/bs';
 import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
 import {useMapContext} from '../../../context/MapProvider';
+
 import Photos from './Photos';
 import Reviews from './Reviews';
 import {Button} from '../../Elements';
-
-
 import {Title, Rating, Separator} from './Elements';
 
 const Container = styled(animated.div)(() => [
@@ -55,6 +54,7 @@ const Flex = styled.div((props) => [
 
 const PlaceDetails = () => {
   const {map, dispatchMap} = useMapContext();
+  console.log(map);
 
   const detailsSpring = useSpring({
     to: {
@@ -70,45 +70,47 @@ const PlaceDetails = () => {
     config: config.default
   })
 
-  if (Object.keys(map.placeDetails).length > 0) {
+  const loader = ({ src, quality }) => {
+    return `${src}&q=${quality || 75}`
+  }
+
+  if (Object.keys(map.details).length > 0) {
     return (
       <Fragment>
         <Container style={detailsSpring}>
           <ImgWrap>
             <Image
-              src={map.placeDetails.photos[0].getUrl()}
-              alt={map.placeDetails.name}
+              loader={loader}
+              src={map.details.photos[0].getUrl()}
+              alt={map.details.name}
               layout='fill'
               objectFit='cover'
             />
           </ImgWrap>
           <ContentWrap>
-            <Title main>{map.placeDetails.name}</Title>
-            <Rating score={map.placeDetails.rating} qtt={map.placeDetails.user_ratings_total} />
+            <Title main>{map.details.name}</Title>
+            <Rating score={map.details.rating} qtt={map.details.user_ratings_total} />
           </ContentWrap>
-
 
           <ContentWrap>
             <Separator tw='mb-4' />
             <Flex icon tw='mb-3'>
               <GoLocation />
-              <p>{map.placeDetails.vicinity}</p>
+              <p>{map.details.vicinity}</p>
             </Flex>
             <Flex icon>
               <BsClock />
-              <p>{map.placeDetails.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
+              <p>{map.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
             </Flex>
             <Separator tw='mt-4' />
           </ContentWrap>
 
-
           <ContentWrap>
-            <Photos imgs={map.placeDetails.photos.slice(1)} />
+            <Photos imgs={map.details.photos.slice(1)} />
           </ContentWrap>
           <ContentWrap>
-            <Reviews reviews={map.placeDetails.reviews} />
+            <Reviews reviews={map.details.reviews} />
           </ContentWrap>
-          {console.log('PlaceDetails/>', place)}
         </Container>
 
         {map.openBttn &&

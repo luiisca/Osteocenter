@@ -49,6 +49,10 @@ const Photos = ({imgs}) => {
   const [page, dispatch] = useReducer(pagesReducer, 0)
   const [showCarBttns, setShowCarBttns] = useState(false)
 
+  const loader = ({src, quality}) => {
+    return `${src}&q=${quality || 75}`
+  }
+
   return (
     <Container>
       <Title>Photos</Title>
@@ -65,7 +69,9 @@ const Photos = ({imgs}) => {
           {imgs.map((img, i) => (
             <ImgWrap key={i}>
               <Image
+                loader={loader}
                 src={img.getUrl()}
+                alt="Zona cercana al 'Faro La Marina'"
                 layout='responsive'
                 objectFit='cover'
                 width='1'

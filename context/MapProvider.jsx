@@ -21,7 +21,7 @@ const placeReducer = (state, action) => {
 
 const MapProvider = ({children}) => {
   const [map, dispatchMap] = useReducer(placeReducer, {
-    placeDetails: {},
+    details: {},
     invisible: false,
     open: false,
     openBttn: false,

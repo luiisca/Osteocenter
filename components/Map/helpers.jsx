@@ -20,7 +20,7 @@ const DetailsGetter = () => {
         dispatchMap({type: 'STORE_DETAILS', details: place});
       }
     })
-  }, [])
+  }, [dispatchMap, map])
 
   return null;
 }

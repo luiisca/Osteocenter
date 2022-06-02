@@ -1,5 +1,5 @@
 import {useSpring, config} from 'react-spring';
-import {GoogleMap, useJsApiLoader, useGoogleMap} from '@react-google-maps/api';
+import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
 import {MdClose} from 'react-icons/md';
 import {RiFullscreenExitFill, RiFullscreenFill} from 'react-icons/ri';
