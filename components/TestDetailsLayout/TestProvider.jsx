@@ -18,7 +18,7 @@ const placeReducer = (state, action) => {
 }
 
 const TestProvider = ({children}) => {
-  const [place, dispatchPlace] = useReducer(placeReducer, {
+  const [place, dispatchMap] = useReducer(placeReducer, {
     details: {},
     invisible: false,
     open: false,
@@ -26,7 +26,7 @@ const TestProvider = ({children}) => {
   })
 
   return (
-    <TestContext.Provider value={{place, dispatchPlace}}>
+    <TestContext.Provider value={{place, dispatchMap}}>
       {children}
     </TestContext.Provider>
   )

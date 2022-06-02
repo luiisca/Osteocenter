@@ -1,9 +1,9 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import tw, {css, styled} from 'twin.macro';
-import {useSpring, animated, config} from 'react-spring';
-import {GoogleMap, useJsApiLoader, useGoogleMap, Marker} from '@react-google-maps/api';
+import {useSpring, animated, config} from 'react-spring'; import {GoogleMap, useJsApiLoader, useGoogleMap, Marker} from '@react-google-maps/api';
 
-import {MdArrowLeft, MdArrowRight, MdClose} from 'react-icons/md';
+import {MdClose} from 'react-icons/md';
+import {RiFullscreenExitFill, RiFullscreenFill} from 'react-icons/ri';
 
 import MarkerContainer from './MarkerContainer';
 import Route from './Route';
@@ -19,22 +19,33 @@ const HideBttn = styled(Button)(() => [
   tw`text-lg`,
 ])
 
-const Container = styled.div(() => [
+const Container = styled.div(({mapFullscreen}) => [
   tw`text-left`,
-  tw`relative`,
-  tw`overflow-hidden my-0 mx-auto rounded-2xl w-[900px] h-[500px]`,
-
+  tw`relative transition-all`,
+  tw`overflow-hidden mx-auto my-0 rounded-2xl w-[900px] h-[500px]`,
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
     &:hover {
       box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
     }
+    transform: ${mapFullscreen ? 'scale(1.7)' : 'scale(1)'};
   `,
 ])
 const GoogleMapContainer = styled(animated.div)(() => [
   tw`w-full h-full`,
   tw`absolute top-0 left-0`,
   tw`inline-block`,
+])
+const FullscreenBttn = styled.div(({mapFullscreen}) => [
+  tw`w-10 h-10 bg-white`,
+  tw`absolute z-10 top-2 right-2`,
+  tw`flex items-center justify-center`,
+  tw`text-xl text-accent-555 hover:text-accent-333`,
+  tw`rounded-[2px] cursor-pointer`,
+  css`
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    transform: ${mapFullscreen ? 'scale(0.7)' : 'scale(1)'};
+  `,
 ])
 
 const Spinner = () => {
@@ -69,30 +80,31 @@ const Map = ({userLocation}) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries: LIBRARIES,
   });
-  const {place, dispatchPlace} = useMapContext();
+  const {map, dispatchMap} = useMapContext();
 
   const mapSpring = useSpring({
     to: {
-      left: place.open ? '35%' : '0%',
-      width: place.open ? '65%' : '100%',
+      left: map.open ? '35%' : '0%',
+      width: map.open ? '65%' : '100%',
+      overflow: 'hidden',
     },
     config: config.default
   })
   const hideBttnSpring = useSpring({
     to: {
-      left: place.open ? '30%' : '-5%',
-      opacity: place.open ? '1' : '0',
+      left: map.open ? '30%' : '-5%',
+      opacity: map.open ? '1' : '0',
     },
     config: config.default
   })
 
   const renderMap = () => {
     return (
-      <Container>
+      <Container mapFullscreen={map.fullscreen}>
         <PlaceDetails />
 
         <HideBttn type='icon' style={hideBttnSpring}
-          onClick={() => dispatchPlace({type: 'HIDE'})}>
+          onClick={() => dispatchMap({type: 'HIDE'})}>
           <MdClose />
         </HideBttn>
 
@@ -100,6 +112,10 @@ const Map = ({userLocation}) => {
           <GoogleMap
             zoom={14}
             center={BUSINESS_LOCATION}
+            clickableIcons={false}
+            options={{
+              fullscreenControl: false,
+            }}
             mapContainerStyle={{
               height: '100%',
               width: '100%',
@@ -109,10 +125,13 @@ const Map = ({userLocation}) => {
             <Route
               userLocation={userLocation}
             />
-            <DetailsGetter dispatch={dispatchPlace} />
+            <DetailsGetter dispatch={dispatchMap} />
           </GoogleMap>
+          <FullscreenBttn onClick={() => dispatchMap({type: 'MAP_FULLSCREEN'})} mapFullscreen={map.fullscreen}>
+            {map.fullscreen ? <RiFullscreenExitFill /> : <RiFullscreenFill />}
+          </FullscreenBttn>
         </GoogleMapContainer>
-      </Container>
+      </Container >
     )
   }
 

@@ -12,21 +12,24 @@ const placeReducer = (state, action) => {
       return {...state, open: !state.open}
     case 'SHOW_OPEN_BTTN':
       return {...state, open: true, openBttn: true, invisible: false}
+    case 'MAP_FULLSCREEN':
+      return {...state, fullscreen: !state.fullscreen}
     default:
       return state
   }
 }
 
 const MapProvider = ({children}) => {
-  const [place, dispatchPlace] = useReducer(placeReducer, {
-    details: {},
+  const [map, dispatchMap] = useReducer(placeReducer, {
+    placeDetails: {},
     invisible: false,
     open: false,
     openBttn: false,
+    fullscreen: false,
   })
 
   return (
-    <MapContext.Provider value={{place, dispatchPlace}}>
+    <MapContext.Provider value={{map, dispatchMap}}>
       {children}
     </MapContext.Provider>
   )

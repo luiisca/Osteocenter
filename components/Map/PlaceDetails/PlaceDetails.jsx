@@ -54,37 +54,37 @@ const Flex = styled.div((props) => [
 ])
 
 const PlaceDetails = () => {
-  const {place, dispatchPlace} = useMapContext();
+  const {map, dispatchMap} = useMapContext();
 
   const detailsSpring = useSpring({
     to: {
-      opacity: place.invisible && 0,
-      transform: place.open ? 'translate(0%)' : 'translate(-100%)',
+      opacity: map.invisible && 0,
+      transform: map.open ? 'translate(0%)' : 'translate(-100%)',
     },
     config: config.default
   })
   const openBttnSpring = useSpring({
     to: {
-      left: place.open ? '35%' : '0%',
+      left: map.open ? '35%' : '0%',
     },
     config: config.default
   })
 
-  if (Object.keys(place.details).length > 0) {
+  if (Object.keys(map.placeDetails).length > 0) {
     return (
       <Fragment>
         <Container style={detailsSpring}>
           <ImgWrap>
             <Image
-              src={place.details.photos[0].getUrl()}
-              alt={place.details.name}
+              src={map.placeDetails.photos[0].getUrl()}
+              alt={map.placeDetails.name}
               layout='fill'
               objectFit='cover'
             />
           </ImgWrap>
           <ContentWrap>
-            <Title main>{place.details.name}</Title>
-            <Rating score={place.details.rating} qtt={place.details.user_ratings_total} />
+            <Title main>{map.placeDetails.name}</Title>
+            <Rating score={map.placeDetails.rating} qtt={map.placeDetails.user_ratings_total} />
           </ContentWrap>
 
 
@@ -92,30 +92,30 @@ const PlaceDetails = () => {
             <Separator tw='mb-4' />
             <Flex icon tw='mb-3'>
               <GoLocation />
-              <p>{place.details.vicinity}</p>
+              <p>{map.placeDetails.vicinity}</p>
             </Flex>
             <Flex icon>
               <BsClock />
-              <p>{place.details.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
+              <p>{map.placeDetails.opening_hours.isOpen() ? 'Abierto' : 'Cerrado'}</p>
             </Flex>
             <Separator tw='mt-4' />
           </ContentWrap>
 
 
           <ContentWrap>
-            <Photos imgs={place.details.photos.slice(1)} />
+            <Photos imgs={map.placeDetails.photos.slice(1)} />
           </ContentWrap>
           <ContentWrap>
-            <Reviews reviews={place.details.reviews} />
+            <Reviews reviews={map.placeDetails.reviews} />
           </ContentWrap>
           {console.log('PlaceDetails/>', place)}
         </Container>
 
-        {place.openBttn &&
+        {map.openBttn &&
           <OpenBttnContainer style={openBttnSpring}
-            onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
+            onClick={() => dispatchMap({type: 'TOGGLE_OPEN'})}>
             <OpenBttn type='icon'>
-              {place.open ? <MdArrowLeft /> : <MdArrowRight />}
+              {map.open ? <MdArrowLeft /> : <MdArrowRight />}
             </OpenBttn>
           </OpenBttnContainer>
         }

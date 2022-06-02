@@ -9,12 +9,12 @@ const onMarkerClick = (dispatch) => {
 }
 
 const MarkerContainer = () => {
-  const {dispatchPlace} = useMapContext();
+  const {dispatchMap} = useMapContext();
 
   return (
     <div>
       <Marker
-        onClick={() => onMarkerClick(dispatchPlace)}
+        onClick={() => onMarkerClick(dispatchMap)}
         position={BUSINESS_LOCATION} />
     </div>
   )

@@ -41,14 +41,14 @@ const Maps = styled(animated.div)(() => [
 
 
 const Test = () => {
-  const {place, dispatchPlace} = useTestContext();
+  const {place, dispatchMap} = useTestContext();
   const detailsSpring = useSpring({
-    opacity: place.invisible && 0,
-    transform: place.open ? 'translate(0%)' : 'translate(-100%)',
+    opacity: map.invisible && 0,
+    transform: map.open ? 'translate(0%)' : 'translate(-100%)',
   })
   const mapSpring = useSpring({
-    left: place.open ? '35%' : '0',
-    width: place.open ? '65%' : '100%',
+    left: map.open ? '35%' : '0',
+    width: map.open ? '65%' : '100%',
   })
 
   return (
@@ -56,24 +56,24 @@ const Test = () => {
       <Details style={detailsSpring}>
         Details
       </Details>
-      {place.open && !place.invisible && (
+      {map.open && !map.invisible && (
         <HideBttn type='icon'
-          onClick={() => dispatchPlace({type: 'HIDE'})}>
+          onClick={() => dispatchMap({type: 'HIDE'})}>
           <MdArrowLeft />
         </HideBttn>
       )}
-      {place.open &&
+      {map.open &&
         <OpenBttn type='icon'
-          onClick={() => dispatchPlace({type: 'TOGGLE_OPEN'})}>
+          onClick={() => dispatchMap({type: 'TOGGLE_OPEN'})}>
           <MdArrowLeft />
         </OpenBttn>
       }
       <Maps
         style={mapSpring}
-        onClick={() => dispatchPlace({type: 'SHOW_OPEN_BTTN'})}>
-        <p>Open: {place.open ? 'true' : 'false'}</p>
-        <p>Invisible: {place.invisible ? 'true' : 'false'}</p>
-        <p>Show open bttn: {place.openBttn ? 'true' : 'false'}</p>
+        onClick={() => dispatchMap({type: 'SHOW_OPEN_BTTN'})}>
+        <p>Open: {map.open ? 'true' : 'false'}</p>
+        <p>Invisible: {map.invisible ? 'true' : 'false'}</p>
+        <p>Show open bttn: {map.openBttn ? 'true' : 'false'}</p>
         Maps
       </Maps>
     </Container>
