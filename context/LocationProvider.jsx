@@ -15,7 +15,7 @@ const locationReducer = (state, action) => {
 const LocationProvider = ({children}) => {
   const [location, dispatchLocation] = useReducer(locationReducer, {
     user: null,
-    routeActive: false,
+    routeActive: true,
   })
 
   return (
