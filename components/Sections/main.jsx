@@ -7,6 +7,8 @@ import Steps from '../Steps';
 import Testimonials from '../Testimonials';
 import Location from '../Location';
 
+import LocationProvider from '../../context/LocationProvider';
+
 const Section = styled.section(props => [
   tw`py-24`,
   props.hero && tw`pt-12 bg-primary-tint-3`,
@@ -33,7 +35,9 @@ const Main = () => {
         <Testimonials />
       </Section>
       <Section>
-        <Location />
+        <LocationProvider>
+          <Location />
+        </LocationProvider>
       </Section>
     </Fragment>
   )

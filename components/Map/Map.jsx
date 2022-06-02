@@ -75,7 +75,7 @@ const DetailsGetter = ({dispatch}) => {
   return null;
 }
 
-const Map = ({userLocation}) => {
+const Map = () => {
   const {isLoaded, loadError} = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries: LIBRARIES,
@@ -122,9 +122,7 @@ const Map = ({userLocation}) => {
             }}
           >
             <MarkerContainer />
-            <Route
-              userLocation={userLocation}
-            />
+            <Route />
             <DetailsGetter dispatch={dispatchMap} />
           </GoogleMap>
           <FullscreenBttn onClick={() => dispatchMap({type: 'MAP_FULLSCREEN'})} mapFullscreen={map.fullscreen}>

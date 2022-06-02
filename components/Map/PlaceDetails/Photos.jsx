@@ -62,8 +62,8 @@ const Photos = ({imgs}) => {
             <BsArrowLeft />
           </ArrowButton>}
         <Carousel crrPage={page}>
-          {imgs.map((img) => (
-            <ImgWrap>
+          {imgs.map((img, i) => (
+            <ImgWrap key={i}>
               <Image
                 src={img.getUrl()}
                 layout='responsive'

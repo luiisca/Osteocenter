@@ -3,9 +3,12 @@ import tw, {css, styled} from 'twin.macro';
 import {Marker, useGoogleMap} from '@react-google-maps/api';
 import {BUSINESS_LOCATION} from '../../static/js/constants';
 
+import {useLocationContext} from '../../context/LocationProvider';
 import MarkerContainer from './MarkerContainer';
 
-const Route = ({userLocation}) => {
+const Route = () => {
+  const {location} = useLocationContext();
+
   const map = useGoogleMap();
   const ref = useRef({
     directionsService: null,
@@ -17,13 +20,14 @@ const Route = ({userLocation}) => {
     ref.current.directionsRenderer?.setDirections({routes: []});
   }
 
-  if (userLocation) {
+  if (location.user && location.routeActive) {
+    console.log('ROUTE />', location.user, location.routeActive)
     ref.current.directionsService = new google.maps.DirectionsService();
     ref.current.directionsRenderer = new google.maps.DirectionsRenderer();
     ref.current.directionsRenderer.setMap(map);
 
     const request = {
-      origin: userLocation,
+      origin: location.user,
       destination: BUSINESS_LOCATION,
       travelMode: 'DRIVING',
     }
@@ -35,6 +39,7 @@ const Route = ({userLocation}) => {
     })
   } else {
     removeDirections();
+    console.log(location.user, location.routeActive);
     return (
       <MarkerContainer />
     )
