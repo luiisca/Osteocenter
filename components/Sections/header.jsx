@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 import tw, {css, styled} from 'twin.macro';
 import Nav from '../Nav';
-import {BaseLink} from '../BaseStyle';
 
 const Container = tw.header`flex justify-between items-center bg-primary-tint-3 h-24 px-12`
 const StyleImgContainer = tw.a`block relative min-w-[200px] h-full`

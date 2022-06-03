@@ -2,6 +2,7 @@ import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
 
 import {Title, Separator} from './Elements';
+import Stars from './Elements/Stars';
 
 const Review = tw.div`py-4`
 const Author = styled.div(() => [
@@ -19,7 +20,7 @@ const Reviews = ({reviews}) => {
       {reviews.map((review, i) => (
         <>
           <Review>
-            <Author>
+            <Author tw='mb-3'>
               <ImgWrap>
                 <Image
                   src={review.profile_photo_url}
@@ -33,7 +34,7 @@ const Reviews = ({reviews}) => {
               <p>{review.author_name}</p>
             </Author>
             <Rating>
-              <span>stars</span>
+              <Stars score={review.rating} />
               <span>{review.relative_time_description}</span>
             </Rating>
             <Content>{review.text}</Content>
