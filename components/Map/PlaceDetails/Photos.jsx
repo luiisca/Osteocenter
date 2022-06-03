@@ -50,7 +50,7 @@ const Photos = ({imgs}) => {
   const [showCarBttns, setShowCarBttns] = useState(false)
 
   const loader = ({src, quality}) => {
-    return `${src}&q=${quality || 75}`
+    return `${src}&q=${quality || 25}`
   }
 
   return (
@@ -79,7 +79,7 @@ const Photos = ({imgs}) => {
             </ImgWrap>
           ))}
         </Carousel>
-        {page != (imgs.length + 1) &&
+        {page != (imgs.length - 1) &&
           <ArrowButton type='icon' arrow right
             onClick={() => dispatch({type: 'NEXT_PAGE'})}>
             <BsArrowRight />
