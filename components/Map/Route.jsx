@@ -7,7 +7,7 @@ import {useLocationContext} from '../../context/LocationProvider';
 import MarkerContainer from './MarkerContainer';
 
 const Route = () => {
-  const {location} = useLocationContext();
+  const {location, dispatchLocation} = useLocationContext();
 
   const map = useGoogleMap();
   const ref = useRef({
@@ -18,12 +18,16 @@ const Route = () => {
   const removeDirections = () => {
     ref.current.directionsRenderer?.setMap(null);
     ref.current.directionsRenderer?.setDirections({routes: []});
+    console.log('removeDirections', ref.current)
   }
 
   if (location.user && location.routeActive) {
-    console.log('ROUTE />', location.user, location.routeActive)
     ref.current.directionsService = new google.maps.DirectionsService();
-    ref.current.directionsRenderer = new google.maps.DirectionsRenderer();
+    const rendererOptions = {
+      map: map,
+      suppressMarkers: true,
+    }
+    ref.current.directionsRenderer = new google.maps.DirectionsRenderer(rendererOptions);
     ref.current.directionsRenderer.setMap(map);
 
     const request = {
@@ -37,13 +41,20 @@ const Route = () => {
         ref.current.directionsRenderer.setDirections(result);
       }
     })
-  } else {
-    removeDirections();
-    console.log(location.user, location.routeActive);
     return (
-      <MarkerContainer />
+      <>
+        <MarkerContainer position={location.user} userLocation />
+        <MarkerContainer position={BUSINESS_LOCATION} />
+      </>
+    )
+  } else {
+    console.log('ROUTE REMOVED')
+    removeDirections();
+
+    return (
+      <MarkerContainer position={BUSINESS_LOCATION} />
     )
   }
 }
 
-export default Route
+export default React.memo(Route)

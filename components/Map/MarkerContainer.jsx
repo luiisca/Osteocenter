@@ -8,14 +8,14 @@ const onMarkerClick = (dispatch) => {
   dispatch({type: 'SHOW_OPEN_BTTN'})
 }
 
-const MarkerContainer = () => {
+const MarkerContainer = ({position, userLocation}) => {
   const {dispatchMap} = useMapContext();
 
   return (
     <div>
       <Marker
-        onClick={() => onMarkerClick(dispatchMap)}
-        position={BUSINESS_LOCATION} />
+      onClick={userLocation ? () => {} : () => onMarkerClick(dispatchMap)}
+        position={position} />
     </div>
   )
 }
