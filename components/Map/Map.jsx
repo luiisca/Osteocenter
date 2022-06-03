@@ -50,7 +50,7 @@ const Map = () => {
 
         <GoogleMapContainer style={mapSpring}>
           <GoogleMap
-            zoom={14}
+            zoom={16}
             center={BUSINESS_LOCATION}
             clickableIcons={false}
             options={{
@@ -87,4 +87,3 @@ const Map = () => {
 }
 
 export default Map
-

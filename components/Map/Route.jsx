@@ -7,7 +7,7 @@ import {useLocationContext} from '../../context/LocationProvider';
 import MarkerContainer from './MarkerContainer';
 
 const Route = () => {
-  const {location, dispatchLocation} = useLocationContext();
+  const {location} = useLocationContext();
 
   const map = useGoogleMap();
   const ref = useRef({
@@ -19,6 +19,10 @@ const Route = () => {
     ref.current.directionsRenderer?.setMap(null);
     ref.current.directionsRenderer?.setDirections({routes: []});
     console.log('removeDirections', ref.current)
+  }
+  const centerBusiness = () => {
+    map.setCenter(BUSINESS_LOCATION)
+    map.setZoom(16)
   }
 
   if (location.user && location.routeActive) {
@@ -50,6 +54,7 @@ const Route = () => {
   } else {
     console.log('ROUTE REMOVED')
     removeDirections();
+    centerBusiness();
 
     return (
       <MarkerContainer position={BUSINESS_LOCATION} />

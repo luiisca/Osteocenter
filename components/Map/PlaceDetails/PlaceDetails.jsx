@@ -25,7 +25,7 @@ const Container = styled(animated.div)(() => [
 const OpenBttnContainer = styled(animated.div)(() => [
   tw`w-[40px] h-[80px]`,
   tw`flex items-center justify-items-start`,
-  tw`absolute top-1/2 left-[35%] z-[1]`,
+  tw`absolute top-1/2 left-[35%] z-20`,
   tw`hover:cursor-pointer`,
 
   css`
@@ -70,7 +70,7 @@ const PlaceDetails = () => {
     config: config.default
   })
 
-  const loader = ({ src, quality }) => {
+  const loader = ({src, quality}) => {
     return `${src}&q=${quality || 75}`
   }
 
