@@ -1,6 +1,5 @@
 import tw, {css, styled} from 'twin.macro';
 import {Marker, useGoogleMap} from '@react-google-maps/api';
-import {BUSINESS_LOCATION} from '../../static/js/constants';
 
 import {useMapContext} from '../../context/MapProvider';
 

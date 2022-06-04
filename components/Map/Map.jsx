@@ -1,3 +1,4 @@
+import {useRef} from 'react';
 import {useSpring, config} from 'react-spring';
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
@@ -12,8 +13,8 @@ import Loading from './Loading';
 import MarkerContainer from './MarkerContainer';
 import Route from './Route';
 import PlaceDetails from './PlaceDetails';
+import ResizeStreetView from './ResizeStreetView';
 import {Container, HideBttn, GoogleMapContainer, FullscreenBttn} from './styledComponents';
-
 
 const Map = () => {
   const {isLoaded, loadError} = useJsApiLoader({
@@ -21,6 +22,7 @@ const Map = () => {
     libraries: LIBRARIES,
   })
   const {map, dispatchMap} = useMapContext()
+  const mapContainerRef = useRef()
 
   const mapSpring = useSpring({
     to: {
@@ -38,6 +40,7 @@ const Map = () => {
     config: config.default
   })
 
+
   const renderMap = () => {
     return (
       <Container mapFullscreen={map.fullscreen}>
@@ -48,7 +51,7 @@ const Map = () => {
           <MdClose />
         </HideBttn>
 
-        <GoogleMapContainer style={mapSpring}>
+        <GoogleMapContainer style={mapSpring} ref={mapContainerRef}>
           <GoogleMap
             zoom={16}
             center={BUSINESS_LOCATION}
@@ -61,6 +64,7 @@ const Map = () => {
               width: '100%',
             }}
           >
+            <ResizeStreetView />
             <MarkerContainer />
             <Route />
             <DetailsGetter />
