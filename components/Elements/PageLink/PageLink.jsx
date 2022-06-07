@@ -6,7 +6,15 @@ const StyledNavLink = styled(BaseLink)(props => [
   tw`text-lg font-medium`,
 ])
 
-const PageLink = ({nextLink, destination, children}) => {
+const PageLink = ({nextLink, custom, destination, children}) => {
+  if (nextLink && custom) {
+    return (
+      <Link href={destination} passHref>
+        {children}
+      </Link>
+    )
+  }
+
   return (
     nextLink ? (
       <Link href={destination} passHref>
