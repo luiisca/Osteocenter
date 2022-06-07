@@ -1,6 +1,7 @@
 import tw, {css, styled} from 'twin.macro';
 
 const BaseLink = styled.a(() => [
+  tw`cursor-pointer`,
   css`
     &:link, &:visited {
       ${tw`inline-block`}

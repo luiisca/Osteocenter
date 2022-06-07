@@ -7,6 +7,7 @@ import Steps from '../Steps';
 import Testimonials from '../Testimonials';
 import Location from '../Location';
 import CallToAction from '../CallToAction';
+import Articles from '../Articles';
 
 import LocationProvider from '../../context/LocationProvider';
 
@@ -43,6 +44,9 @@ const Main = () => {
       </Section>
       <Section cta>
         <CallToAction />
+      </Section>
+      <Section>
+        <Articles />
       </Section>
     </Fragment>
   )

@@ -1,6 +1,6 @@
 import tw, {css, styled} from 'twin.macro';
-import {BaseLink} from '../../BaseStyle';
 import {animated} from 'react-spring';
+import {BaseLink} from '../../BaseStyle';
 
 const Text = styled(BaseLink)(props => [
   css`
@@ -35,14 +35,15 @@ const Icon = styled(animated.button)(props => [
 ])
 
 const Button = (props => {
-  if (props.type == 'icon') {
-    return (
-      <Icon {...props}>{props.children}</Icon>
-    )
-  } else if (props.type == 'text') {
-    return (
-      <Text {...props}>{props.children}</Text>
-    )
+  switch (props.type) {
+    case 'icon':
+      return (
+        <Icon {...props}>{props.children}</Icon>
+      )
+    case 'text':
+      return (
+        <Text {...props}>{props.children}</Text>
+      )
   }
 })
 
