@@ -1,11 +1,11 @@
 import tw, {css, styled} from 'twin.macro';
 import {BaseLink} from '../../BaseStyle';
-import {useSpring, animated} from 'react-spring';
+import {animated} from 'react-spring';
 
 const Text = styled(BaseLink)(props => [
   css`
     &:link, &:visited {
-      ${tw`px-8 py-4`}
+      ${tw`px-8 py-4 bg-primary`}
       ${tw`rounded-[9px]`}
       ${tw`text-lg font-medium text-white leading-[20px]`}
       ${props.nav && tw`px-6 py-3 leading-[18px]`}

@@ -6,6 +6,7 @@ import Biography from '../Biography';
 import Steps from '../Steps';
 import Testimonials from '../Testimonials';
 import Location from '../Location';
+import CallToAction from '../CallToAction';
 
 import LocationProvider from '../../context/LocationProvider';
 
@@ -14,6 +15,7 @@ const Section = styled.section(props => [
   props.hero && tw`pt-12 bg-primary-tint-3`,
   props.valueSection && tw`text-center`,
   props.biography && tw`p-0 mx-16`,
+  props.cta && tw`p-0`,
 ])
 
 const Main = () => {
@@ -38,6 +40,9 @@ const Main = () => {
         <LocationProvider>
           <Location />
         </LocationProvider>
+      </Section>
+      <Section cta>
+        <CallToAction />
       </Section>
     </Fragment>
   )
