@@ -1,4 +1,7 @@
 import tw, {css, styled, theme} from 'twin.macro';
+import Image from 'next/image';
+import {useReducer} from 'react';
+import {useSpring, animated} from 'react-spring';
 
 import {BsArrowLeft, BsArrowRight} from 'react-icons/bs';
 
@@ -6,7 +9,10 @@ import {BaseContainer, BaseLink} from '../BaseStyle';
 import {Button, Heading, PageLink} from '../Elements';
 
 const Container = styled(BaseContainer)(() => [
-  tw``,
+  tw`flex gap-6`,
+  css`
+    height: clamp(350px, 15vh, 400px);
+  `,
 ])
 const Flex = tw.div`flex gap-3`
 const WrapLink = styled(BaseLink)(() => [
@@ -22,8 +28,60 @@ const WrapLink = styled(BaseLink)(() => [
     }
   `,
 ])
+const CarouselWrap = tw.div`overflow-hidden`
+const Carousel = styled(animated.div)(() => [
+  tw`flex w-full h-full gap-7`,
+])
+const Article = styled.div(() => [
+  tw`flex flex-col h-full min-w-[50%]`,
+  css`
+    flex-shrink: 0;
+  `,
+])
+const ImgWrap = tw.div`w-full h-full relative`
+
+const articlesOrderReducer = (state, action) => {
+  switch (action.type) {
+    case 'PREVIOUS':
+      state.articles.unshift(state.articles.pop())
+      return {...state, page: state.page - 1}
+    case 'NEXT':
+      state.articles.push(state.articles.shift())
+      return {...state, page: state.page + 1}
+    default:
+      return state
+  }
+}
+
 
 const Articles = () => {
+  const [data, dispatch] = useReducer(articlesOrderReducer, {
+    articles: [{
+      title: 'Article 1',
+      type: 'Caso de estudio',
+      picture: 'article1.jpg',
+    },
+    {
+      title: 'Article 2',
+      type: 'Tratamiento',
+      picture: 'article2.jpg',
+    },
+    {
+      title: 'Article 3',
+      type: 'Caso de estudio',
+      picture: 'article3.jpg',
+    },
+    {
+      title: 'Article 4',
+      type: 'Prevención',
+      picture: 'article4.jpg',
+    }],
+    page: 0
+  })
+  const carouselSpring = useSpring({
+    transform: `translate(${-data.page * 350}px)`
+  })
+
   return (
     <Container>
       <div>
@@ -33,14 +91,32 @@ const Articles = () => {
           <WrapLink tw='mb-5'>Ver todos</WrapLink>
         </PageLink>
         <Flex>
-          <Button type='icon'>
+          <Button type='icon' onClick={() => dispatch({type: 'PREVIOUS'})}>
             <BsArrowLeft />
           </Button>
-          <Button type='icon'>
+          <Button type='icon' onClick={() => dispatch({type: 'NEXT'})}>
             <BsArrowRight />
           </Button>
         </Flex>
       </div>
+      <CarouselWrap>
+        <Carousel style={carouselSpring}>
+          {data.articles.map((article, i) => (
+            <Article key={i}>
+              <ImgWrap tw='mb-4'>
+                <Image
+                  src={`/img/articles/${article.picture}`}
+                  alt={article.title}
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </ImgWrap>
+              <Heading subHeading as='span' tw='text-xs'>{article.type}</Heading>
+              <Heading secondary as='h2' tw='m-0 text-4xl'>{article.title}</Heading>
+            </Article>
+          ))}
+        </Carousel>
+      </CarouselWrap>
     </Container>
   )
 }

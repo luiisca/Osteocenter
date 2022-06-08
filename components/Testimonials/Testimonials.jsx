@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React,{useState, useReducer} from 'react';
+import React, {useState, useReducer} from 'react';
 import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
 import tw, {css, styled} from 'twin.macro';
