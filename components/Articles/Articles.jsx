@@ -30,10 +30,10 @@ const WrapLink = styled(BaseLink)(() => [
 ])
 const CarouselWrap = tw.div`overflow-hidden`
 const Carousel = styled(animated.div)(() => [
-  tw`flex w-full h-full gap-7`,
+  tw`flex w-full h-full`,
 ])
 const Article = styled.div(() => [
-  tw`flex flex-col h-full min-w-[50%]`,
+  tw`flex flex-col h-full min-w-[50%] pl-7`,
   css`
     flex-shrink: 0;
   `,
@@ -43,10 +43,10 @@ const ImgWrap = tw.div`w-full h-full relative`
 const articlesOrderReducer = (state, action) => {
   switch (action.type) {
     case 'PREVIOUS':
-      state.articles.unshift(state.articles.pop())
+      // state.articles.unshift(state.articles.pop())
       return {...state, page: state.page - 1}
     case 'NEXT':
-      state.articles.push(state.articles.shift())
+      // state.articles.push(state.articles.shift())
       return {...state, page: state.page + 1}
     default:
       return state
@@ -79,7 +79,7 @@ const Articles = () => {
     page: 0
   })
   const carouselSpring = useSpring({
-    transform: `translate(${-data.page * 350}px)`
+    transform: `translate(${-data.page * 50}%)`
   })
 
   return (
