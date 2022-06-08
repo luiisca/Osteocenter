@@ -26,6 +26,7 @@ const Text = styled(BaseLink)(props => [
 const Icon = styled(animated.button)(props => [
   tw`flex items-center justify-center transition-all`,
   tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
+  props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
   css`
     box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
     &:hover {

@@ -2,6 +2,7 @@ import tw, {css, styled, theme} from 'twin.macro';
 import Image from 'next/image';
 import {useReducer} from 'react';
 import {useSpring, animated} from 'react-spring';
+import {ARTICLES_PER_PAGE} from '../../static/js/constants';
 
 import {BsArrowLeft, BsArrowRight} from 'react-icons/bs';
 
@@ -91,10 +92,10 @@ const Articles = () => {
           <WrapLink tw='mb-5'>Ver todos</WrapLink>
         </PageLink>
         <Flex>
-          <Button type='icon' onClick={() => dispatch({type: 'PREVIOUS'})}>
+          <Button type='icon' inactive={data.page == 0} onClick={() => data.page == 0 || dispatch({type: 'PREVIOUS'})}>
             <BsArrowLeft />
           </Button>
-          <Button type='icon' onClick={() => dispatch({type: 'NEXT'})}>
+          <Button type='icon' inactive={data.page == data.articles.length / ARTICLES_PER_PAGE} onClick={() => data.page == data.articles.length / ARTICLES_PER_PAGE || dispatch({type: 'NEXT'})}>
             <BsArrowRight />
           </Button>
         </Flex>
