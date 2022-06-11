@@ -2,11 +2,18 @@ import Link from 'next/link';
 import tw, {css, styled} from 'twin.macro';
 import {BaseLink} from '../../BaseStyle';
 
-const StyledNavLink = styled(BaseLink)(props => [
+const StyledNavLink = styled(BaseLink)((props: {}) => [
   tw`text-lg font-medium`,
 ])
 
-const PageLink = ({nextLink, custom, destination, children}) => {
+interface Props {
+  nextLink?: boolean
+  custom?: boolean
+  destination: string
+  children: React.ReactNode
+}
+
+const PageLink = ({nextLink, custom, destination, children}: Props) => {
   if (nextLink && custom) {
     return (
       <Link href={destination} passHref>
