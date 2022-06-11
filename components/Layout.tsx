@@ -2,9 +2,13 @@ import Head from 'next/head';
 import Script from 'next/script';
 import Header from './Sections/header';
 
-export const siteTitle = 'Osteocenter';
+export const siteTitle: string = 'Osteocenter';
 
-const Layout = ({children}) => {
+interface Props {
+  children: React.ReactNode 
+}
+
+const Layout = ({children}: Props): JSX.Element => {
   return (
     <div>
       <Head>
