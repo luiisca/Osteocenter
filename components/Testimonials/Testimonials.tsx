@@ -4,12 +4,18 @@ import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
 import tw, {css, styled} from 'twin.macro';
 import {Heading, Button} from '../Elements';
-import Testimonial from './Testimonial';
+import Testimonial, {TestimonialType} from './Testimonial';
 
 const Container = tw.div`flex text-center items-center flex-col`
 const Carousel = tw.div`grid grid-cols-[1fr auto 1fr] gap-12`
 
-const pagesReducer = (state, action) => {
+const initialState: number = 1
+type ACTIONTYPE =
+  | {type: 'PREVIOUS_PAGE'}
+  | {type: 'NEXT_PAGE'};
+type Testimonials = TestimonialType[]
+
+const pagesReducer = (state: typeof initialState, action: ACTIONTYPE): typeof initialState => {
   switch (action.type) {
     case 'PREVIOUS_PAGE':
       return state - 1;
@@ -22,7 +28,7 @@ const pagesReducer = (state, action) => {
 
 const Testimonials = () => {
   const [page, dispatch] = useReducer(pagesReducer, 1)
-  const [testimonials, setTestimonials] = useState([
+  const [testimonials, setTestimonials] = useState<Testimonials>([
     {
       message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent magna magna, lacinia quis porta nec, condimentum eget quam. Etiam lorem eros, posuere sed pretium a, cursus et libero',
       author: {

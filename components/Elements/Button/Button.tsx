@@ -2,7 +2,23 @@ import tw, {css, styled} from 'twin.macro';
 import {animated} from 'react-spring';
 import {BaseLink} from '../../BaseStyle';
 
-const Text = styled(BaseLink)(props => [
+interface IconProps {
+  type: 'icon'
+  children: React.ReactNode
+  inactive: boolean
+}
+interface TextProps {
+  type: 'text'
+  children: React.ReactNode
+  nav?: boolean
+  cta?: boolean
+  hero?: boolean
+  outline?: boolean
+  arrow?: boolean
+}
+type Props = IconProps | TextProps
+
+const Text = styled(BaseLink)((props: TextProps) => [
   css`
     &:link, &:visited {
       ${tw`px-8 py-4 bg-primary`}
@@ -23,7 +39,7 @@ const Text = styled(BaseLink)(props => [
     }
   `,
 ])
-const Icon = styled(animated.button)(props => [
+const Icon = styled(animated.button)((props: IconProps) => [
   tw`flex items-center justify-center transition-all`,
   tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
   props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
@@ -35,7 +51,8 @@ const Icon = styled(animated.button)(props => [
   `
 ])
 
-const Button = (props => {
+
+const Button = ((props: Props): JSX.Element | null => {
   switch (props.type) {
     case 'icon':
       return (
@@ -45,6 +62,8 @@ const Button = (props => {
       return (
         <Text {...props}>{props.children}</Text>
       )
+    default:
+      return null
   }
 })
 

@@ -14,7 +14,21 @@ const ImgWrap = styled.span(() => [
   `,
 ])
 
-const Testimonial = ({name, message, img}) => {
+interface Author {
+  name: string
+  picture: string
+}
+export interface TestimonialType {
+  message: string
+  author: Author
+}
+interface Props {
+  name: string
+  message: string
+  img: string
+}
+
+const Testimonial = ({name, message, img}: Props):JSX.Element => {
   return (
     <div>
       <Quote>

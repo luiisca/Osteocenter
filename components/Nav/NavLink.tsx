@@ -1,12 +1,12 @@
 import {PageLink} from "../Elements"
 
-interface NavLink {
+interface Props {
   nextLink?: boolean
   destination: string
   children: React.ReactNode
 }
 
-const NavLink = ({nextLink, destination, children}: NavLink):JSX.Element => {
+const NavLink = ({nextLink, destination, children}: Props): JSX.Element => {
   return (
     <li><PageLink nextLink={nextLink} destination={destination}>{children}</PageLink></li>
   )

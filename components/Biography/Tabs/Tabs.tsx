@@ -5,7 +5,9 @@ import Education from './Education';
 import Experience from './Experience';
 
 const Container = tw.div`flex gap-24`
-const TabButton = styled.button(({active}) => [
+
+
+const TabButton = styled.button(({active}: {active: boolean}) => [
   tw`block px-5 py-8 text-base`,
   css`
     ${tw`text-[#6c6c6c]`}
@@ -18,11 +20,9 @@ const TabButton = styled.button(({active}) => [
   `
 ])
 
-const Tabs = () => {
-  const [activeBttn, setActiveBttn] = useState(1)
-  const handleToggle = (bttn) => {
-    setActiveBttn(bttn)
-  }
+const Tabs = (): JSX.Element => {
+  const [activeBttn, setActiveBttn] = useState<number>(1)
+  const handleToggle = (bttn: number): void => setActiveBttn(bttn)
 
   return (
     <Container>
