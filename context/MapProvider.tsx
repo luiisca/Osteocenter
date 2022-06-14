@@ -14,6 +14,8 @@ const placeReducer = (state, action) => {
       return {...state, open: true, openBttn: true, invisible: false}
     case 'MAP_FULLSCREEN':
       return {...state, fullscreen: !state.fullscreen}
+    case 'RESIZE':
+      return {...state, resize: true}
     default:
       return state
   }
@@ -26,6 +28,7 @@ const MapProvider = ({children}) => {
     open: false,
     openBttn: false,
     fullscreen: false,
+    resize: false,
   })
 
   return (

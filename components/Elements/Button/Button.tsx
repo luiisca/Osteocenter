@@ -51,7 +51,6 @@ const Icon = styled(animated.button)(props: IconProps => [
   `
 ])
 
-
 const Button = ((props: Props): JSX.Element | null => {
   switch (props.type) {
     case 'icon':
