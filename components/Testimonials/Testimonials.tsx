@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, {useState, useReducer} from 'react';
 import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 import {Heading, Button} from '../Elements';
 import Testimonial, {TestimonialType} from './Testimonial';
 

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 
 const Container = tw.div`w-4/5 h-full`
 const ImgWrap = styled.span(() => [

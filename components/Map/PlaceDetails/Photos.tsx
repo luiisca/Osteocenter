@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import {useReducer, useState} from 'react';
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 import {BsArrowRight, BsArrowLeft} from 'react-icons/bs';
 
 import {Button} from '../../Elements';

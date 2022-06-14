@@ -1,5 +1,5 @@
+import tw, {css, styled} from 'twin.macro'; ;
 import {useState} from 'react';
-import tw, {css, styled} from 'twin.macro';
 
 import Education from './Education';
 import Experience from './Experience';

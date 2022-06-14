@@ -9,11 +9,11 @@ export default function Home() {
     <Layout>
       <Head>
         <title>{siteTitle}</title>
-      </Head>
-      {/*
-          <Main />
-          <Footer />
-          */}
+    </Head>
+    <Main />
+    {/*
+            <Footer />
+        */}
     </Layout>
   )
 }

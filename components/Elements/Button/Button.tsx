@@ -39,7 +39,7 @@ const Text = styled(BaseLink)((props: TextProps) => [
     }
   `,
 ])
-const Icon = styled(animated.button)((props: IconProps) => [
+const Icon = styled(animated.button)(props: IconProps => [
   tw`flex items-center justify-center transition-all`,
   tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
   props.inactive && tw`cursor-not-allowed text-primary-tint-1`,

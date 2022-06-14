@@ -1,4 +1,4 @@
-import tw from 'twin.macro';
+import tw, {css, styled} from 'twin.macro';
 
 import {Button as BaseBttn} from '../Elements';
 import {FaRoute} from 'react-icons/fa';

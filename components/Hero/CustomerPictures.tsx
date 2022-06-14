@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 
 const Container = tw.div`flex items-center gap-4 mt-20`
 const Images = tw.div`flex`

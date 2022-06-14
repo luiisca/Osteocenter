@@ -1,4 +1,5 @@
-import tw, {css, styled, theme} from 'twin.macro';
+import tw, {theme} from 'twin.macro';
+
 import Image from 'next/image';
 import {useReducer} from 'react';
 import {useSpring, animated} from 'react-spring';
@@ -33,7 +34,7 @@ const CarouselWrap = tw.div`overflow-hidden`
 const Carousel = styled(animated.div)(() => [
   tw`flex w-full h-full`,
 ])
-const Article = styled.div(() => [
+const Article = styled.div((): TwStyle[] => [
   tw`flex flex-col h-full min-w-[50%] pl-7`,
   css`
     flex-shrink: 0;
@@ -41,22 +42,7 @@ const Article = styled.div(() => [
 ])
 const ImgWrap = tw.div`w-full h-full relative`
 
-const articlesOrderReducer = (state, action) => {
-  switch (action.type) {
-    case 'PREVIOUS':
-      // state.articles.unshift(state.articles.pop())
-      return {...state, page: state.page - 1}
-    case 'NEXT':
-      // state.articles.push(state.articles.shift())
-      return {...state, page: state.page + 1}
-    default:
-      return state
-  }
-}
-
-
-const Articles = () => {
-  const [data, dispatch] = useReducer(articlesOrderReducer, {
+const initialState = {
     articles: [{
       title: 'Article 1',
       type: 'Caso de estudio',
@@ -78,7 +64,25 @@ const Articles = () => {
       picture: 'article4.jpg',
     }],
     page: 0
-  })
+}
+type ACTIONTYPE = {type: 'PREVIOUS'} | {type: 'NEXT'}
+
+const articlesOrderReducer = (state: typeof initialState, action: ACTIONTYPE):typeof initialState => {
+  switch (action.type) {
+    case 'PREVIOUS':
+      // state.articles.unshift(state.articles.pop())
+      return {...state, page: state.page - 1}
+    case 'NEXT':
+      // state.articles.push(state.articles.shift())
+      return {...state, page: state.page + 1}
+    default:
+      return state
+  }
+}
+
+
+const Articles = (): JSX.Element => {
+  const [data, dispatch] = useReducer(articlesOrderReducer, initialState)
   const carouselSpring = useSpring({
     transform: `translate(${-data.page * 50}%)`
   })

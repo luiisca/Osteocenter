@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 
 import {Title, Separator} from './Elements';
 import Stars from './Elements/Stars';

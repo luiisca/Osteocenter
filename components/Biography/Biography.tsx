@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 import {BaseContainer} from '../BaseStyle';
 import {Heading} from '../Elements';
 import Tabs from './Tabs';

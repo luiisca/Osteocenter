@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro'; ;
 import Stars from './Stars';
 
 const Container = tw.div`flex items-center gap-1 `
