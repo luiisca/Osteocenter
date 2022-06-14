@@ -1,28 +1,39 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useGoogleMap} from '@react-google-maps/api';
 
-import {PLACE_ID, PLACE_FIELDS} from '../../static/js/constants';
+import {PLACE_ID, PLACE_FIELDS} from '../../static/ts/constants';
 import {useMapContext} from '../../context/MapProvider';
 
-const DetailsGetter = () => {
-  const map = useGoogleMap()
+interface Request {
+  placeId: string
+  fields: string[]
+}
+
+let map: google.maps.Map | HTMLDivElement
+let service: google.maps.places.PlacesService
+let request: Request
+
+const DetailsGetter = ():void => {
+  map = useGoogleMap() || new HTMLDivElement()
+
   const {dispatchMap} = useMapContext()
 
   useEffect(() => {
-    const service = new google.maps.places.PlacesService(map)
+    service = new google.maps.places.PlacesService(map)
 
-    const request = {
+    request = {
       placeId: PLACE_ID,
       fields: PLACE_FIELDS,
     }
-    service.getDetails(request, (place, status) => {
+    service.getDetails(request, (
+      results: google.maps.places.PlaceResult | null,
+      status: google.maps.places.PlacesServiceStatus
+    ): void => {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        dispatchMap({type: 'STORE_DETAILS', details: place});
+        dispatchMap({type: 'STORE_DETAILS', details: {}});
       }
     })
   }, [dispatchMap, map])
-
-  return null;
 }
 
 export default DetailsGetter

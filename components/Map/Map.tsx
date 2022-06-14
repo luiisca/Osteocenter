@@ -5,7 +5,7 @@ import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import {MdClose} from 'react-icons/md';
 import {RiFullscreenExitFill, RiFullscreenFill} from 'react-icons/ri';
 
-import {BUSINESS_LOCATION, LIBRARIES} from '../../static/js/constants';
+import {BUSINESS_LOCATION, LIBRARIES} from '../../static/ts/constants';
 import {useMapContext} from '../../context/MapProvider';
 import DetailsGetter from './helpers';
 
@@ -16,11 +16,12 @@ import PlaceDetails from './PlaceDetails';
 import ResizeStreetView from './ResizeStreetView';
 import {Container, HideBttn, GoogleMapContainer, FullscreenBttn} from './styledComponents';
 
-const Map = () => {
+const Map = ():JSX.Element => {
   const {isLoaded, loadError} = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
     libraries: LIBRARIES,
   })
+
   const {map, dispatchMap} = useMapContext()
   const mapContainerRef = useRef()
 
@@ -40,6 +41,7 @@ const Map = () => {
     config: config.default
   })
 
+  const business: google.maps.LatLngLiteral = {lat: -12.123305609301212, lng: -77.0401126174581};
 
   const renderMap = () => {
     return (

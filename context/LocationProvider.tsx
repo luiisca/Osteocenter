@@ -1,7 +1,16 @@
 import {useReducer, useContext, createContext} from 'react';
 
-const LocationContext = createContext();
-const locationReducer = (state, action) => {
+const LocationContext = createContext(null);
+
+const initialState = {
+  user: null,
+  routeActive: true,
+}
+type ACTIONTYPE =
+  | {type: 'USER_LOCATION', user: google.maps}
+  | {type: 'ROUTE_VISIBILITY'}
+
+const locationReducer = (state: typeof initialState, action) => {
   switch (action.type) {
     case 'USER_LOCATION':
       return {...state, user: action.user}

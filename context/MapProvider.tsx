@@ -1,8 +1,44 @@
 import {useReducer, useContext, createContext} from 'react';
 
-const MapContext = createContext();
+interface InitialState {
+  details: google.maps.places.PlaceResult | null
+  invisible: boolean
+  open: boolean
+  openBttn: boolean,
+  fullscreen: boolean,
+  resize: boolean,
+}
 
-const placeReducer = (state, action) => {
+type ACTIONTYPE =
+  | {type: 'STORE_DETAILS', details: google.maps.places.PlaceResult | null}
+| {type: 'HIDE'}
+| {type: 'TOGGLE_OPEN'}
+| {type: 'SHOW_OPEN_BTTN'}
+| {type: 'MAP_FULLSCREEN'}
+| {type: 'RESIZE'}
+
+interface Props {
+  children: React.ReactNode
+}
+
+const initialState: InitialState = {
+  details: null,
+  invisible: false,
+  open: false,
+  openBttn: false,
+  fullscreen: false,
+  resize: false,
+}
+
+const MapContext = createContext<{
+  map: InitialState
+  dispatchMap: React.Dispatch<ACTIONTYPE>
+}>({
+  map: initialState,
+  dispatchMap: () => {},
+});
+
+const placeReducer = (state: InitialState, action: ACTIONTYPE): InitialState => {
   switch (action.type) {
     case 'STORE_DETAILS':
       return {...state, details: action.details}
@@ -21,15 +57,8 @@ const placeReducer = (state, action) => {
   }
 }
 
-const MapProvider = ({children}) => {
-  const [map, dispatchMap] = useReducer(placeReducer, {
-    details: {},
-    invisible: false,
-    open: false,
-    openBttn: false,
-    fullscreen: false,
-    resize: false,
-  })
+const MapProvider = ({children}: Props) => {
+  const [map, dispatchMap] = useReducer(placeReducer, initialState)
 
   return (
     <MapContext.Provider value={{map, dispatchMap}}>
