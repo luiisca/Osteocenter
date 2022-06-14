@@ -2,9 +2,8 @@ import Head from 'next/head'
 
 import Layout, {siteTitle} from '../components/Layout';
 import Main from '../components/Sections/main';
-import Footer from '../components/Sections/footer';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <Layout>
       <Head>
