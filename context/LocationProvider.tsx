@@ -1,16 +1,34 @@
 import {useReducer, useContext, createContext} from 'react';
 
-const LocationContext = createContext(null);
+type coors = google.maps.LatLngLiteral
+
+interface InitialState {
+  user: coors | null
+  routeActive: boolean
+}
+
+type ACTIONTYPE =
+  | {type: 'USER_LOCATION', user: coors}
+  | {type: 'ROUTE_VISIBILITY'}
+
+interface Props {
+  children: React.ReactNode
+}
 
 const initialState = {
   user: null,
   routeActive: true,
 }
-type ACTIONTYPE =
-  | {type: 'USER_LOCATION', user: google.maps}
-  | {type: 'ROUTE_VISIBILITY'}
 
-const locationReducer = (state: typeof initialState, action) => {
+const LocationContext = createContext<{
+  location: InitialState
+  dispatchLocation: React.Dispatch<ACTIONTYPE>
+}>({
+  location: initialState,
+  dispatchLocation: () => {}
+})
+
+const locationReducer = (state: InitialState, action: ACTIONTYPE): InitialState => {
   switch (action.type) {
     case 'USER_LOCATION':
       return {...state, user: action.user}
@@ -21,11 +39,8 @@ const locationReducer = (state: typeof initialState, action) => {
   }
 }
 
-const LocationProvider = ({children}) => {
-  const [location, dispatchLocation] = useReducer(locationReducer, {
-    user: null,
-    routeActive: true,
-  })
+const LocationProvider = ({children}: Props): JSX.Element => {
+  const [location, dispatchLocation] = useReducer(locationReducer, initialState)
 
   return (
     <LocationContext.Provider value={{location, dispatchLocation}}>
