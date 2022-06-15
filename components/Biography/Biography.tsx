@@ -9,20 +9,20 @@ const BackColor = tw(BaseContainer)`max-w-none bg-primary-tint-2 rounded-[11px] 
 const Container = tw.div`max-w-screen-xl flex items-start gap-14 my-0 mx-auto`
 const Content = tw.div`w-full`
 const Text = tw.p`text-lg`
-const ImgWrap = styled.span(props => [
+const ImgWrap = styled.span(() => [
   tw`w-[45%]`,
   css`
     transform: rotateY(180deg);
   `
 ])
 
-const Biography = () => {
+const Biography = (): JSX.Element => {
   return (
     <BackColor>
       <Container>
         <ImgWrap>
           <Image
-            priority='true'
+            priority={true}
             src='/img/hero.png'
             alt='Doctor cirujano Ronal Cadillo'
             layout='responsive'
@@ -42,7 +42,7 @@ const Biography = () => {
           <Tabs />
         </Content>
       </Container>
-    </BackColor >
+    </BackColor>
   )
 }
 

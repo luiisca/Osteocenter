@@ -8,7 +8,7 @@ interface Props {
   subHeading?: boolean
 }
 
-const Heading = styled(BaseHeading)(({primary, secondary, tertiary, subHeading}: Props): TwStyle[] => [
+const Heading = styled(BaseHeading)(({primary, secondary, tertiary, subHeading}: Props) => [
   primary && tw`text-6xl leading-[1.1] my-0 mb-8`,
   secondary && tw`mb-8 text-5xl leading-normal`,
   tertiary && tw`text-3xl leading-[1.2] mb-8`,
