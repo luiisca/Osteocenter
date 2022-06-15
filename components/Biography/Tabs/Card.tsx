@@ -1,14 +1,21 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro'; ;
+import tw, {css, styled} from 'twin.macro';;
 
-import {Heading} from '../Elements';
-import {ImgWrap} from './style';
+import {Heading} from '../../Elements';
+import {ImgWrap} from '../style';
 
-const Text = styled.p((props) => [
+interface Props {
+  period: string
+  name: string
+  image: string
+  children: React.ReactNode
+}
+
+const Text = styled.p(() => [
   tw`text-lg font-medium leading-6`,
 ])
 
-const Card = ({period, name, image, children}) => {
+const Card = ({period, name, image, children}: Props) => {
   return (
     <div>
       <ImgWrap>
@@ -16,9 +23,10 @@ const Card = ({period, name, image, children}) => {
           src={`/img/icons/${image}.svg`}
           alt={`${name} icon`}
           layout='responsive'
-          size='10vw'
+          sizes='10vw'
           width='1'
-          height='1' />
+          height='1'
+        />
       </ImgWrap>
       <Heading subHeading>{period}</Heading>
       <Text tw='mb-2'>{name}</Text>
