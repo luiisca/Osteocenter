@@ -1,8 +1,8 @@
 import tw, {css, styled} from 'twin.macro';
-import Card from '../Card';
+import Card from './Card';
 import {Container} from '../style';
 
-const Education = () => {
+const Education = (): JSX.Element => {
   return (
     <Container>
       <Card image='hospital' period='1997 - 2003' name='Licenciatura en Medicina y Cirugía' />

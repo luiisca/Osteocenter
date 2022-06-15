@@ -8,14 +8,14 @@ interface Props {
   period: string
   name: string
   image: string
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const Text = styled.p(() => [
   tw`text-lg font-medium leading-6`,
 ])
 
-const Card = ({period, name, image, children}: Props) => {
+const Card = ({period, name, image, children}: Props): JSX.Element => {
   return (
     <div>
       <ImgWrap>

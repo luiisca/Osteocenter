@@ -1,11 +1,10 @@
-import tw, {css, styled} from 'twin.macro'; ;
+import tw, {css, styled} from 'twin.macro';;
 import {useState} from 'react';
 
 import Education from './Education';
 import Experience from './Experience';
 
 const Container = tw.div`flex gap-24`
-
 
 const TabButton = styled.button(({active}: {active: boolean}) => [
   tw`block px-5 py-8 text-base`,

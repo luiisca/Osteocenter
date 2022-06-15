@@ -1,7 +1,7 @@
 import Card from './Card';
 import {Container} from '../style';
 
-const Experience = () => {
+const Experience = (): JSX.Element => {
   return (
     <Container>
       <Card image='hospital' period='2010 - 2013' name='Hospital San Juan de Dios'>

@@ -10,7 +10,7 @@ const Container = tw.div`max-w-screen-xl flex items-center gap-14 mx-auto`
 const Text = tw.p`text-lg max-w-[50ch]`
 const ImgWrap = tw.div`w-1/3 h-1/3`
 
-const CallToAction = () => (
+const CallToAction = (): JSX.Element => (
   <BackColor>
     <Container>
       <div>
@@ -31,7 +31,7 @@ const CallToAction = () => (
           layout='responsive'
           width='1'
           height='1'
-          size='50vw'
+          sizes='50vw'
         />
       </ImgWrap>
     </Container>
