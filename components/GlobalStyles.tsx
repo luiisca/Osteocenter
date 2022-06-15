@@ -372,7 +372,7 @@ const Global = createGlobalStyle`
   }
 `;
 
-const GlobalStyles = () => (
+const GlobalStyles = (): JSX.Element => (
   <Fragment>
     <BaseStyles />
     <Normalize />

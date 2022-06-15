@@ -1,14 +1,14 @@
-import tw, {theme} from 'twin.macro';
+import tw, {styled, css, theme} from 'twin.macro';
 
 import Image from 'next/image';
 import {useReducer} from 'react';
 import {useSpring, animated} from 'react-spring';
-import {ARTICLES_PER_PAGE} from '../../static/js/constants';
 
 import {BsArrowLeft, BsArrowRight} from 'react-icons/bs';
 
 import {BaseContainer, BaseLink} from '../BaseStyle';
 import {Button, Heading, PageLink} from '../Elements';
+import {ARTICLES_PER_PAGE} from '../../static/ts/constants';
 
 const Container = styled(BaseContainer)(() => [
   tw`flex gap-6`,
@@ -22,11 +22,11 @@ const WrapLink = styled(BaseLink)(() => [
   css`
     &:link, &:visited {
       ${tw`text-primary`}
-      border-bottom: solid 2px ${theme`colors.primary`}
+      border-bottom: solid 2px ${theme<string>`colors.primary`}
     }
     &:hover, &:active {
       ${tw`text-primary-shade-1`}
-      border-color: ${theme`colors.primary.shade-1`}
+      border-color: ${theme<string>`colors.primary.shade-1`}
     }
   `,
 ])
@@ -34,7 +34,7 @@ const CarouselWrap = tw.div`overflow-hidden`
 const Carousel = styled(animated.div)(() => [
   tw`flex w-full h-full`,
 ])
-const Article = styled.div((): TwStyle[] => [
+const Article = styled.div(() => [
   tw`flex flex-col h-full min-w-[50%] pl-7`,
   css`
     flex-shrink: 0;
