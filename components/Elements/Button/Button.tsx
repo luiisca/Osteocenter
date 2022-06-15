@@ -3,22 +3,26 @@ import {animated} from 'react-spring';
 import {BaseLink} from '../../BaseStyle';
 
 interface IconProps {
-  type: 'icon'
-  children: React.ReactNode
-  inactive: boolean
+  elType: 'icon'
+  children?: React.ReactNode
+  inactive?: boolean
+  onClick?: () => boolean | void
 }
 interface TextProps {
-  type: 'text'
-  children: React.ReactNode
+  elType: 'text'
+  children?: React.ReactNode
+  target?: string
+  href?: string
   nav?: boolean
   cta?: boolean
   hero?: boolean
   outline?: boolean
   arrow?: boolean
+  onClick?: () => boolean | void
 }
-type Props = IconProps | TextProps
+type Props = TextProps | IconProps;
 
-const Text = styled(BaseLink)((props: TextProps) => [
+const Text = styled(BaseLink)<TextProps>(props => [
   css`
     &:link, &:visited {
       ${tw`px-8 py-4 bg-primary`}
@@ -39,31 +43,28 @@ const Text = styled(BaseLink)((props: TextProps) => [
     }
   `,
 ])
-const Icon = styled(animated.button)(props: IconProps => [
-  tw`flex items-center justify-center transition-all`,
-  tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
-  props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
-  css`
-    box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
-    &:hover {
-      box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
-    }
-  `
-])
+const Icon = styled(animated.button)<IconProps>(props => [
+    tw`flex items-center justify-center transition-all`,
+    tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
+    props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
 
-const Button = ((props: Props): JSX.Element | null => {
-  switch (props.type) {
-    case 'icon':
-      return (
-        <Icon {...props}>{props.children}</Icon>
-      )
-    case 'text':
-      return (
-        <Text {...props}>{props.children}</Text>
-      )
-    default:
-      return null
+    css`
+      box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
+      &:hover {
+        box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
+      }
+    `,
+])
+const Button = ((props: Props): JSX.Element => {
+  if (props.elType === 'icon') {
+    return (
+      <Icon {...props}>{props.children}</Icon>
+    )
   }
+
+  return (
+    <Text {...props}>{props.children}</Text>
+  )
 })
 
-export default Button
+// export default Button

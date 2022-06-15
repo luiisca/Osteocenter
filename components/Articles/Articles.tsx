@@ -43,31 +43,31 @@ const Article = styled.div(() => [
 const ImgWrap = tw.div`w-full h-full relative`
 
 const initialState = {
-    articles: [{
-      title: 'Article 1',
-      type: 'Caso de estudio',
-      picture: 'article1.jpg',
-    },
-    {
-      title: 'Article 2',
-      type: 'Tratamiento',
-      picture: 'article2.jpg',
-    },
-    {
-      title: 'Article 3',
-      type: 'Caso de estudio',
-      picture: 'article3.jpg',
-    },
-    {
-      title: 'Article 4',
-      type: 'Prevención',
-      picture: 'article4.jpg',
-    }],
-    page: 0
+  articles: [{
+    title: 'Article 1',
+    type: 'Caso de estudio',
+    picture: 'article1.jpg',
+  },
+  {
+    title: 'Article 2',
+    type: 'Tratamiento',
+    picture: 'article2.jpg',
+  },
+  {
+    title: 'Article 3',
+    type: 'Caso de estudio',
+    picture: 'article3.jpg',
+  },
+  {
+    title: 'Article 4',
+    type: 'Prevención',
+    picture: 'article4.jpg',
+  }],
+  page: 0
 }
 type ACTIONTYPE = {type: 'PREVIOUS'} | {type: 'NEXT'}
 
-const articlesOrderReducer = (state: typeof initialState, action: ACTIONTYPE):typeof initialState => {
+const articlesOrderReducer = (state: typeof initialState, action: ACTIONTYPE): typeof initialState => {
   switch (action.type) {
     case 'PREVIOUS':
       // state.articles.unshift(state.articles.pop())
@@ -96,10 +96,18 @@ const Articles = (): JSX.Element => {
           <WrapLink tw='mb-5'>Ver todos</WrapLink>
         </PageLink>
         <Flex>
-          <Button type='icon' inactive={data.page == 0} onClick={() => data.page == 0 || dispatch({type: 'PREVIOUS'})}>
+          <Button
+            type='icon'
+            inactive={data.page == 0}
+            onClick={() => data.page == 0 || dispatch({type: 'PREVIOUS'})}
+          >
             <BsArrowLeft />
           </Button>
-          <Button type='icon' inactive={data.page == data.articles.length / ARTICLES_PER_PAGE} onClick={() => data.page == data.articles.length / ARTICLES_PER_PAGE || dispatch({type: 'NEXT'})}>
+          <Button
+            type='icon'
+            inactive={data.page == data.articles.length / ARTICLES_PER_PAGE}
+            onClick={() => data.page == data.articles.length / ARTICLES_PER_PAGE || dispatch({type: 'NEXT'})}
+          >
             <BsArrowRight />
           </Button>
         </Flex>
