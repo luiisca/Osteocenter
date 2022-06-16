@@ -1,46 +1,46 @@
 import Image from 'next/image';
 import tw, {css, styled} from 'twin.macro';
-import {TOTAL_STARS} from '../../../../static/js/constants';
+import {TOTAL_STARS} from '../../../../static/ts/constants';
 
 const ImgWrap = tw.div`w-4 h-4`
 const Container = tw.div`flex`
 
-const Stars = ({score}) => (
+const Stars = ({score}: {score: number}): JSX.Element => (
   <Container>
-    {[...new Array(Math.trunc(score))].map((_, i) => (
+    {[...new Array(Math.trunc(score))].map((_, i): JSX.Element => (
       <ImgWrap key={i}>
         <Image
           src='/img/stars/star_rate.png'
           alt='star rate'
           layout='responsive'
-          size='1vw'
+          sizes='1vw'
           height='1'
           width='1'
         /> </ImgWrap>
     ))}
-    {[...new Array(TOTAL_STARS - Math.trunc(score))].map((_, i) => {
-      if (`${score}`.slice(2) >= 8) {
+    {[...new Array(TOTAL_STARS - Math.trunc(score))].map((_, i): JSX.Element => {
+      if (+`${score}`.slice(2) >= 8) {
         return (
           <ImgWrap key={i}>
             <Image
               src='/img/stars/star_rate.png'
               alt='star rate'
               layout='responsive'
-              size='1vw'
+              sizes='1vw'
               height='1'
               width='1'
             />
           </ImgWrap>
         )
       }
-      if (`${score}`.slice(2) >= 3) {
+      if (+`${score}`.slice(2) >= 3) {
         return (
           <ImgWrap key={i}>
             <Image
               src='/img/stars/star_rate_half.png'
               alt='star rate half'
               layout='responsive'
-              size='1vw'
+              sizes='1vw'
               height={1}
               width={1}
             />
@@ -53,7 +53,7 @@ const Stars = ({score}) => (
             src='/img/stars/star_rate_empty.png'
             alt='star rate empty'
             layout='responsive'
-            size='1vw'
+            sizes='1vw'
             height='1'
             width='1'
           />

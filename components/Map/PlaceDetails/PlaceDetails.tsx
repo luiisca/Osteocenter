@@ -105,7 +105,7 @@ const PlaceDetails = (): JSX.Element | null => {
             <Photos imgs={map.details?.photos?.slice(1) || []} />
           </ContentWrap>
           <ContentWrap>
-            <Reviews reviews={map.details?.reviews} />
+            <Reviews reviews={map.details?.reviews || []} />
           </ContentWrap>
         </Container>
 

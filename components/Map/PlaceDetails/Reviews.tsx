@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro'; ;
+import tw, {css, styled} from 'twin.macro';
 
 import {Title, Separator} from './Elements';
 import Stars from './Elements/Stars';
@@ -13,7 +13,7 @@ const ImgWrap = tw.div`w-8 h-8`
 const Rating = tw.div`flex gap-3 text-sm`
 const Content = tw.p`mt-2 text-sm text-accent-333`
 
-const Reviews = ({reviews}) => {
+const Reviews = ({reviews}: {reviews: google.maps.places.PlaceReview[] | []}): JSX.Element => {
   return (
     <div>
       <Title>Reviews</Title>
@@ -26,7 +26,7 @@ const Reviews = ({reviews}) => {
                   src={review.profile_photo_url}
                   alt={`${review.author_name} picture`}
                   layout='responsive'
-                  size='5vw'
+                  sizes='5vw'
                   width='1'
                   height='1'
                 />
@@ -34,7 +34,7 @@ const Reviews = ({reviews}) => {
               <p>{review.author_name}</p>
             </Author>
             <Rating>
-              <Stars score={review.rating} />
+              <Stars score={review.rating || 0} />
               <span>{review.relative_time_description}</span>
             </Rating>
             <Content>{review.text}</Content>
