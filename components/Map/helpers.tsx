@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useGoogleMap} from '@react-google-maps/api';
 
 import {PLACE_ID, PLACE_FIELDS} from '../../static/ts/constants';
@@ -14,11 +14,11 @@ let service: google.maps.places.PlacesService
 let request: Request
 
 const DetailsGetter = (): null => {
-  map = useGoogleMap() || new HTMLDivElement()
+  map = useGoogleMap() as google.maps.Map 
 
   const {dispatchMap} = useMapContext()
 
-  useEffect(() => {
+  useEffect((): void => {
     service = new google.maps.places.PlacesService(map)
 
     request = {
@@ -30,7 +30,7 @@ const DetailsGetter = (): null => {
       status: google.maps.places.PlacesServiceStatus
     ): void => {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        dispatchMap({type: 'STORE_DETAILS', details: {}});
+        dispatchMap({type: 'STORE_DETAILS', details: results})
       }
     })
   }, [dispatchMap, map])

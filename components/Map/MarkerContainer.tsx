@@ -6,7 +6,7 @@ import {useMapContext} from '../../context/MapProvider';
 
 interface Props {
   position?: google.maps.LatLngLiteral
-  userLocation?: google.maps.LatLngLiteral
+  userLocation?: boolean
 }
 
 const MarkerContainer = ({position, userLocation}: Props): JSX.Element => {

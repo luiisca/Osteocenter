@@ -1,26 +1,28 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
-import tw, {css, styled} from 'twin.macro';
-import {Marker, useGoogleMap} from '@react-google-maps/api';
-import {BUSINESS_LOCATION} from '../../static/js/constants';
+import React, {useRef} from 'react';
+import {useGoogleMap} from '@react-google-maps/api';
+import {BUSINESS_LOCATION} from '../../static/ts/constants';
 
 import {useLocationContext} from '../../context/LocationProvider';
 import MarkerContainer from './MarkerContainer';
 
-const Route = () => {
+const Route = (): JSX.Element => {
   const {location} = useLocationContext();
 
-  const map = useGoogleMap();
-  const ref = useRef({
+  const map = useGoogleMap() as google.maps.Map;
+  const ref = useRef<{
+    directionsService: google.maps.DirectionsService | null
+    directionsRenderer: google.maps.DirectionsRenderer | null
+  }>({
     directionsService: null,
     directionsRenderer: null,
   });
 
-  const removeDirections = () => {
+  const removeDirections = (): void => {
     ref.current.directionsRenderer?.setMap(null);
     ref.current.directionsRenderer?.setDirections({routes: []});
-    console.log('removeDirections', ref.current)
   }
-  const centerBusiness = () => {
+
+  const centerBusiness = (): void => {
     map.setCenter(BUSINESS_LOCATION)
     map.setZoom(16)
   }
@@ -37,12 +39,12 @@ const Route = () => {
     const request = {
       origin: location.user,
       destination: BUSINESS_LOCATION,
-      travelMode: 'DRIVING',
+      travelMode: 'DRIVING' as google.maps.TravelMode,
     }
 
-    ref.current.directionsService.route(request, function (result, status) {
+    ref.current.directionsService.route(request, (result, status) => {
       if (status == 'OK') {
-        ref.current.directionsRenderer.setDirections(result);
+        ref.current.directionsRenderer?.setDirections(result);
       }
     })
     return (
@@ -52,7 +54,6 @@ const Route = () => {
       </>
     )
   } else {
-    console.log('ROUTE REMOVED')
     removeDirections();
     centerBusiness();
 
