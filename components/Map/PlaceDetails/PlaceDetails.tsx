@@ -11,6 +11,7 @@ import {MdArrowLeft, MdArrowRight} from 'react-icons/md';
 
 // helpers
 import {useMapContext} from '../../../context/MapProvider';
+import {loader} from './helpers';
 
 // components
 import Photos from './Photos';
@@ -69,10 +70,6 @@ const PlaceDetails = (): JSX.Element | null => {
     config: config.default
   })
 
-  const loader = ({src, width, quality}: {src: string, width: number, quality?: number}): string => {
-    return `${src}&q=${quality || 75}`
-  }
-
   if (Object.keys({...map.details}).length > 0) {
     return (
       <Fragment>
@@ -105,7 +102,7 @@ const PlaceDetails = (): JSX.Element | null => {
           </ContentWrap>
 
           <ContentWrap>
-            <Photos imgs={map.details?.photos?.slice(1)} />
+            <Photos imgs={map.details?.photos?.slice(1) || []} />
           </ContentWrap>
           <ContentWrap>
             <Reviews reviews={map.details?.reviews} />
