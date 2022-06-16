@@ -30,18 +30,16 @@ const Map = (): JSX.Element => {
   const mapContainerRef = useRef<HTMLDivElement>(null)
 
   const mapSpring = useSpring({
-    to: {
-      left: map.open ? '35%' : '0%',
-      width: map.open ? '65%' : '100%',
-      overflow: 'hidden',
-    },
+    left: map.open ? '35%' : '0%',
+    width: map.open ? '65%' : '100%',
+    overflow: 'hidden',
+
     config: config.default
   })
   const hideBttnSpring = useSpring({
-    to: {
-      left: map.open ? '30%' : '-5%',
-      opacity: map.open ? '1' : '0',
-    },
+    left: map.open ? '30%' : '-5%',
+    opacity: map.open ? '1' : '0',
+
     config: config.default
   })
 

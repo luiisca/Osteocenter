@@ -15,7 +15,6 @@ export const Container = styled.div(({mapFullscreen}: {mapFullscreen: boolean}) 
   `,
 ])
 
-// there probably is a better typing for style ReactSpring object
 export const HideBttn = styled(Button)(({style}: {style: {}}) => [
   tw`w-10 h-10`,
   tw`absolute top-3 z-[2]`,
