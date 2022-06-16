@@ -28,9 +28,9 @@ export const OpenBttn = styled(Button)(() => [
 export const ContentWrap = tw.div`py-3 px-4`
 
 export const ImgWrap = tw.div`relative w-full h-2/5`
-export const Flex = styled.div((props) => [
+export const Flex = styled.div(({icon}: {icon: boolean}) => [
   tw`flex items-center gap-4`,
-  props.icon && css`
+  icon && css`
     ${tw`text-accent-333`};
     svg {
       flex-shrink: 0;

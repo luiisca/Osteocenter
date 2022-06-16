@@ -51,7 +51,7 @@ const ArrowButton = styled(Button)(({left, right}: {left?: boolean, right?: bool
   right && tw`right-0 translate-x-[25%]`,
 ])
 
-const Photos = ({imgs}: {imgs: google.maps.places.PlacePhoto[] | []}) => {
+const Photos = ({imgs}: {imgs: google.maps.places.PlacePhoto[] | []}): JSX.Element => {
   const [page, dispatch] = useReducer(pagesReducer, 0)
   const [showCarBttns, setShowCarBttns] = useState(false)
 

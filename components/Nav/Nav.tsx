@@ -5,7 +5,7 @@ import NavLink from './NavLink';
 
 const StyledNavList = tw(BaseList)`flex items-center gap-8`
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
   return (
     <nav>
       <StyledNavList>
@@ -13,7 +13,7 @@ const Nav = () => {
         <NavLink destination='#'>Por que elegirnos?</NavLink>
         <NavLink destination='#'>Contáctanos</NavLink>
         <NavLink nextLink destination='/blog'>Blog</NavLink>
-        <li><Button type='text' nav cta href='#'>Pide una cita</Button></li>
+        <li><Button elType='text' nav cta href='#'>Pide una cita</Button></li>
       </StyledNavList>
     </nav>
   )

@@ -7,7 +7,7 @@ import Step from './Step';
 const StepsContainer = tw.div`grid grid-cols-2 gap-x-16 gap-y-24 items-center`
 const Description = tw.p`text-lg leading-[1.8]`
 
-const Steps = () => {
+const Steps = (): JSX.Element => {
   return (
     <Container>
       <div>

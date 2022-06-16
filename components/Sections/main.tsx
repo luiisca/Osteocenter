@@ -11,7 +11,14 @@ import Articles from '../Articles';
 
 import LocationProvider from '../../context/LocationProvider';
 
-const Section = styled.section(props => [
+interface SectionProps {
+  hero?: boolean
+  valueSection?: boolean
+  biography?: boolean
+  cta?: boolean
+}
+
+const Section = styled.section((props: SectionProps) => [
   tw`py-24`,
   props.hero && tw`pt-12 bg-primary-tint-3`,
   props.valueSection && tw`text-center`,
@@ -19,7 +26,7 @@ const Section = styled.section(props => [
   props.cta && tw`p-0`,
 ])
 
-const Main = () => {
+const Main = (): JSX.Element => {
   return (
     <Fragment>
       <Section hero>
@@ -51,4 +58,4 @@ const Main = () => {
     </Fragment>
   )
 }
-export default Main;
+export default Main

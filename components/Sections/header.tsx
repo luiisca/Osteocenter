@@ -7,13 +7,13 @@ import Nav from '../Nav';
 const Container = tw.header`flex justify-between items-center bg-primary-tint-3 h-24 px-12`
 const StyleImgContainer = tw.a`block relative min-w-[200px] h-full`
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <Container>
       <Link href='/' passHref>
         <StyleImgContainer>
           <Image
-            priority='true'
+            priority={true}
             layout='fill'
             objectFit='contain'
             alt="osteocenter logo"

@@ -85,7 +85,7 @@ const PlaceDetails = (): JSX.Element | null => {
           </ImgWrap>
           <ContentWrap>
             <Title main>{map.details?.name}</Title>
-            <Rating score={map.details?.rating} qtt={map.details?.user_ratings_total} />
+            <Rating score={map.details?.rating || 0} qtt={map.details?.user_ratings_total || 0} />
           </ContentWrap>
 
           <ContentWrap>
