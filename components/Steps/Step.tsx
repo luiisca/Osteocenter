@@ -14,7 +14,7 @@ const ImgWrap = styled.div(() => [
   tw`rounded-[9px] overflow-hidden`
 ])
 
-const Step = ({src, name, num, children}: Props) => {
+const Step = ({src, name, num, children}: Props): JSX.Element => {
   if (+num % 2) {
     return (
       <>
