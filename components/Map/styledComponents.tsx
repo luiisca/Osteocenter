@@ -22,7 +22,7 @@ export const HideBttn = styled(Button)(({style}: {style: {}}) => [
   tw`text-lg`,
 ])
 
-export const GoogleMapContainer = styled(animated.div)(({ref}: {ref: React.RefObject}) => [
+export const GoogleMapContainer = styled(animated.div)(() => [
   tw`w-full h-full`,
   tw`absolute top-0 left-0`,
   tw`inline-block`,

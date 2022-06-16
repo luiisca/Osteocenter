@@ -27,7 +27,7 @@ const Map = (): JSX.Element => {
   })
 
   const {map, dispatchMap} = useMapContext()
-  const mapContainerRef = useRef()
+  const mapContainerRef = useRef<HTMLDivElement>(null)
 
   const mapSpring = useSpring({
     to: {
