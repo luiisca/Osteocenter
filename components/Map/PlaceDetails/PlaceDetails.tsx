@@ -52,7 +52,7 @@ const Flex = styled.div((props) => [
   `,
 ])
 
-const PlaceDetails = () => {
+const PlaceDetails = (): JSX.Element | null => {
   const {map, dispatchMap} = useMapContext();
   console.log(map);
 
@@ -123,7 +123,7 @@ const PlaceDetails = () => {
         }
       </Fragment>
     )
-  }
+  } else return null
 }
 
 export default PlaceDetails

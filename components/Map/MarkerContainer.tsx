@@ -1,18 +1,25 @@
-import tw, {css, styled} from 'twin.macro';
 import {useState, useEffect} from 'react';
 import {Marker, useGoogleMap} from '@react-google-maps/api';
 
 import {useMapContext} from '../../context/MapProvider';
 
-const MarkerContainer = ({position, userLocation}) => {
+interface Props {
+  position: google.maps.LatLngLiteral
+  userLocation: google.maps.LatLngLiteral
+}
+
+const MarkerContainer = ({position, userLocation}: Props): JSX.Element => {
   const {dispatchMap} = useMapContext()
-  const [bounce, setBounce] = useState(false)
+  const [bounce, setBounce] = useState<boolean>(false)
 
   return (
     <div>
       <Marker
-        onClick={userLocation ? () => {} : () => dispatchMap({type: 'SHOW_OPEN_BTTN'})}
-        animation={bounce ? google.maps.Animation.BOUNCE : null}
+        onClick={userLocation ? () => {} : () => dispatchMap({
+          type: 'SHOW_OPEN_BTTN'
+        })
+        }
+        animation={bounce ? google.maps.Animation.BOUNCE : undefined}
         onMouseOver={() => setBounce(true)}
         onMouseOut={() => setBounce(false)}
         cursor='pointer'

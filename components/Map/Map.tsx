@@ -1,14 +1,18 @@
+// libraries
 import {useRef} from 'react';
 import {useSpring, config} from 'react-spring';
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 
+// icons
 import {MdClose} from 'react-icons/md';
 import {RiFullscreenExitFill, RiFullscreenFill} from 'react-icons/ri';
 
+// helpers
 import {BUSINESS_LOCATION, LIBRARIES} from '../../static/ts/constants';
 import {useMapContext} from '../../context/MapProvider';
 import DetailsGetter from './helpers';
 
+// components
 import Loading from './Loading';
 import MarkerContainer from './MarkerContainer';
 import Route from './Route';
@@ -41,19 +45,22 @@ const Map = ():JSX.Element => {
     config: config.default
   })
 
-  const business: google.maps.LatLngLiteral = {lat: -12.123305609301212, lng: -77.0401126174581};
-
-  const renderMap = () => {
+  const renderMap = (): JSX.Element => {
     return (
       <Container mapFullscreen={map.fullscreen}>
         <PlaceDetails />
 
-        <HideBttn type='icon' style={hideBttnSpring}
-          onClick={() => dispatchMap({type: 'HIDE'})}>
+        <HideBttn 
+          elType='icon' style={hideBttnSpring}
+          onClick={() => dispatchMap({type: 'HIDE'})}
+          >
           <MdClose />
         </HideBttn>
 
-        <GoogleMapContainer style={mapSpring} ref={mapContainerRef}>
+        <GoogleMapContainer 
+          style={mapSpring} 
+          ref={mapContainerRef}
+          >
           <GoogleMap
             zoom={16}
             center={BUSINESS_LOCATION}

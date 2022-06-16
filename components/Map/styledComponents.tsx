@@ -2,7 +2,7 @@ import tw, {css, styled} from 'twin.macro';
 import {Button} from '../Elements';
 import {animated} from 'react-spring';
 
-export const Container = styled.div(({mapFullscreen}) => [
+export const Container = styled.div(({mapFullscreen}: {mapFullscreen: boolean}) => [
   tw`text-left`,
   tw`relative transition-all`,
   tw`overflow-hidden mx-auto my-0 rounded-2xl w-[900px] h-[500px]`,
@@ -15,13 +15,14 @@ export const Container = styled.div(({mapFullscreen}) => [
   `,
 ])
 
-export const HideBttn = styled(Button)(() => [
+// there probably is a better typing for style ReactSpring object
+export const HideBttn = styled(Button)(({style}: {style: {}}) => [
   tw`w-10 h-10`,
   tw`absolute top-3 z-[2]`,
   tw`text-lg`,
 ])
 
-export const GoogleMapContainer = styled(animated.div)(() => [
+export const GoogleMapContainer = styled(animated.div)(({ref}: {ref: React.RefObject}) => [
   tw`w-full h-full`,
   tw`absolute top-0 left-0`,
   tw`inline-block`,
