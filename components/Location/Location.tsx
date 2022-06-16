@@ -8,7 +8,7 @@ import {Heading} from '../Elements';
 import useIsMobile from '../../hooks/useIsMobile';
 import MapProvider from '../../context/MapProvider';
 
-const Location = () => {
+const Location = (): JSX.Element => {
   const IS_MOBILE = useIsMobile();
 
   return (

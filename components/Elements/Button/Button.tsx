@@ -67,4 +67,4 @@ const Button = ((props: Props): JSX.Element => {
   )
 })
 
-// export default Button
+export default Button

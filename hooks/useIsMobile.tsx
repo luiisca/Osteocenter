@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  useEffect(() => {
+  useEffect((): void => {
     setIsMobile(('ontouchstart' in window) ||
       (navigator.maxTouchPoints > 0) &&
       /Mobi|Android/i.test(navigator.userAgent));

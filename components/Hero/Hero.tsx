@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro'; ;
+import tw, {css, styled} from 'twin.macro';
 import {BaseContainer} from '../BaseStyle';
 
 import {Button, Heading} from '../Elements';
@@ -8,7 +8,7 @@ import HeroImage from './HeroImage';
 const Container = tw(BaseContainer)`max-w-screen-2xl grid grid-cols-2 gap-2.5 items-center justify-items-end`
 const Text = tw.p`text-xl mb-12`
 
-const Hero = () => {
+const Hero = (): JSX.Element => {
   return (
     <Container>
       <div>
@@ -18,8 +18,8 @@ const Hero = () => {
           de fracturas, reconstrucciones óseas, Prótesis de caderas, tumores
           óseos y músculo esquelético.
         </Text>
-        <Button type='text' cta hero href="#" tw='mr-4'>Pide una cita</Button>
-        <Button type='text' outline href="#biography">Más sobre mí &darr;</Button>
+        <Button elType='text' cta hero href="#" tw='mr-4'>Pide una cita</Button>
+        <Button elType='text' outline href="#biography">Más sobre mí &darr;</Button>
         <CustomerPictures />
       </div>
       <HeroImage />

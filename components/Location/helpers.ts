@@ -1,5 +1,5 @@
-export const getUserLocation = () => {
-  return new Promise((resolve, reject) => {
+export const getUserLocation = (): Promise<google.maps.LatLngLiteral> => {
+  return new Promise<google.maps.LatLngLiteral>((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -8,7 +8,8 @@ export const getUserLocation = () => {
             lng: position.coords.longitude
           };
           resolve(pos)
-        }, () => reject('Error: the location service failed')
+          },
+          () => reject('Error: the location service failed')
       );
     } else {
       reject("Error: your browser doesn't support geolocation");
