@@ -4,7 +4,7 @@ import tw, {css, styled} from 'twin.macro';
 import {Heading} from '../Elements';
 
 const Container = tw.div`flex flex-col items-center`
-const ImgWrap = styled.div`
+const ImgWrap = styled.div<{position: string}>`
     ${tw`relative w-[5rem]`}
 
     &::before {
@@ -15,7 +15,7 @@ const ImgWrap = styled.div`
   `
 const Text = tw.p`text-lg max-w-[30ch]`
 
-const Value = ({name, shapePosition}) => {
+const Value = ({name, shapePosition}: {name: string, shapePosition: string}): JSX.Element => {
   return (
     <Container>
       <ImgWrap position={shapePosition} tw='mb-8'>
@@ -23,7 +23,7 @@ const Value = ({name, shapePosition}) => {
           src={`/img/icons/${name}.svg`}
           alt={`${name} logo`}
           layout='responsive'
-          size='10vw'
+          sizes='10vw'
           width='1'
           height='1'
         />

@@ -8,7 +8,7 @@ const Text = tw.p`text-xl m-auto mb-20 max-w-prose`
 
 const ValuesContainer = tw.div`flex justify-center gap-16`
 
-const Values = () => {
+const Values = (): JSX.Element => {
   return (
     <Container>
       <Heading as='h2' secondary>
