@@ -13,7 +13,7 @@ let map: google.maps.Map | HTMLDivElement
 let service: google.maps.places.PlacesService
 let request: Request
 
-const DetailsGetter = ():void => {
+const DetailsGetter = (): null => {
   map = useGoogleMap() || new HTMLDivElement()
 
   const {dispatchMap} = useMapContext()
@@ -34,6 +34,8 @@ const DetailsGetter = ():void => {
       }
     })
   }, [dispatchMap, map])
+
+  return null
 }
 
 export default DetailsGetter

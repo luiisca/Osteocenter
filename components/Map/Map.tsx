@@ -20,7 +20,7 @@ import PlaceDetails from './PlaceDetails';
 import ResizeStreetView from './ResizeStreetView';
 import {Container, HideBttn, GoogleMapContainer, FullscreenBttn} from './styledComponents';
 
-const Map = ():JSX.Element => {
+const Map = (): JSX.Element => {
   const {isLoaded, loadError} = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
     libraries: LIBRARIES,
@@ -50,17 +50,17 @@ const Map = ():JSX.Element => {
       <Container mapFullscreen={map.fullscreen}>
         <PlaceDetails />
 
-        <HideBttn 
+        <HideBttn
           elType='icon' style={hideBttnSpring}
           onClick={() => dispatchMap({type: 'HIDE'})}
-          >
+        >
           <MdClose />
         </HideBttn>
 
-        <GoogleMapContainer 
-          style={mapSpring} 
+        <GoogleMapContainer
+          style={mapSpring}
           ref={mapContainerRef}
-          >
+        >
           <GoogleMap
             zoom={16}
             center={BUSINESS_LOCATION}
