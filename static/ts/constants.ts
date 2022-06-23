@@ -1,5 +1,9 @@
 import {Libraries} from '@react-google-maps/api';
 
+// CMS
+export const GRAPHQL_ENDPOINT = "https://spacexdata.herokuapp.com/graphql"
+
+// Map
 export const BUSINESS_LOCATION: google.maps.LatLngLiteral = {lat: -12.123305609301212, lng: -77.0401126174581};
 
 export const PLACE_ID = 'ChIJnzhbFSTIBZERdvxWvPnibdE';
@@ -11,5 +15,5 @@ export const MAP_DIRECTIONS = (userLocation: google.maps.LatLngLiteral) => `http
 
 export const TOTAL_STARS = 5;
 
-// carousel
+// Blog
 export const ARTICLES_PER_PAGE = 2;
