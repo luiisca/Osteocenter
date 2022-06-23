@@ -12,7 +12,7 @@ const Nav = (): JSX.Element => {
         <NavLink destination='#'>Nuestros Servicios</NavLink>
         <NavLink destination='#'>Por que elegirnos?</NavLink>
         <NavLink destination='#'>Contáctanos</NavLink>
-        <NavLink nextLink destination='/blog'>Blog</NavLink>
+        <NavLink nextLink destination='/blog/test'>Blog</NavLink>
         <li><Button elType='text' nav cta href='#'>Pide una cita</Button></li>
       </StyledNavList>
     </nav>
