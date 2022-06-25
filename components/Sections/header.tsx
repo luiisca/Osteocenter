@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import tw, {css, styled} from 'twin.macro';
+import tw from 'twin.macro';
 import Nav from '../Nav';
 
 const Container = tw.header`flex justify-between items-center bg-primary-tint-3 h-24 px-12`

@@ -15,7 +15,7 @@ export const Container = styled.div(({mapFullscreen}: {mapFullscreen: boolean}) 
   `,
 ])
 
-export const HideBttn = styled(Button)(({style}: {style: {}}) => [
+export const HideBttn = styled(Button)(() => [
   tw`w-10 h-10`,
   tw`absolute top-3 z-[2]`,
   tw`text-lg`,

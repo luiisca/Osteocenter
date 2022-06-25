@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import tw, {css, styled} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 import {BaseLink} from '../../BaseStyle';
 
 const StyledNavLink = styled(BaseLink)(() => [

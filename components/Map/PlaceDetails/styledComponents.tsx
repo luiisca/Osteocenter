@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro'; ;
+import tw, {css, styled} from 'twin.macro';
 import {Button} from '../../Elements';
 import {animated} from 'react-spring';
 

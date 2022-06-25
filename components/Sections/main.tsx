@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 import {Fragment} from "react";
 import Hero from '../Hero';
 import Values from '../Values';

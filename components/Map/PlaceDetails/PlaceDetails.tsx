@@ -1,7 +1,7 @@
 // libraries
 import Image from 'next/image';
 import {Fragment} from 'react';
-import tw, {css, styled} from 'twin.macro';;
+import tw, {css, styled} from 'twin.macro';
 import {animated, useSpring, config} from 'react-spring';
 
 // icons

@@ -1,4 +1,4 @@
-import {Libraries} from '@react-google-maps/api';
+type Libraries = ("drawing" | "geometry" | "localContext" | "places" | "visualization")[];
 
 // CMS
 export const GRAPHQL_ENDPOINT = "https://spacexdata.herokuapp.com/graphql"

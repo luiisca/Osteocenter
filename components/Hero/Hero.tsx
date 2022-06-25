@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw from 'twin.macro';
 import {BaseContainer} from '../BaseStyle';
 
 import {Button, Heading} from '../Elements';

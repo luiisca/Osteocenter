@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 import {Button, Heading} from '../Elements';
 import {BaseContainer} from '../BaseStyle';
 
@@ -20,7 +20,7 @@ const CallToAction = (): JSX.Element => (
         <Text tw='mb-5'>
           Reserva tu cita hoy mismo y nos comunicaremos contigo para darte la atencion que mereces lo antes posible.
         </Text>
-        <Button type='text' cta href='#'>
+        <Button elType='text' cta href='#'>
           Pide una cita
         </Button>
       </div>

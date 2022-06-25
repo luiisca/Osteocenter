@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw from 'twin.macro';
 
 const BaseList = tw.ul`list-none`
 

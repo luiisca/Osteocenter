@@ -97,14 +97,14 @@ const Articles = (): JSX.Element => {
         </PageLink>
         <Flex>
           <Button
-            type='icon'
+            elType='icon'
             inactive={data.page == 0}
             onClick={() => data.page == 0 || dispatch({type: 'PREVIOUS'})}
           >
             <BsArrowLeft />
           </Button>
           <Button
-            type='icon'
+            elType='icon'
             inactive={data.page == data.articles.length / ARTICLES_PER_PAGE}
             onClick={() => data.page == data.articles.length / ARTICLES_PER_PAGE || dispatch({type: 'NEXT'})}
           >

@@ -1,5 +1,3 @@
-import tw, {css, styled} from 'twin.macro';
-
 import Map from '../Map';
 import Button from './Button';
 import {BaseContainer} from '../BaseStyle';
