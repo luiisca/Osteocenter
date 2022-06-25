@@ -4,14 +4,15 @@ export default async function apiFetch(
   endpoint,
   {method, headers, body} = {}
 ) {
-  // const token = window.sessionStorage.getItem(tokenKey);
+  // const token = sessionStorage.getItem(tokenKey);
+  const newToken = 'jJRY1LW4VVJf3Wrp3q6LNHFx';
 
-  // if (token) {
-  //   headers = {
-  //     Authorization: `Bearer ${token}`,
-  //     ...headers,
-  //   };
-  // }
+  if (newToken) {
+    headers = {
+      Authorization: `Bearer ${newToken}`,
+      ...headers,
+    };
+  }
 
   if (body) {
     headers = {
@@ -30,7 +31,7 @@ export default async function apiFetch(
 
   let data;
   if (!response.ok) {
-    // if (response.status === 401) window.sessionStorage.removeItem(tokenKey);
+    // if (response.status === 401) sessionStorage.removeItem(tokenKey);
     try {
       data = await response.json();
     } catch (error) {

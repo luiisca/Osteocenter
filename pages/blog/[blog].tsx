@@ -1,58 +1,55 @@
-import {Button} from '../../components/Elements';
+import tw from 'twin.macro';
+import {Button, Heading} from '../../components/Elements';
 import Layout from '../../components/Layout';
-import {getUnicorns, createUnicorn} from '../../services/createUnicorns';
+import {createFavorite, getFavorites} from '../../services/favorites-service';
 
-interface unicorn {
-  _id: string
-  name: string
-  age: number
-  colour: string
-}
-interface toCreateUnicorn {
-  name: string
-  age: number
-  colour: string
+interface favouritePokemon {
+  pokemon_name: string,
+  pokemon_id: number,
+  pokemon_type: string
+  pokemon_avatar_url: string
 }
 
-export async function getStaticProps() {
-  const unicorns = await getUnicorns()
-  console.log(unicorns)
+export async function getServerSideProps() {
+  const pokemons = await getFavorites()
 
-  return {props: {unicorns}}
+  return {props: {pokemons}}
 }
-export async function getStaticPaths() {
-  return {
-    paths: [
-      // String variant:
-      '/blog/first-post',
-      // Object variant:
-      {params: {blog: 'second-post'}},
-    ],
-    fallback: true,
-  }
-}
-const Blog = ({unicorns}: {unicorns: unicorn[]}): JSX.Element => {
+const Pokemon = tw.div`px-6 py-3 max-w-[400px] mx-5 mb-4 bg-primary-tint-3 rounded-md`
+// export async function getStaticPaths() {
+//   return {
+//     paths: [
+//       // String variant:
+//       '/blog/first-post',
+//       // Object variant:
+//       {params: {blog: 'second-post'}},
+//     ],
+//     fallback: true,
+//   }
+// }
+
+const Blog = ({pokemons}: {pokemons: favouritePokemon[]}): JSX.Element => {
   return (
     <Layout>
-      <h1>Some unicorns for you</h1>
-      {unicorns?.map((unicorn: unicorn) => {
+      <Heading tw='mx-5' secondary >Favourite Pokemons</Heading>
+      {pokemons?.map((pokemon: favouritePokemon) => {
         return (
-          <div key={unicorn._id}>
-            <h2>Hello I&apos;m unicorn {unicorn.name}</h2>
-            <p>My colour is {unicorn.colour}</p>
-            <p>I&apos;m {unicorn.age} yo</p>
-            <p>And Imma kill you :)</p>
-          </div>
+          <Pokemon key={pokemon.pokemon_id} >
+            <Heading subHeading>{pokemon.pokemon_name}</Heading>
+            <p>{pokemon.pokemon_type}</p>
+          </Pokemon>
         )
       })}
-      <Button elType='text' href="" cta onClick={(e: any) => {
+
+      <Button tw='mx-5' elType='text' href="" cta onClick={(e: any) => {
         e.preventDefault()
-        const unicorn: toCreateUnicorn = {
-          name: '292kd',
-          age: 2939,
-          colour: 'ldkfjdfkl'
+        const newPok: favouritePokemon = {
+          "pokemon_name": "pikacho",
+          "pokemon_id": 1,
+          "pokemon_type": "rock",
+          "pokemon_avatar_url": "/some.png"
         }
-        createUnicorn(unicorn)
+        createFavorite(newPok)
       }}>Create new Killer unicorns</Button>
     </Layout>
   )
