@@ -3,8 +3,8 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql
+  // useQuery,
+  // gql
 } from "@apollo/client";
 import {GRAPHQL_ENDPOINT} from '../static/ts/constants';
 

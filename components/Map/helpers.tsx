@@ -14,7 +14,7 @@ let service: google.maps.places.PlacesService
 let request: Request
 
 const DetailsGetter = (): null => {
-  map = useGoogleMap() as google.maps.Map 
+  map = useGoogleMap() as google.maps.Map
 
   const {dispatchMap} = useMapContext()
 
@@ -33,7 +33,7 @@ const DetailsGetter = (): null => {
         dispatchMap({type: 'STORE_DETAILS', details: results})
       }
     })
-  }, [dispatchMap, map])
+  }, [dispatchMap])
 
   return null
 }

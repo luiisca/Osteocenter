@@ -6,7 +6,8 @@ interface IconProps {
   elType: 'icon'
   children?: React.ReactNode
   inactive?: boolean
-  onClick?: () => boolean | void
+  onClick?: (e?: any) => boolean | void
+  style?: {}
 }
 interface TextProps {
   elType: 'text'
@@ -18,7 +19,8 @@ interface TextProps {
   hero?: boolean
   outline?: boolean
   arrow?: boolean
-  onClick?: () => boolean | void
+  onClick?: (e?: any) => boolean | void
+  style?: {}
 }
 type Props = TextProps | IconProps;
 

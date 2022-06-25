@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro';
+import tw from 'twin.macro';
 import {TOTAL_STARS} from '../../../../static/ts/constants';
 
 const ImgWrap = tw.div`w-4 h-4`

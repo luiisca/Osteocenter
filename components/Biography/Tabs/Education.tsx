@@ -1,4 +1,3 @@
-import tw, {css, styled} from 'twin.macro';
 import Card from './Card';
 import {Container} from '../style';
 

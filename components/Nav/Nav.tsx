@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw from 'twin.macro';
 import {BaseList} from '../BaseStyle';
 import {Button} from '../Elements';
 import NavLink from './NavLink';
@@ -12,7 +12,7 @@ const Nav = (): JSX.Element => {
         <NavLink destination='#'>Nuestros Servicios</NavLink>
         <NavLink destination='#'>Por que elegirnos?</NavLink>
         <NavLink destination='#'>Contáctanos</NavLink>
-        <NavLink nextLink destination='/blog/test'>Blog</NavLink>
+        <NavLink nextLink destination='/blog/second-post'>Blog</NavLink>
         <li><Button elType='text' nav cta href='#'>Pide una cita</Button></li>
       </StyledNavList>
     </nav>

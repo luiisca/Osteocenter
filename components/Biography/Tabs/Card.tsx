@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import tw, {css, styled} from 'twin.macro';;
+import tw, {styled} from 'twin.macro';;
 
 import {Heading} from '../../Elements';
 import {ImgWrap} from '../style';

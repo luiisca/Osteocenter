@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import {Marker, useGoogleMap} from '@react-google-maps/api';
+import {useState} from 'react';
+import {Marker} from '@react-google-maps/api';
 import {BUSINESS_LOCATION} from '../../static/ts/constants';
 
 import {useMapContext} from '../../context/MapProvider';

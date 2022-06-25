@@ -1,4 +1,4 @@
-import tw, {css, styled} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 
 const Separator = styled.div`
   height: 0px;

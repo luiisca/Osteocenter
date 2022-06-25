@@ -25,8 +25,8 @@ const Home: NextPage = (): JSX.Element => {
           </>
         )
       })} || <p>No Launches</p>
+      <Main />
       {/*
-    <Main />
             <Footer />
         */}
     </Layout>
