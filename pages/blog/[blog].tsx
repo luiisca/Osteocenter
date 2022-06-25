@@ -10,36 +10,46 @@ interface favouritePokemon {
   pokemon_avatar_url: string
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const pokemons = await getFavorites()
 
-  return {props: {pokemons}}
+  return {
+    props: {pokemons},
+    revalidate: 10,
+  }
 }
-const Pokemon = tw.div`px-6 py-3 max-w-[400px] mx-5 mb-4 bg-primary-tint-3 rounded-md`
-// export async function getStaticPaths() {
-//   return {
-//     paths: [
-//       // String variant:
-//       '/blog/first-post',
-//       // Object variant:
-//       {params: {blog: 'second-post'}},
-//     ],
-//     fallback: true,
-//   }
-// }
+const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4`
+const Pokemon = tw.div`px-6 py-3 max-w-[400px] bg-primary-tint-3 rounded-md`
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      // String variant:
+      '/blog/first-post',
+      // Object variant:
+      {params: {blog: 'second-post'}},
+    ],
+    fallback: true,
+  }
+}
 
 const Blog = ({pokemons}: {pokemons: favouritePokemon[]}): JSX.Element => {
   return (
     <Layout>
       <Heading tw='mx-5' secondary >Favourite Pokemons</Heading>
-      {pokemons?.map((pokemon: favouritePokemon) => {
-        return (
-          <Pokemon key={pokemon.pokemon_id} >
-            <Heading subHeading>{pokemon.pokemon_name}</Heading>
-            <p>{pokemon.pokemon_type}</p>
-          </Pokemon>
-        )
-      })}
+      {pokemons?.length && (
+      <Heading subHeading tw='mx-5 mb-3'>{pokemons.length} pokemons</Heading>
+      )}
+      <Container>
+        {pokemons?.map((pokemon: favouritePokemon) => {
+          return (
+            <Pokemon key={pokemon.pokemon_id} >
+              <Heading subHeading>{pokemon.pokemon_name}</Heading>
+              <p>{pokemon.pokemon_type}</p>
+            </Pokemon>
+          )
+        })}
+      </Container>
 
       <Button tw='mx-5' elType='text' href="" cta onClick={(e: any) => {
         e.preventDefault()
@@ -50,7 +60,7 @@ const Blog = ({pokemons}: {pokemons: favouritePokemon[]}): JSX.Element => {
           "pokemon_avatar_url": "/some.png"
         }
         createFavorite(newPok)
-      }}>Create new Killer unicorns</Button>
+      }}>New Favourite</Button>
     </Layout>
   )
 }
