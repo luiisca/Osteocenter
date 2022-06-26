@@ -1,15 +1,14 @@
-import {tokenKey, BASE_URI} from "../config";
+import { tokenKey, BASE_URI } from "../config";
 
 export default async function apiFetch(
   endpoint,
-  {method, headers, body} = {}
+  { method, headers, body } = {}
 ) {
-  // const token = sessionStorage.getItem(tokenKey);
-  const newToken = '3wg2QXQRHokXuaQNgSqkrTD5';
+  const token = sessionStorage.getItem(tokenKey);
 
-  if (newToken) {
+  if (token) {
     headers = {
-      Authorization: `Bearer ${newToken}`,
+      Authorization: `Bearer ${token}`,
       ...headers,
     };
   }
@@ -31,7 +30,7 @@ export default async function apiFetch(
 
   let data;
   if (!response.ok) {
-    // if (response.status === 401) sessionStorage.removeItem(tokenKey);
+    if (response.status === 401) sessionStorage.removeItem(tokenKey);
     try {
       data = await response.json();
     } catch (error) {
