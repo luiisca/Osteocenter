@@ -1,16 +1,13 @@
 import tw from 'twin.macro';
-import {initializeApollo, addApolloState} from '../../lib/apolloClient'
-import {useLaunchListQuery, LaunchListDocument} from '../../generated';
+import {initializeApollo, addApolloState} from '../../graphql/apolloClient'
 
 import {Button, Heading} from '../../components/Elements';
 import Layout from '../../components/Layout';
-import {createFavorite} from '../../services/favorites-service';
 
-const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4` const Rocket = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`
+const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4` 
+const Rocket = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`
 
 const Blog = (): JSX.Element => {
-  // TODO:
-  // 1. Learn how useQuery works, confirm wheter or not it prioritizes cache over request to API and how does it know when use either one or the other
   const {loading, error, data} = useLaunchListQuery()
 
   if (error) return <div>Error loading posts.</div>

@@ -10,10 +10,12 @@ query Articles {
     }
     featuredPost
     categories {
-      id
+      name
+      slug
     }
     featuredImage {
-      id
+      url
     }
   }
 }
+

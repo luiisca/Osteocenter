@@ -7,7 +7,7 @@ const nextConfig = {
     }
   },
   images: {
-    domains: ['https://maps.googleapis.com', 'lh3.googleusercontent.com'],
+    domains: ['https://maps.googleapis.com', 'lh3.googleusercontent.com', 'media.graphassets.com'],
   },
 }
 
