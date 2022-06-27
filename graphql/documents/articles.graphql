@@ -1,0 +1,19 @@
+query Articles {
+  articles {
+    publishedAt
+    id
+    slug
+    title
+    excerpt
+    content {
+      html
+    }
+    featuredPost
+    categories {
+      id
+    }
+    featuredImage {
+      id
+    }
+  }
+}

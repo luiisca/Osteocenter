@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://spacexdata.herokuapp.com/graphql"
+schema: "https://api-sa-east-1.graphcms.com/v2/cl4nkmq1q05e601xphw57ff46/master"
 documents: "graphql/**/*.graphql"
 generates:
   generated.tsx:

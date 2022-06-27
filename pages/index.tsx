@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import type {NextPage} from 'next';
-
 import Layout, {siteTitle} from '../components/Layout';
 import Main from '../components/Sections/main';
 
