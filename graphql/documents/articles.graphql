@@ -5,9 +5,6 @@ query Articles {
     slug
     title
     excerpt
-    content {
-      html
-    }
     featuredPost
     categories {
       name

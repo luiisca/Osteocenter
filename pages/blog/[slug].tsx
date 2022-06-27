@@ -1,52 +1,42 @@
 import tw from 'twin.macro';
+import {ArticlesDocument, useArticlesQuery} from "../../generated"
 import {initializeApollo, addApolloState} from '../../graphql/apolloClient'
 
 import {Button, Heading} from '../../components/Elements';
 import Layout from '../../components/Layout';
 
-const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4` 
+const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4`
 const Rocket = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`
 
-const Blog = (): JSX.Element => {
-  const {loading, error, data} = useLaunchListQuery()
+const apolloClient = initializeApollo()
 
-  if (error) return <div>Error loading posts.</div>
-  if (loading) return <div>Loading more posts besides the ones cached</div>
+const Blog = (): JSX.Element => {
+  const {loading, error, data} = useArticlesQuery()
+  const cache = apolloClient.cache.extract()
+  console.log(cache)
+
+  if (error) return <div>Error loading article.</div>
+  if (loading) return <div>Loading...</div>
 
   return (
     <Layout>
       <Heading tw='mx-5' secondary >SpaceX Launch Missions</Heading>
       <Container>
-        {data?.launches?.map((launch) => {
+        {data?.articles?.map((article) => {
           return (
-            <Rocket key={launch?.flight_number}>
-              <Heading subHeading>Fly {launch?.flight_number}</Heading>
-              <Heading tertiary>{launch?.mission_name}</Heading>
-              <p>Launch Year: {launch?.launch_year}</p>
-              <p>Flight number: {launch?.flight_number}</p>
+            <Rocket>
+              <Heading primary>{article.title}</Heading>
             </Rocket>
           )
         })}
       </Container>
 
-      <Button tw='mx-5' elType='text' href="" cta onClick={(e: any) => {
-        e.preventDefault()
-        const newPok = {
-          "pokemon_name": "pikacho",
-          "pokemon_id": 1,
-          "pokemon_type": "rock",
-          "pokemon_avatar_url": "/some.png"
-        }
-        createFavorite(newPok)
-      }}>New Rocket</Button>
     </Layout>
   )
 }
 export async function getStaticProps() {
-  const apolloClient = initializeApollo()
-
   await apolloClient.query({
-    query: LaunchListDocument
+    query: ArticlesDocument
   })
 
   return addApolloState(apolloClient, {
@@ -61,7 +51,7 @@ export async function getStaticPaths() {
       // String variant:
       '/blog/first-post',
       // Object variant:
-      {params: {blog: 'second-post'}},
+      {params: {slug: 'second-post'}},
     ],
     fallback: true,
   }

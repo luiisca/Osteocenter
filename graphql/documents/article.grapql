@@ -1,0 +1,16 @@
+query Article($slug: String) {
+  article(where: {slug: $slug}) {
+    title
+    slug
+    excerpt
+    featuredImage {
+      url
+      height
+      width
+    }
+    content {
+      html
+    }
+  }
+}
+

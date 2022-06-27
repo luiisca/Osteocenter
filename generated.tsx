@@ -5566,7 +5566,7 @@ export enum _SystemDateTimeFieldVariation {
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', publishedAt?: any | null, id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', html: string }, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, featuredImage: { __typename?: 'Asset', url: string } }> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', publishedAt?: any | null, id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, featuredImage: { __typename?: 'Asset', url: string } }> };
 
 
 export const ArticlesDocument = gql`
@@ -5577,9 +5577,6 @@ export const ArticlesDocument = gql`
     slug
     title
     excerpt
-    content {
-      html
-    }
     featuredPost
     categories {
       name
