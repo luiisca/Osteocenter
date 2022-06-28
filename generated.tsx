@@ -5563,27 +5563,86 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type ArticleQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', slug: string, publishedAt?: any | null, title: string, excerpt: string, featuredImage: { __typename?: 'Asset', url: string, height?: number | null, width?: number | null }, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, content: { __typename?: 'RichText', html: string } } | null };
+
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', publishedAt?: any | null, id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, featuredImage: { __typename?: 'Asset', url: string } }> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, publishedAt?: any | null, title: string, excerpt: string, slug: string, featuredPost: boolean, featuredImage: { __typename?: 'Asset', url: string, height?: number | null, width?: number | null }, categories: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 
-export const ArticlesDocument = gql`
-    query Articles {
-  articles {
-    publishedAt
-    id
+export const ArticleDocument = gql`
+    query Article($slug: String!) {
+  article(where: {slug: $slug}) {
     slug
+    publishedAt
+    featuredImage {
+      url
+      height
+      width
+    }
     title
     excerpt
-    featuredPost
     categories {
       name
       slug
     }
+    content {
+      html
+    }
+  }
+}
+    `;
+
+/**
+ * __useArticleQuery__
+ *
+ * To run a query within a React component, call `useArticleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArticleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArticleQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useArticleQuery(baseOptions: Apollo.QueryHookOptions<ArticleQuery, ArticleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArticleQuery, ArticleQueryVariables>(ArticleDocument, options);
+      }
+export function useArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArticleQuery, ArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArticleQuery, ArticleQueryVariables>(ArticleDocument, options);
+        }
+export type ArticleQueryHookResult = ReturnType<typeof useArticleQuery>;
+export type ArticleLazyQueryHookResult = ReturnType<typeof useArticleLazyQuery>;
+export type ArticleQueryResult = Apollo.QueryResult<ArticleQuery, ArticleQueryVariables>;
+export const ArticlesDocument = gql`
+    query Articles {
+  articles {
+    id
+    publishedAt
     featuredImage {
       url
+      height
+      width
+    }
+    title
+    excerpt
+    slug
+    featuredPost
+    categories {
+      name
+      slug
     }
   }
 }

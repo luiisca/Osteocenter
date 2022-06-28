@@ -1,60 +1,63 @@
-import tw from 'twin.macro';
-import {ArticlesDocument, useArticlesQuery} from "../../generated"
-import {initializeApollo, addApolloState} from '../../graphql/apolloClient'
+import { GetStaticPaths, GetStaticProps } from "next";
+import {
+  ArticlesDocument,
+  ArticleDocument,
+  useArticleQuery,
+} from "../../generated";
+import { initializeApollo, addApolloState } from "../../graphql/apolloClient";
 
-import {Button, Heading} from '../../components/Elements';
-import Layout from '../../components/Layout';
+import { Heading } from "../../components/Elements";
+import Layout from "../../components/Layout";
 
-const Container = tw.div`grid grid-cols-4 gap-2 mx-5 mb-4`
-const Rocket = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`
+const Article = ({ params }: { params: { slug: string } }): JSX.Element => {
+  const { loading, error, data } = useArticleQuery({
+    variables: { slug: params.slug },
+  });
 
-const apolloClient = initializeApollo()
-
-const Blog = (): JSX.Element => {
-  const {loading, error, data} = useArticlesQuery()
-  const cache = apolloClient.cache.extract()
-  console.log(cache)
-
-  if (error) return <div>Error loading article.</div>
-  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error loading article.</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Layout>
-      <Heading tw='mx-5' secondary >SpaceX Launch Missions</Heading>
-      <Container>
-        {data?.articles?.map((article) => {
-          return (
-            <Rocket>
-              <Heading primary>{article.title}</Heading>
-            </Rocket>
-          )
-        })}
-      </Container>
-
+      <Heading subHeading>{data?.article?.publishedAt}</Heading>
+      <Heading primary>{data?.article?.title}</Heading>
     </Layout>
-  )
-}
-export async function getStaticProps() {
+  );
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const apolloClient = initializeApollo();
   await apolloClient.query({
-    query: ArticlesDocument
-  })
+    query: ArticleDocument,
+    variables: {
+      slug: params?.slug,
+    },
+  });
 
   return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 10
-  })
-}
+    props: { params },
+    revalidate: 10,
+  });
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
+  // TODO:
+  // 1. Learn more about apolloClient + getStaticPaths
+  // 2. Apparently we can't access cache from here, learn why
+
+  const apolloClient = initializeApollo();
+  const { data } = await apolloClient.query({
+    query: ArticlesDocument,
+  });
+
+  const paths = data?.articles?.map((article: { slug: string }) => ({
+    params: { slug: article?.slug as string },
+  }));
+
   return {
-    paths: [
-      // String variant:
-      '/blog/first-post',
-      // Object variant:
-      {params: {slug: 'second-post'}},
-    ],
-    fallback: true,
-  }
-}
+    paths: paths,
+    fallback: false,
+  };
+};
 
-export default Blog
+export default Article;

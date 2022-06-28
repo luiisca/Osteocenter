@@ -1,6 +1,6 @@
-query Articles {
-  articles {
-    id
+query Article($slug: String!) {
+  article(where: {slug: $slug}) {
+    slug
     publishedAt
     featuredImage {
       url
@@ -9,11 +9,12 @@ query Articles {
     }
     title
     excerpt
-    slug
-    featuredPost
     categories {
       name
       slug
+    }
+    content {
+      html
     }
   }
 }
