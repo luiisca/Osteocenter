@@ -5563,6 +5563,18 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type CreateArticleMutationVariables = Exact<{
+  slug: Scalars['String'];
+  title: Scalars['String'];
+  excerpt: Scalars['String'];
+  content: Scalars['RichTextAST'];
+  featuredPost: Scalars['Boolean'];
+  featuredImage: AssetCreateOneInlineInput;
+}>;
+
+
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
+
 export type ArticleQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -5576,6 +5588,59 @@ export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, publishedAt?: any | null, title: string, excerpt: string, slug: string, featuredPost: boolean, featuredImage: { __typename?: 'Asset', url: string, height?: number | null, width?: number | null }, categories: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 
+export const CreateArticleDocument = gql`
+    mutation CreateArticle($slug: String!, $title: String!, $excerpt: String!, $content: RichTextAST!, $featuredPost: Boolean!, $featuredImage: AssetCreateOneInlineInput!) {
+  createArticle(
+    data: {slug: $slug, title: $title, excerpt: $excerpt, content: $content, featuredPost: $featuredPost, featuredImage: $featuredImage}
+  ) {
+    slug
+    title
+    excerpt
+    content {
+      raw
+      markdown
+      html
+    }
+    featuredPost
+    featuredImage {
+      width
+      height
+      url
+    }
+  }
+}
+    `;
+export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutation, CreateArticleMutationVariables>;
+
+/**
+ * __useCreateArticleMutation__
+ *
+ * To run a mutation, you first call `useCreateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *      title: // value for 'title'
+ *      excerpt: // value for 'excerpt'
+ *      content: // value for 'content'
+ *      featuredPost: // value for 'featuredPost'
+ *      featuredImage: // value for 'featuredImage'
+ *   },
+ * });
+ */
+export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOptions<CreateArticleMutation, CreateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateArticleMutation, CreateArticleMutationVariables>(CreateArticleDocument, options);
+      }
+export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
+export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
+export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
 export const ArticleDocument = gql`
     query Article($slug: String!) {
   article(where: {slug: $slug}) {

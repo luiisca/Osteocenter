@@ -1,0 +1,33 @@
+mutation CreateArticle(
+  $slug: String!,
+  $title: String!,
+  $excerpt: String!,
+	$content: RichTextAST!,
+	$featuredPost: Boolean!,
+	$featuredImage: AssetCreateOneInlineInput!)
+  {
+  createArticle(data: {
+    slug: $slug,
+    title: $title,
+    excerpt: $excerpt,
+    content: $content,
+    featuredPost: $featuredPost,
+    featuredImage: $featuredImage
+  	})
+  {
+    slug
+    title
+    excerpt
+    content {
+      raw
+      markdown
+      html
+    }
+    featuredPost
+    featuredImage {
+      width
+      height
+      url
+    }
+  }
+}

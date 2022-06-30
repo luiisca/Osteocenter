@@ -6,6 +6,8 @@ import Layout from "../../components/Layout";
 import { ArticlesDocument, useArticlesQuery } from "../../generated";
 import { addApolloState, initializeApollo } from "../../graphql/apolloClient";
 
+import { FiEdit } from "react-icons/fi";
+
 const Articles = tw.div`grid grid-cols-2 gap-2 mx-5 mb-4`;
 const Article = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`;
 const Category = tw.span`inline-block py-2 px-4 bg-primary-shade-1 hover:bg-primary-shade-2 rounded-lg text-white`;
@@ -22,6 +24,12 @@ const Blog = (): JSX.Element => {
 
   return (
     <Layout>
+      <Link href="/blog/new">
+        <a>
+          <FiEdit />
+          Nuevo Articulo
+        </a>
+      </Link>
       <Heading primary tw="m-5">
         Blog
       </Heading>

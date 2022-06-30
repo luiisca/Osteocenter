@@ -6,8 +6,14 @@ import {
 } from "../../generated";
 import { initializeApollo, addApolloState } from "../../graphql/apolloClient";
 
+import { FiEdit } from "react-icons/fi";
+
 import { Heading } from "../../components/Elements";
 import Layout from "../../components/Layout";
+
+const editArticle = () => {
+  
+}
 
 const Article = ({ params }: { params: { slug: string } }): JSX.Element => {
   const { loading, error, data } = useArticleQuery({
@@ -19,6 +25,7 @@ const Article = ({ params }: { params: { slug: string } }): JSX.Element => {
 
   return (
     <Layout>
+      <FiEdit onClick={editArticle}/>
       <Heading subHeading>{data?.article?.publishedAt}</Heading>
       <Heading primary>{data?.article?.title}</Heading>
     </Layout>

@@ -31,6 +31,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHCMS_CONTENT_ENDPOINT, // Server URL (must be absolute)
+  headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_PAT}` },
   // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
 });
 
