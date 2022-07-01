@@ -5573,14 +5573,21 @@ export type CreateArticleMutationVariables = Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
+
+export type PublishArticleMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type PublishArticleMutation = { __typename?: 'Mutation', publishArticle?: { __typename?: 'Article', publishedAt?: any | null, stage: Stage, id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', html: string }, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, featuredImage: { __typename?: 'Asset', url: string } } | null };
 
 export type ArticleQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', slug: string, publishedAt?: any | null, title: string, excerpt: string, featuredImage: { __typename?: 'Asset', url: string, height?: number | null, width?: number | null }, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, content: { __typename?: 'RichText', html: string } } | null };
+export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5593,6 +5600,7 @@ export const CreateArticleDocument = gql`
   createArticle(
     data: {slug: $slug, title: $title, excerpt: $excerpt, content: $content, featuredPost: $featuredPost, featuredImage: $featuredImage}
   ) {
+    id
     slug
     title
     excerpt
@@ -5641,24 +5649,72 @@ export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
 export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
 export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
-export const ArticleDocument = gql`
-    query Article($slug: String!) {
-  article(where: {slug: $slug}) {
-    slug
+export const PublishArticleDocument = gql`
+    mutation PublishArticle($id: ID) {
+  publishArticle(where: {id: $id}) {
     publishedAt
-    featuredImage {
-      url
-      height
-      width
-    }
+    stage
+    id
+    slug
     title
     excerpt
+    content {
+      html
+    }
+    featuredPost
     categories {
       name
       slug
     }
+    featuredImage {
+      url
+    }
+  }
+}
+    `;
+export type PublishArticleMutationFn = Apollo.MutationFunction<PublishArticleMutation, PublishArticleMutationVariables>;
+
+/**
+ * __usePublishArticleMutation__
+ *
+ * To run a mutation, you first call `usePublishArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePublishArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [publishArticleMutation, { data, loading, error }] = usePublishArticleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePublishArticleMutation(baseOptions?: Apollo.MutationHookOptions<PublishArticleMutation, PublishArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PublishArticleMutation, PublishArticleMutationVariables>(PublishArticleDocument, options);
+      }
+export type PublishArticleMutationHookResult = ReturnType<typeof usePublishArticleMutation>;
+export type PublishArticleMutationResult = Apollo.MutationResult<PublishArticleMutation>;
+export type PublishArticleMutationOptions = Apollo.BaseMutationOptions<PublishArticleMutation, PublishArticleMutationVariables>;
+export const ArticleDocument = gql`
+    query Article($slug: String!) {
+  article(where: {slug: $slug}) {
+    id
+    slug
+    title
+    excerpt
     content {
+      raw
+      markdown
       html
+    }
+    featuredPost
+    featuredImage {
+      width
+      height
+      url
     }
   }
 }
@@ -5693,7 +5749,7 @@ export type ArticleLazyQueryHookResult = ReturnType<typeof useArticleLazyQuery>;
 export type ArticleQueryResult = Apollo.QueryResult<ArticleQuery, ArticleQueryVariables>;
 export const ArticlesDocument = gql`
     query Articles {
-  articles {
+  articles(first: 100) {
     id
     publishedAt
     featuredImage {

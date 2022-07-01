@@ -40,6 +40,7 @@ const Blog = (): JSX.Element => {
               <Link href={`/blog/${article.slug}`}>
                 <a>
                   <Heading subHeading>{article.publishedAt}</Heading>
+                  {/*
                   <ImgWrap>
                     <Image
                       src={article.featuredImage.url}
@@ -48,6 +49,7 @@ const Blog = (): JSX.Element => {
                       objectFit="cover"
                     />
                   </ImgWrap>
+                  */}
                   <Heading tertiary>{article.title}</Heading>
                   <p>{article.excerpt}</p>
                   {article.categories.map((category) => (

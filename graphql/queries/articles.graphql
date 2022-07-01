@@ -1,5 +1,5 @@
 query Articles {
-  articles {
+  articles(first: 100) {
     id
     publishedAt
     featuredImage {

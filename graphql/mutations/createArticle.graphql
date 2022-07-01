@@ -15,6 +15,7 @@ mutation CreateArticle(
     featuredImage: $featuredImage
   	})
   {
+    id
     slug
     title
     excerpt

@@ -1,0 +1,23 @@
+mutation PublishArticle($id: ID) {
+  publishArticle(where: {
+    id: $id
+  }) {
+    publishedAt
+    stage
+    id
+    slug
+    title
+    excerpt
+    content {
+      html
+    }
+    featuredPost
+    categories {
+      name
+      slug
+    }
+    featuredImage {
+      url
+    }
+  }
+}
