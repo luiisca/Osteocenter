@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client";
 import Layout from "../../components/Layout";
 import { Button, Heading } from "../../components/Elements";
 import {
@@ -6,19 +7,17 @@ import {
   usePublishArticleMutation,
 } from "../../generated";
 import type { CreateArticleMutation } from "../../generated";
-
 import { FiEdit } from "react-icons/fi";
-
 // temp
 const newArticleData = {
-  slug: "new-article-slug-89",
-  title: "New Article 89",
-  excerpt: "Article created using graphql mutations 89",
+  slug: "new-article-slug-699",
+  title: "New Article 699",
+  excerpt: "Article created using graphql mutations 699",
   featuredPost: true,
   featuredImage: {
     create: {
-      fileName: "New Article 89",
-      handle: "random-handle-diwkj89",
+      fileName: "New Article 699",
+      handle: "random-handle-diwkj699",
     },
   },
   content: {
@@ -155,7 +154,42 @@ const NewArticle = () => {
   ] = usePublishArticleMutation();
 
   const createArticle = async (): Promise<void> => {
-    const { data } = await createArticleMutation({ variables: newArticleData });
+    const { data } = await createArticleMutation({
+      variables: newArticleData,
+      // add new reference to articles object on apollo cache as it doesn't it automatically
+      update: (cache, mutationResult) => {
+        const { data } = mutationResult;
+        cache.modify({
+          fields: {
+            articles(existingArticles = []) {
+              const newArticleRef = cache.writeFragment({
+                data: data?.createArticle,
+                fragment: gql`
+                  fragment NewArticle on articles {
+                    id
+                    slug
+                    title
+                    excerpt
+                    content {
+                      raw
+                      markdown
+                      html
+                    }
+                    featuredPost
+                    featuredImage {
+                      width
+                      height
+                      url
+                    }
+                  }
+                `,
+              });
+              return [...existingArticles, newArticleRef];
+            },
+          },
+        });
+      },
+    });
     publishArticleMutation({
       variables: {
         id: data?.createArticle?.id,
