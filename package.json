@@ -23,6 +23,7 @@
     "deepmerge": "^4.2.2",
     "favicons": "^7.0.0-beta.4",
     "fecha": "^4.2.3",
+    "formik": "^2.2.9",
     "glob": "^8.0.3",
     "graphql": "^16.5.0",
     "gray-matter": "^4.0.3",
