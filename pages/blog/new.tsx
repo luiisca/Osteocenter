@@ -1,5 +1,4 @@
 import { styled } from "twin.macro";
-import { gql } from "@apollo/client";
 import {
   useCreateArticleMutation,
   usePublishArticleMutation,
@@ -19,6 +18,7 @@ import {
 import { FiEdit } from "react-icons/fi";
 
 import Layout from "../../components/Layout";
+import ImageInput from "../../components/NewArticle/ImageInput";
 import { Button, Heading } from "../../components/Elements";
 
 interface MyFormValues {
@@ -61,141 +61,9 @@ const initialValue: Descendant[] = [
     ],
   },
 ];
-// temp
-const newArticleData = {
-  slug: "new-article-slug-699",
-  title: "New Article 699",
-  excerpt: "Article created using graphql mutations 699",
-  featuredPost: true,
-  featuredImage: {
-    create: {
-      fileName: "New Article 699",
-      handle: "random-handle-diwkj699",
-    },
-  },
-  content: {
-    children: [
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "GraphCMS boasts an impressive collection of ",
-          },
-          {
-            href: "https://graphcms.com/docs/api-reference/schema/field-types",
-            type: "link",
-            children: [
-              {
-                text: "Field Types",
-              },
-            ],
-          },
-          {
-            text: " that you can use when content modelling. These field types range from the core GraphQL scalar types, to custom ",
-          },
-          {
-            href: "https://graphcms.com/docs/api-reference/schema/field-types#asset",
-            type: "link",
-            children: [
-              {
-                text: "Asset",
-              },
-            ],
-          },
-          {
-            text: ", ",
-          },
-          {
-            href: "https://graphcms.com/docs/api-reference/schema/field-types#location",
-            type: "link",
-            children: [
-              {
-                text: "Location",
-              },
-            ],
-          },
-          {
-            text: ", ",
-          },
-          {
-            href: "https://graphcms.com/docs/api-reference/schema/field-types#json",
-            type: "link",
-            children: [
-              {
-                text: "JSON",
-              },
-            ],
-          },
-          {
-            text: ", and, ",
-          },
-          {
-            href: "https://graphcms.com/docs/api-reference/schema/field-types#rich-text",
-            type: "link",
-            children: [
-              {
-                text: "RichText",
-              },
-            ],
-          },
-          {
-            text: " scalars.",
-          },
-        ],
-      },
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "",
-          },
-        ],
-      },
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "In this post we'll look at the Rich Text field. We'll take a peak at how you can query, and mutate Rich Text using the Content API.",
-          },
-        ],
-      },
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "",
-          },
-        ],
-      },
-      {
-        src: "https://media.graphcms.com/N3JOKsXrT9ezCU4Ba6LI",
-        type: "image",
-        title: "Screenshot 2021-03-24 at 13.00.14.png",
-        width: 2408,
-        handle: "N3JOKsXrT9ezCU4Ba6LI",
-        height: 1684,
-        children: [
-          {
-            text: "",
-          },
-        ],
-        mimeType: "image/png",
-      },
-      {
-        type: "paragraph",
-        children: [
-          {
-            text: "",
-          },
-        ],
-      },
-    ],
-  },
-};
 
 const NewArticle = () => {
   const [value, setValue] = useState<Descendant[]>(initialValue);
-  const [testState, setTestState] = useState<string>("hello test");
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [createArticleMutation, { loading: createLoading }] =
@@ -205,18 +73,6 @@ const NewArticle = () => {
     publishArticleMutation,
     { loading: publishLoading, error: publishError },
   ] = usePublishArticleMutation();
-
-  const handleImagePreview = (values: any, setFieldValue: any) => {
-    if (values.featuredImage) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFieldValue("featuredImagePreview", reader.result);
-        console.log("onLoaded render", reader.result);
-      };
-      console.log("handleImagePreview", values);
-      reader.readAsDataURL(values.featuredImage);
-    }
-  };
 
   const createArticle = (values: any, actions: any) => {
     console.log(values, actions);
@@ -305,22 +161,7 @@ const NewArticle = () => {
               </label>
               <p>Seleccionado: {values.featured}</p>
             </div>
-            <input
-              type="file"
-              id="file"
-              name="file"
-              onChange={(e: any) => {
-                console.log("input file on change", e.currentTarget.files[0]);
-                setTestState("bye");
-                console.log(testState);
-                // it is not possible to access the new value of state inmediately after defining it, gotta wait to the next render
-                setFieldValue("featuredImage", e.currentTarget.files[0]);
-              }}
-            />
-            {handleImagePreview(values, setFieldValue)}
-            {values.featuredImage && (
-              <img src={values.featuredImagePreview} alt="preview image" />
-            )}
+            <ImageInput />
             <Button elType="submit" type="submit" cta hero tw="mr-4">
               <FiEdit />
               Publicar
