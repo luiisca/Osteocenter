@@ -13,18 +13,13 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date string, such as 2007-12-03 (YYYY-MM-DD), compliant with ISO 8601 standard for representation of dates using the Gregorian calendar. */
   Date: any;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the date-timeformat outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representationof dates and times using the Gregorian calendar. */
   DateTime: any;
   Hex: any;
-  /** Raw JSON value */
   Json: any;
-  /** The Long scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
   Long: any;
   RGBAHue: any;
   RGBATransparency: any;
-  /** Slate-compatible RichText AST */
   RichTextAST: any;
 };
 
@@ -5569,18 +5564,18 @@ export type CreateArticleMutationVariables = Exact<{
   excerpt: Scalars['String'];
   content: Scalars['RichTextAST'];
   featuredPost: Scalars['Boolean'];
-  featuredImage: AssetCreateOneInlineInput;
+  imageId: Scalars['ID'];
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', id: string } | null };
 
 export type PublishArticleMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type PublishArticleMutation = { __typename?: 'Mutation', publishArticle?: { __typename?: 'Article', publishedAt?: any | null, stage: Stage, id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', html: string }, categories: Array<{ __typename?: 'Category', name: string, slug: string }>, featuredImage: { __typename?: 'Asset', url: string } } | null };
+export type PublishArticleMutation = { __typename?: 'Mutation', publishArticle?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
 
 export type ArticleQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -5596,25 +5591,11 @@ export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename
 
 
 export const CreateArticleDocument = gql`
-    mutation CreateArticle($slug: String!, $title: String!, $excerpt: String!, $content: RichTextAST!, $featuredPost: Boolean!, $featuredImage: AssetCreateOneInlineInput!) {
+    mutation CreateArticle($slug: String!, $title: String!, $excerpt: String!, $content: RichTextAST!, $featuredPost: Boolean!, $imageId: ID!) {
   createArticle(
-    data: {slug: $slug, title: $title, excerpt: $excerpt, content: $content, featuredPost: $featuredPost, featuredImage: $featuredImage}
+    data: {slug: $slug, title: $title, excerpt: $excerpt, content: $content, featuredPost: $featuredPost, featuredImage: {connect: {id: $imageId}}}
   ) {
     id
-    slug
-    title
-    excerpt
-    content {
-      raw
-      markdown
-      html
-    }
-    featuredPost
-    featuredImage {
-      width
-      height
-      url
-    }
   }
 }
     `;
@@ -5638,7 +5619,7 @@ export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutat
  *      excerpt: // value for 'excerpt'
  *      content: // value for 'content'
  *      featuredPost: // value for 'featuredPost'
- *      featuredImage: // value for 'featuredImage'
+ *      imageId: // value for 'imageId'
  *   },
  * });
  */
@@ -5652,21 +5633,19 @@ export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArti
 export const PublishArticleDocument = gql`
     mutation PublishArticle($id: ID) {
   publishArticle(where: {id: $id}) {
-    publishedAt
-    stage
     id
     slug
     title
     excerpt
     content {
+      raw
+      markdown
       html
     }
     featuredPost
-    categories {
-      name
-      slug
-    }
     featuredImage {
+      width
+      height
       url
     }
   }

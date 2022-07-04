@@ -2,21 +2,19 @@ mutation PublishArticle($id: ID) {
   publishArticle(where: {
     id: $id
   }) {
-    publishedAt
-    stage
     id
     slug
     title
     excerpt
     content {
+      raw
+      markdown
       html
     }
     featuredPost
-    categories {
-      name
-      slug
-    }
     featuredImage {
+      width
+      height
       url
     }
   }

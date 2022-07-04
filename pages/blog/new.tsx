@@ -1,9 +1,7 @@
+// libraries
 import { styled } from "twin.macro";
-import {
-  useCreateArticleMutation,
-  usePublishArticleMutation,
-} from "../../generated";
 import { useState, useMemo, useRef } from "react";
+import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { createEditor, Descendant } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
@@ -16,9 +14,19 @@ import {
   FieldProps,
 } from "formik";
 
+// helpers
+import {
+  useCreateArticleMutation,
+  usePublishArticleMutation,
+} from "../../generated";
+import { postImageAsset } from "../../services/assets";
+import { toSlug, toRichTextFormat } from "../../lib/helpers";
+
+// icons + visuls
 import { Orbit } from "@uiball/loaders";
 import { FiEdit } from "react-icons/fi";
 
+// components
 import Layout from "../../components/Layout";
 import ImageInput from "../../components/NewArticle/ImageInput";
 import { Button, Heading } from "../../components/Elements";
@@ -65,7 +73,7 @@ const initialValue: Descendant[] = [
 ];
 
 const NewArticle = () => {
-  const [value, setValue] = useState<Descendant[]>(initialValue);
+  const [content, setContent] = useState<Descendant[]>(initialValue);
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const [createArticleMutation, { loading: createLoading }] =
@@ -79,80 +87,74 @@ const NewArticle = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const postImageAsset = async (obj: any) => {
-    const result = await fetch("/api/postImage", {
-      method: "POST",
-      body: obj,
-    });
-
-    return result.json();
-  };
   const createArticle = async (values: any, actions: any) => {
     if (!values.featuredImage) return;
 
     const formData = new FormData();
+    const { title, excerpt, featured, featuredImage } = values;
     formData.append("featuredImage", values.featuredImage);
-    formData.append("title", values.title);
-    formData.append("excerpt", values.excerpt);
-    formData.append("featured", values.featured);
 
-    postImageAsset(formData).then((res) => {
-      setLoading(false)
-      setSubmitted(true)
-      console.log(res)
-    });
+    const { id: imageId } = await postImageAsset(formData);
+    const mutationVariables = {
+      slug: toSlug(title),
+      title,
+      excerpt,
+      content: toRichTextFormat(content),
+      featuredPost: featured === "yes",
+      imageId,
+    };
 
-    // setLoading(true);
+    setLoading(false);
+    setSubmitted(true);
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
 
-    const { title, excerpt, featured, featuredImage } = values;
-    const form = new FormData();
-    form.append("featuredImage", values.featuredImage);
+    const { data } = await createArticleMutation({
+      variables: mutationVariables,
+    });
 
-    // const { data } = await createArticleMutation({
-    //   variables: newArticleData,
-    //   // add new reference to articles list fields on apollo cache as it doesn't do that automatically
-    //   update: (cache, mutationResult) => {
-    //     const { data } = mutationResult;
-    //     cache.modify({
-    //       fields: {
-    //         articles(existingArticles = []) {
-    //           const newArticleRef = cache.writeFragment({
-    //             data: data?.createArticle,
-    //             fragment: gql`
-    //               fragment NewArticle on articles {
-    //                 id
-    //                 slug
-    //                 title
-    //                 excerpt
-    //                 content {
-    //                   raw
-    //                   markdown
-    //                   html
-    //                 }
-    //                 featuredPost
-    //                 featuredImage {
-    //                   width
-    //                   height
-    //                   url
-    //                 }
-    //               }
-    //             `,
-    //           });
-    //           return [...existingArticles, newArticleRef];
-    //         },
-    //       },
-    //     });
-    //   },
-    // });
-    // publishArticleMutation({
-    //   variables: {
-    //     id: data?.createArticle?.id,
-    //   },
-    // });
+    publishArticleMutation({
+      variables: {
+        id: data?.createArticle?.id,
+      },
+
+      // add new reference to articles list fields on apollo cache as it doesn't do that automatically
+      update: (cache, mutationResult) => {
+        const { data } = mutationResult;
+        cache.modify({
+          fields: {
+            articles(existingArticles = []) {
+              const newArticleRef = cache.writeFragment({
+                data: data?.publishArticle,
+                fragment: gql`
+                  fragment PublishedArticle on articles {
+                    id
+                    slug
+                    title
+                    excerpt
+                    content {
+                      raw
+                      markdown
+                      html
+                    }
+                    featuredPost
+                    featuredImage {
+                      width
+                      height
+                      url
+                    }
+                  }
+                `,
+              });
+              return [...existingArticles, newArticleRef];
+            },
+          },
+        });
+      },
+    });
   };
 
   const initialValues: MyFormValues = {
@@ -169,7 +171,7 @@ const NewArticle = () => {
       {publishError && <p>Hubo un problema, reintentar</p>}
       <Heading tertiary>New Article</Heading>
 
-      <Orbit size={35} color="#231F20" />
+      {loading && <Orbit size={35} color="#231F20" />}
       <Formik initialValues={initialValues} onSubmit={createArticle}>
         {({ values, setFieldValue }: FormikProps<MyFormValues>) => (
           <Form>
@@ -205,9 +207,9 @@ const NewArticle = () => {
       <Container>
         <Slate
           editor={editor}
-          value={value}
+          value={content}
           onChange={(newValue) => {
-            setValue(newValue);
+            setContent(newValue);
           }}
         >
           <Editable

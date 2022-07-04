@@ -4,7 +4,7 @@ mutation CreateArticle(
   $excerpt: String!,
 	$content: RichTextAST!,
 	$featuredPost: Boolean!,
-	$featuredImage: AssetCreateOneInlineInput!)
+	$imageId: ID!)
   {
   createArticle(data: {
     slug: $slug,
@@ -12,23 +12,9 @@ mutation CreateArticle(
     excerpt: $excerpt,
     content: $content,
     featuredPost: $featuredPost,
-    featuredImage: $featuredImage
+    featuredImage: {connect: {id: $imageId}}
   	})
   {
     id
-    slug
-    title
-    excerpt
-    content {
-      raw
-      markdown
-      html
-    }
-    featuredPost
-    featuredImage {
-      width
-      height
-      url
-    }
   }
 }
