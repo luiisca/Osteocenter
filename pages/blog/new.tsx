@@ -4,6 +4,7 @@ import {
   usePublishArticleMutation,
 } from "../../generated";
 import { useState, useMemo, useRef } from "react";
+import { useRouter } from "next/router";
 import { createEditor, Descendant } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import {
@@ -15,6 +16,7 @@ import {
   FieldProps,
 } from "formik";
 
+import { Orbit } from "@uiball/loaders";
 import { FiEdit } from "react-icons/fi";
 
 import Layout from "../../components/Layout";
@@ -73,14 +75,43 @@ const NewArticle = () => {
     publishArticleMutation,
     { loading: publishLoading, error: publishError },
   ] = usePublishArticleMutation();
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const createArticle = (values: any, actions: any) => {
-    console.log(values, actions);
+  const postImageAsset = async (obj: any) => {
+    const result = await fetch("/api/postImage", {
+      method: "POST",
+      body: obj,
+    });
+
+    return result.json();
+  };
+  const createArticle = async (values: any, actions: any) => {
+    if (!values.featuredImage) return;
+
+    const formData = new FormData();
+    formData.append("featuredImage", values.featuredImage);
+    formData.append("title", values.title);
+    formData.append("excerpt", values.excerpt);
+    formData.append("featured", values.featured);
+
+    postImageAsset(formData).then((res) => {
+      setLoading(false)
+      setSubmitted(true)
+      console.log(res)
+    });
+
+    // setLoading(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    const { title, excerpt, featured, featuredImage } = values;
     const form = new FormData();
     form.append("featuredImage", values.featuredImage);
-    for (let p of form) {
-      console.log(p);
-    }
+
     // const { data } = await createArticleMutation({
     //   variables: newArticleData,
     //   // add new reference to articles list fields on apollo cache as it doesn't do that automatically
@@ -138,6 +169,7 @@ const NewArticle = () => {
       {publishError && <p>Hubo un problema, reintentar</p>}
       <Heading tertiary>New Article</Heading>
 
+      <Orbit size={35} color="#231F20" />
       <Formik initialValues={initialValues} onSubmit={createArticle}>
         {({ values, setFieldValue }: FormikProps<MyFormValues>) => (
           <Form>
@@ -161,7 +193,7 @@ const NewArticle = () => {
               </label>
               <p>Seleccionado: {values.featured}</p>
             </div>
-            <ImageInput />
+            <ImageInput setFieldValue={setFieldValue} name="featuredImage" />
             <Button elType="submit" type="submit" cta hero tw="mr-4">
               <FiEdit />
               Publicar

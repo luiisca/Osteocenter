@@ -33,28 +33,34 @@ const Container = styled.div((props) => [
     transition: border 0.24s ease-in-out;
   `,
 ]);
-const ImgWrap = styled.div(() => [
-  tw`justify-self-center w-[clamp(200px, 80%, 400px)]`,
-  tw`rounded-[9px] overflow-hidden`,
-]);
 
-const ImageInput = () => {
+const ImageInput = ({
+  setFieldValue,
+  name,
+}: {
+  setFieldValue: any;
+  name: string;
+}) => {
   const [imgPreview, setImgPreview] = useState<string | null | ArrayBuffer>("");
 
-  const onDrop = useCallback((accepedtFiles: Array<{}>) => {
-    const firstFile = accepedtFiles[0];
+  const onDrop = useCallback(
+    (accepedtFiles: Array<{}>) => {
+      const firstFile = accepedtFiles[0];
+      setFieldValue(name, firstFile);
 
-    const handleImagePreview = (files: any) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImgPreview(reader.result);
+      const handleImagePreview = (files: any) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImgPreview(reader.result);
+        };
+        reader.readAsDataURL(files);
       };
-      reader.readAsDataURL(files);
-    };
-    console.log("dropped");
+      console.log("dropped");
 
-    handleImagePreview(firstFile);
-  }, []);
+      handleImagePreview(firstFile);
+    },
+    [name, setFieldValue]
+  );
 
   const {
     getRootProps,
