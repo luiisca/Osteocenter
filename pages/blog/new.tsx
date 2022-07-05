@@ -28,7 +28,8 @@ import { FiEdit } from "react-icons/fi";
 
 // components
 import Layout from "../../components/Layout";
-import ImageInput from "../../components/NewArticle/ImageInput";
+import ImageInput from "../../components/Articles/TextEditor/ImageInput";
+import TextEditor from "../../components/Articles/TextEditor";
 import { Button, Heading } from "../../components/Elements";
 
 interface MyFormValues {
@@ -205,22 +206,7 @@ const NewArticle = () => {
       </Formik>
       {/*
       <Container>
-        <Slate
-          editor={editor}
-          value={content}
-          onChange={(newValue) => {
-            setContent(newValue);
-          }}
-        >
-          <Editable
-            placeholder="Enter some text..."
-            onKeyDown={(event: React.KeyboardEvent) => {
-              if (event.key !== "&") return;
-              event.preventDefault();
-              editor.insertText("and");
-            }}
-          />
-        </Slate>
+        <TextEditor />
       </Container>
       */}
     </Layout>

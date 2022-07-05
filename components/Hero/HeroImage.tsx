@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/future/image';
 import tw, {css, styled} from 'twin.macro';
 
 const Container = tw.div`w-4/5 h-full`
@@ -18,7 +18,6 @@ const HeroImage = () => {
       <ImgWrap>
         <Image
           priority={true}
-          layout='raw'
           sizes='50vw'
           width='400'
           height='600'
