@@ -5577,6 +5577,13 @@ export type PublishArticleMutationVariables = Exact<{
 
 export type PublishArticleMutation = { __typename?: 'Mutation', publishArticle?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
 
+export type PublishAssetMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PublishAssetMutation = { __typename?: 'Mutation', publishAsset?: { __typename?: 'Asset', id: string } | null };
+
 export type ArticleQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -5677,6 +5684,39 @@ export function usePublishArticleMutation(baseOptions?: Apollo.MutationHookOptio
 export type PublishArticleMutationHookResult = ReturnType<typeof usePublishArticleMutation>;
 export type PublishArticleMutationResult = Apollo.MutationResult<PublishArticleMutation>;
 export type PublishArticleMutationOptions = Apollo.BaseMutationOptions<PublishArticleMutation, PublishArticleMutationVariables>;
+export const PublishAssetDocument = gql`
+    mutation PublishAsset($id: ID!) {
+  publishAsset(where: {id: $id}) {
+    id
+  }
+}
+    `;
+export type PublishAssetMutationFn = Apollo.MutationFunction<PublishAssetMutation, PublishAssetMutationVariables>;
+
+/**
+ * __usePublishAssetMutation__
+ *
+ * To run a mutation, you first call `usePublishAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePublishAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [publishAssetMutation, { data, loading, error }] = usePublishAssetMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePublishAssetMutation(baseOptions?: Apollo.MutationHookOptions<PublishAssetMutation, PublishAssetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PublishAssetMutation, PublishAssetMutationVariables>(PublishAssetDocument, options);
+      }
+export type PublishAssetMutationHookResult = ReturnType<typeof usePublishAssetMutation>;
+export type PublishAssetMutationResult = Apollo.MutationResult<PublishAssetMutation>;
+export type PublishAssetMutationOptions = Apollo.BaseMutationOptions<PublishAssetMutation, PublishAssetMutationVariables>;
 export const ArticleDocument = gql`
     query Article($slug: String!) {
   article(where: {slug: $slug}) {

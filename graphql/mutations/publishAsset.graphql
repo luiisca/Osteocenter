@@ -1,0 +1,5 @@
+mutation PublishAsset($id: ID!) {
+  publishAsset(where: {id: $id}) {
+    id
+  }
+}

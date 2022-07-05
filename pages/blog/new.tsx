@@ -18,6 +18,7 @@ import {
 import {
   useCreateArticleMutation,
   usePublishArticleMutation,
+  usePublishAssetMutation,
 } from "../../generated";
 import { postImageAsset } from "../../services/assets";
 import { toSlug, toRichTextFormat } from "../../lib/helpers";
@@ -37,7 +38,7 @@ interface MyFormValues {
   excerpt: string;
   featured: boolean;
   featuredImage: null;
-  featuredImagePreview: string;
+  content: any;
 }
 
 const Container = styled.div`
@@ -50,40 +51,16 @@ const Container = styled.div`
   padding: 0 100px;
 `;
 
-// Create our initial value...
-const initialValue: Descendant[] = [
-  {
-    type: "paragraph",
-    children: [
-      {
-        text: "This example shows how you can make a hovering menu appear above your content, which you can use to make text ",
-      },
-      { text: "bold", bold: true },
-      { text: ", " },
-      { text: ", or anything else you might want to do!" },
-    ],
-  },
-  {
-    type: "paragraph",
-    children: [
-      { text: "Try it out yourself! Just " },
-      { text: "select any piece of text and the menu will appear", bold: true },
-      { text: "." },
-    ],
-  },
-];
-
 const NewArticle = () => {
-  const [content, setContent] = useState<Descendant[]>(initialValue);
-  const editor = useMemo(() => withReact(createEditor()), []);
-
   const [createArticleMutation, { loading: createLoading }] =
     useCreateArticleMutation();
-
   const [
     publishArticleMutation,
     { loading: publishLoading, error: publishError },
   ] = usePublishArticleMutation();
+  const [publishAssetMutation, { data: publishImgData }] =
+    usePublishAssetMutation();
+
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -92,17 +69,22 @@ const NewArticle = () => {
     if (!values.featuredImage) return;
 
     const formData = new FormData();
-    const { title, excerpt, featured, featuredImage } = values;
+    const { title, excerpt, featured, content } = values;
     formData.append("featuredImage", values.featuredImage);
 
     const { id: imageId } = await postImageAsset(formData);
+    const { data: publishAssetData } = await publishAssetMutation({
+      variables: {
+        id: imageId,
+      },
+    });
     const mutationVariables = {
       slug: toSlug(title),
       title,
       excerpt,
       content: toRichTextFormat(content),
       featuredPost: featured === "yes",
-      imageId,
+      imageId: publishAssetData?.publishAsset?.id || "",
     };
 
     setLoading(false);
@@ -163,7 +145,16 @@ const NewArticle = () => {
     excerpt: "",
     featured: true,
     featuredImage: null,
-    featuredImagePreview: "",
+    content: [
+      {
+        type: "p",
+        children: [
+          {
+            text: "",
+          },
+        ],
+      },
+    ],
   };
   return (
     <Layout>
@@ -201,14 +192,13 @@ const NewArticle = () => {
               <FiEdit />
               Publicar
             </Button>
+            <TextEditor
+              initialContent={values.content}
+              setFieldValue={setFieldValue}
+            />
           </Form>
         )}
       </Formik>
-      {/*
-      <Container>
-        <TextEditor />
-      </Container>
-      */}
     </Layout>
   );
 };

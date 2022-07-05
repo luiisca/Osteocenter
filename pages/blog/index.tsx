@@ -22,6 +22,7 @@ const Blog = (): JSX.Element => {
   if (error) return <div>Error loading articles.</div>;
   if (loading) return <div>Loading...</div>;
 
+  console.log(data);
   return (
     <Layout>
       <Link href="/blog/new">
@@ -40,7 +41,6 @@ const Blog = (): JSX.Element => {
               <Link href={`/blog/${article.slug}`}>
                 <a>
                   <Heading subHeading>{article.publishedAt}</Heading>
-                  {/*
                   <ImgWrap>
                     <Image
                       src={article.featuredImage.url}
@@ -49,7 +49,6 @@ const Blog = (): JSX.Element => {
                       objectFit="cover"
                     />
                   </ImgWrap>
-                  */}
                   <Heading tertiary>{article.title}</Heading>
                   <p>{article.excerpt}</p>
                   {article.categories.map((category) => (
