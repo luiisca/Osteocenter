@@ -1,9 +1,10 @@
-import { Plate, TEditableProps } from "@udecode/plate";
-import { MyParagraphElement, MyValue } from "./plateTypes";
+import { Plate } from "@udecode/plate";
+import { MyValue } from "./plateTypes";
 
-const editableProps: TEditableProps<MyValue> = {
-  placeholder: "Escribir...",
-};
+import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
+import { editableProps } from "./configs/editablesProps";
+
+import { MarkBallonToolbar } from "./balloon-toolbar/MarkBalloonToolbar";
 
 const TextEditor = ({
   initialContent,
@@ -15,9 +16,12 @@ const TextEditor = ({
   return (
     <Plate<MyValue>
       editableProps={editableProps}
+      plugins={basicNodesPlugins}
       initialValue={initialContent}
       onChange={(newValue) => setFieldValue("content", newValue)}
-    />
+    >
+      <MarkBallonToolbar />
+    </Plate>
   );
 };
 

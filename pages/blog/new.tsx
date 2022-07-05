@@ -1,10 +1,8 @@
 // libraries
 import { styled } from "twin.macro";
-import { useState, useMemo, useRef } from "react";
+import { useState } from "react";
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
-import { createEditor, Descendant } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
 import {
   Formik,
   FormikHelpers,
