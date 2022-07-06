@@ -1,13 +1,18 @@
 // libraries + types
 import { useRef, CSSProperties } from "react";
 import { CursorOverlayContainer } from "./cursor-overlay/CursorOverlayContainer";
-import { Plate, createExitBreakPlugin } from "@udecode/plate";
+import {
+  Plate,
+  createExitBreakPlugin,
+  createSoftBreakPlugin,
+} from "@udecode/plate";
 import { MyValue, createMyPlugins } from "./plateTypes";
 
 // configs + basics
 import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
 import { BasicElementToolbarButtons } from "./basic-elements/BasicElementToolbarButtons";
 import { exitBreakPlugin } from "./exit-break/exitBreakPlugin";
+import { softBreakPlugin } from "./soft-break/softBreakPlugin";
 import { editableProps } from "./configs/editablesProps";
 import { plateUI } from "./configs/plateUI";
 
@@ -29,6 +34,7 @@ const plugins = createMyPlugins(
   [
     ...basicNodesPlugins,
     createExitBreakPlugin(exitBreakPlugin),
+    createSoftBreakPlugin(softBreakPlugin),
     dragOverCursorPlugin,
   ],
   {
