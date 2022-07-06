@@ -1,12 +1,22 @@
+// libraries + types
 import { Plate } from "@udecode/plate";
-import { MyValue } from "./plateTypes";
+import { MyValue, createMyPlugins } from "./plateTypes";
 
+// configs + basics
 import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
 import { BasicElementToolbarButtons } from "./basic-elements/BasicElementToolbarButtons";
 import { editableProps } from "./configs/editablesProps";
+import { plateUI } from "./configs/plateUI";
 
+// components
 import { Toolbar } from "./toolbar/Toolbar";
 import { MarkBallonToolbar } from "./balloon-toolbar/MarkBalloonToolbar";
+import { withStyledPlaceHolders } from "./placeholder/withStyledPlaceHolders";
+
+const components = withStyledPlaceHolders(plateUI);
+const plugins = createMyPlugins([...basicNodesPlugins], {
+  components,
+});
 
 const TextEditor = ({
   initialContent,
@@ -23,7 +33,7 @@ const TextEditor = ({
 
       <Plate<MyValue>
         editableProps={editableProps}
-        plugins={basicNodesPlugins}
+        plugins={plugins}
         initialValue={initialContent}
         onChange={(newValue) => setFieldValue("content", newValue)}
       >

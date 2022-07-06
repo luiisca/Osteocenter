@@ -145,7 +145,7 @@ const NewArticle = () => {
     featuredImage: null,
     content: [
       {
-        type: "p",
+        type: "h1",
         children: [
           {
             text: "",
