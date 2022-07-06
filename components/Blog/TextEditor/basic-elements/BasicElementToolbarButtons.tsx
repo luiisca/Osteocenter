@@ -1,16 +1,18 @@
 // toolbar icons
-import { FormatQuote } from "@styled-icons/material/FormatQuote";
-import { Looks3 } from "@styled-icons/material/Looks3";
-import { LooksOne } from "@styled-icons/material/LooksOne";
 import { LooksTwo } from "@styled-icons/material/LooksTwo";
+import { Looks3 } from "@styled-icons/material/Looks3";
+import { Looks4 } from "@styled-icons/material/Looks4";
+import { FormatQuote } from "@styled-icons/material/FormatQuote";
+import { Image } from "@styled-icons/material/Image";
 
 // mark elements reference
 import {
   BlockToolbarButton,
-  ELEMENT_BLOCKQUOTE,
-  ELEMENT_H1,
+  ImageToolbarButton,
   ELEMENT_H2,
   ELEMENT_H3,
+  ELEMENT_H4,
+  ELEMENT_BLOCKQUOTE,
   getPluginType,
 } from "@udecode/plate";
 
@@ -23,11 +25,6 @@ export const BasicElementToolbarButtons = () => {
   return (
     <>
       <BlockToolbarButton
-        type={getPluginType(editor, ELEMENT_H1)}
-        icon={<LooksOne />}
-      />
-
-      <BlockToolbarButton
         type={getPluginType(editor, ELEMENT_H2)}
         icon={<LooksTwo />}
       />
@@ -38,9 +35,16 @@ export const BasicElementToolbarButtons = () => {
       />
 
       <BlockToolbarButton
+        type={getPluginType(editor, ELEMENT_H4)}
+        icon={<Looks4 />}
+      />
+
+      <BlockToolbarButton
         type={getPluginType(editor, ELEMENT_BLOCKQUOTE)}
         icon={<FormatQuote />}
       />
+
+      <ImageToolbarButton icon={<Image />} />
     </>
   );
 };

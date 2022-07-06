@@ -27,8 +27,8 @@ import { FiEdit } from "react-icons/fi";
 
 // components
 import Layout from "../../components/Layout";
-import ImageInput from "../../components/Articles/TextEditor/ImageInput";
-import TextEditor from "../../components/Articles/TextEditor";
+import ImageInput from "../../components/Blog/TextEditor/ImageInput";
+import TextEditor from "../../components/Blog/TextEditor";
 import { Button, Heading } from "../../components/Elements";
 
 interface MyFormValues {

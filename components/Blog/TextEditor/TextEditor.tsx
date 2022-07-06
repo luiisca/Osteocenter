@@ -5,6 +5,12 @@ import {
   Plate,
   createExitBreakPlugin,
   createSoftBreakPlugin,
+  createImagePlugin,
+  createSelectOnBackspacePlugin,
+  createTrailingBlockPlugin,
+  createNormalizeTypesPlugin,
+  ELEMENT_H1,
+  ELEMENT_IMAGE,
 } from "@udecode/plate";
 import { MyValue, createMyPlugins } from "./plateTypes";
 
@@ -13,6 +19,7 @@ import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
 import { BasicElementToolbarButtons } from "./basic-elements/BasicElementToolbarButtons";
 import { exitBreakPlugin } from "./exit-break/exitBreakPlugin";
 import { softBreakPlugin } from "./soft-break/softBreakPlugin";
+import { trailingBlockPlugin } from './trailing-block/trailingBlockPlugin';
 import { editableProps } from "./configs/editablesProps";
 import { plateUI } from "./configs/plateUI";
 
@@ -36,6 +43,16 @@ const plugins = createMyPlugins(
     createExitBreakPlugin(exitBreakPlugin),
     createSoftBreakPlugin(softBreakPlugin),
     dragOverCursorPlugin,
+    createImagePlugin(),
+    createSelectOnBackspacePlugin({
+      options: { query: { allow: [ELEMENT_IMAGE] } },
+    }),
+    createTrailingBlockPlugin(trailingBlockPlugin),
+    createNormalizeTypesPlugin({
+      options: {
+        rules: [{ path: [0], strictType: ELEMENT_H1 }],
+      },
+    }),
   ],
   {
     components,
