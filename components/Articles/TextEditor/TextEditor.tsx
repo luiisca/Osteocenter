@@ -1,4 +1,6 @@
 // libraries + types
+import { useRef, CSSProperties } from "react";
+import { CursorOverlayContainer } from "./cursor-overlay/CursorOverlayContainer";
 import { Plate, createExitBreakPlugin } from "@udecode/plate";
 import { MyValue, createMyPlugins } from "./plateTypes";
 
@@ -13,10 +15,22 @@ import { plateUI } from "./configs/plateUI";
 import { Toolbar } from "./toolbar/Toolbar";
 import { MarkBallonToolbar } from "./balloon-toolbar/MarkBalloonToolbar";
 import { withStyledPlaceHolders } from "./placeholder/withStyledPlaceHolders";
+import { dragOverCursorPlugin } from "./cursor-overlay/dragOverCursorPlugin";
+
+const styles: Record<string, CSSProperties> = {
+  wrapper: {
+    position: "relative",
+  },
+};
 
 const components = withStyledPlaceHolders(plateUI);
+
 const plugins = createMyPlugins(
-  [...basicNodesPlugins, createExitBreakPlugin(exitBreakPlugin)],
+  [
+    ...basicNodesPlugins,
+    createExitBreakPlugin(exitBreakPlugin),
+    dragOverCursorPlugin,
+  ],
   {
     components,
   }
@@ -29,8 +43,9 @@ const TextEditor = ({
   initialContent: any;
   setFieldValue: any;
 }) => {
+  const ref = useRef(null);
   return (
-    <>
+    <div ref={ref} style={styles.wrapper}>
       <Toolbar>
         <BasicElementToolbarButtons />
       </Toolbar>
@@ -42,8 +57,9 @@ const TextEditor = ({
         onChange={(newValue) => setFieldValue("content", newValue)}
       >
         <MarkBallonToolbar />
+        <CursorOverlayContainer containerRef={ref} />
       </Plate>
-    </>
+    </div>
   );
 };
 

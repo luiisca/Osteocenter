@@ -8,11 +8,11 @@ export const exitBreakPlugin: Partial<MyPlatePlugin<ExitBreakPlugin>> = {
         // default behavior break to the next line
         hotkey: "mod+enter",
       },
-      // {
-      //   // break to the previous line
-      //   hotkey: 'mod+shift+enter',
-      //   before: true,
-      // },
+      {
+        // break to the previous line
+        hotkey: "mod+shift+enter",
+        before: true,
+      },
       {
         // if cursor at start of the block break to previous line
         // if end break to next line
