@@ -1,10 +1,11 @@
 // libraries + types
-import { Plate } from "@udecode/plate";
+import { Plate, createExitBreakPlugin } from "@udecode/plate";
 import { MyValue, createMyPlugins } from "./plateTypes";
 
 // configs + basics
 import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
 import { BasicElementToolbarButtons } from "./basic-elements/BasicElementToolbarButtons";
+import { exitBreakPlugin } from "./exit-break/exitBreakPlugin";
 import { editableProps } from "./configs/editablesProps";
 import { plateUI } from "./configs/plateUI";
 
@@ -14,9 +15,12 @@ import { MarkBallonToolbar } from "./balloon-toolbar/MarkBalloonToolbar";
 import { withStyledPlaceHolders } from "./placeholder/withStyledPlaceHolders";
 
 const components = withStyledPlaceHolders(plateUI);
-const plugins = createMyPlugins([...basicNodesPlugins], {
-  components,
-});
+const plugins = createMyPlugins(
+  [...basicNodesPlugins, createExitBreakPlugin(exitBreakPlugin)],
+  {
+    components,
+  }
+);
 
 const TextEditor = ({
   initialContent,
