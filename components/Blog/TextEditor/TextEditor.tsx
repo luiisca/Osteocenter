@@ -14,12 +14,15 @@ import {
 } from "@udecode/plate";
 import { MyValue, createMyPlugins } from "./plateTypes";
 
+// helpers
+import { postImageAsset } from "../../../services/assets";
+
 // configs + basics
 import { basicNodesPlugins } from "./basic-nodes/basicNodesPlugins";
 import { BasicElementToolbarButtons } from "./basic-elements/BasicElementToolbarButtons";
 import { exitBreakPlugin } from "./exit-break/exitBreakPlugin";
 import { softBreakPlugin } from "./soft-break/softBreakPlugin";
-import { trailingBlockPlugin } from './trailing-block/trailingBlockPlugin';
+import { trailingBlockPlugin } from "./trailing-block/trailingBlockPlugin";
 import { editableProps } from "./configs/editablesProps";
 import { plateUI } from "./configs/plateUI";
 

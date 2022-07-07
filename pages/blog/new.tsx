@@ -31,12 +31,32 @@ import ImageInput from "../../components/Blog/TextEditor/ImageInput";
 import TextEditor from "../../components/Blog/TextEditor";
 import { Button, Heading } from "../../components/Elements";
 
+interface BasicNode {
+  type: string;
+  children: Array<{}>;
+}
+// const imgNodeFirst = {
+//   type: "img",
+//   children: [{}, {}],
+//   url: "data:image/jpeg;base64",
+//   caption: [{ text: "dklfj" }],
+// };
+interface ImageNode extends BasicNode {
+  src: string;
+  type: "image";
+  title: string;
+  width: number;
+  handle: string;
+  height: number;
+  caption?: Array<{}>;
+  mimeType: string;
+}
 interface MyFormValues {
   title: string;
   excerpt: string;
-  featured: boolean;
+  featuredPost: boolean;
   featuredImage: null;
-  content: any;
+  content: Array<ImageNode | BasicNode>;
 }
 
 const Container = styled.div`
@@ -67,7 +87,7 @@ const NewArticle = () => {
     if (!values.featuredImage) return;
 
     const formData = new FormData();
-    const { title, excerpt, featured, content } = values;
+    const { title, excerpt, featuredPost, content } = values;
     formData.append("featuredImage", values.featuredImage);
 
     const { id: imageId } = await postImageAsset(formData);
@@ -81,7 +101,7 @@ const NewArticle = () => {
       title,
       excerpt,
       content: toRichTextFormat(content),
-      featuredPost: featured === "yes",
+      featuredPost: featuredPost === "yes",
       imageId: publishAssetData?.publishAsset?.id || "",
     };
 
@@ -141,7 +161,7 @@ const NewArticle = () => {
   const initialValues: MyFormValues = {
     title: "",
     excerpt: "",
-    featured: true,
+    featuredPost: true,
     featuredImage: null,
     content: [
       {
@@ -176,11 +196,11 @@ const NewArticle = () => {
             <div id="feature-article">Destacar articulo</div>
             <div role="group" aria-labelledby="feature-article">
               <label>
-                <Field type="radio" name="featured" value="yes" />
+                <Field type="radio" name="featuredPost" value="yes" />
                 Yes
               </label>
               <label>
-                <Field type="radio" name="featured" value="no" />
+                <Field type="radio" name="featuredPost" value="no" />
                 No
               </label>
               <p>Seleccionado: {values.featured}</p>
@@ -194,6 +214,7 @@ const NewArticle = () => {
               initialContent={values.content}
               setFieldValue={setFieldValue}
             />
+            {console.log(values.content)}
           </Form>
         )}
       </Formik>

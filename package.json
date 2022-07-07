@@ -21,6 +21,7 @@
     "@types/styled-components": "^5.1.25",
     "@udecode/plate": "^14.0.0",
     "@uiball/loaders": "^1.2.6",
+    "axios": "^0.27.2",
     "deepmerge": "^4.2.2",
     "favicons": "^7.0.0-beta.4",
     "fecha": "^4.2.3",
