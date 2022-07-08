@@ -1,5 +1,6 @@
 // libraries
-import { styled } from "twin.macro";
+import axios from "axios";
+import tw, { styled } from "twin.macro";
 import { useState } from "react";
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -20,7 +21,7 @@ import {
   useDeleteAssetMutation,
 } from "../../generated";
 import { postImageAsset } from "../../services/assets";
-import { toSlug, toRichTextFormat } from "../../lib/helpers";
+import { toSlug, rebuildImgNodes, toRichTextFormat } from "../../lib/helpers";
 
 // icons + visuls
 import { Orbit } from "@uiball/loaders";
@@ -36,12 +37,6 @@ interface BasicNode {
   type: string;
   children: Array<{}>;
 }
-// const imgNodeFirst = {
-//   type: "img",
-//   children: [{}, {}],
-//   url: "data:image/jpeg;base64",
-//   caption: [{ text: "dklfj" }],
-// };
 interface ImageNode extends BasicNode {
   src: string;
   type: "image";
@@ -56,7 +51,7 @@ interface MyFormValues {
   title: string;
   excerpt: string;
   featuredPost: boolean;
-  featuredImage: null;
+  img: null;
   content: Array<ImageNode | BasicNode>;
 }
 
@@ -69,8 +64,11 @@ const Container = styled.div`
   flex-direction: column;
   padding: 0 100px;
 `;
+const Err = tw.div`bg-red-400 text-white p-3 px-6 rounded-sm max-w-[300px]`;
+const Submitted = tw.div`bg-primary-tint-3 p-3 px-6 rounded-sm max-w-[300px]`;
 
 const NewArticle = () => {
+  // mutations
   const [createArticleMutation, { loading: createLoading }] =
     useCreateArticleMutation();
   const [
@@ -81,47 +79,74 @@ const NewArticle = () => {
     usePublishAssetMutation();
   const [deleteAssetMutation] = useDeleteAssetMutation();
 
+  // state
+  // TODO: Should probably move to reducer
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [featImgErr, setFeatImgErr] = useState<boolean>(false);
+  const [contImgErr, setContImgErr] = useState<{ imgName: string | null }>({
+    imgName: null,
+  });
+  const [criticalContImgsError, setCrticalContImgsError] =
+    useState<boolean>(false);
   const router = useRouter();
 
-  const createArticle = async (values: any, actions: any) => {
-    if (!values.featuredImage) return;
+  const createArticle = async (values: any) => {
+    if (!values.img) return;
 
-    const formData = new FormData();
-    const { title, excerpt, featuredPost, content } = values;
-    formData.append("featuredImage", values.featuredImage);
-
-    const { id: imageId } = await postImageAsset(formData);
-    // upload and publish all content images
-
-    const { data: publishAssetData } = await publishAssetMutation({
-      variables: {
-        id: imageId,
-      },
-    });
-    const mutationVariables = {
-      slug: toSlug(title),
-      title,
-      excerpt,
-      content: toRichTextFormat(content),
-      featuredPost: featuredPost === "yes",
-      imageId: publishAssetData?.publishAsset?.id || "",
-    };
-
-    setLoading(false);
-    setSubmitted(true);
-
+    setLoading(true);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+    const formData = new FormData();
+    const { title, excerpt, content, featuredPost } = values;
+    formData.append("img", values.img);
+
+    const imageAsset = await postImageAsset(formData);
+    let publishAsset;
+
+    console.log(imageAsset);
+    if (imageAsset.type === "data") {
+      const { data: publishedAssetData } = await publishAssetMutation({
+        variables: {
+          id: imageAsset?.id,
+        },
+      });
+      publishAsset = publishedAssetData?.publishAsset;
+    } else {
+      setFeatImgErr(true);
+      setLoading(false);
+      return;
+    }
+
+    const contentNodes = rebuildImgNodes(
+      content,
+      publishAssetMutation,
+      deleteAssetMutation,
+      setContImgErr,
+      setCrticalContImgsError
+    );
+    if (!contentNodes) {
+      setCrticalContImgsError(true);
+      setLoading(false);
+      return;
+    }
+
+    const mutationVariables = {
+      slug: toSlug(title),
+      title,
+      excerpt,
+      content: toRichTextFormat(contentNodes),
+      featuredPost: featuredPost === "yes",
+      imageId: publishAsset?.id || "",
+    };
 
     const { data } = await createArticleMutation({
       variables: mutationVariables,
     });
 
-    publishArticleMutation({
+    await publishArticleMutation({
       variables: {
         id: data?.createArticle?.id,
       },
@@ -160,13 +185,16 @@ const NewArticle = () => {
         });
       },
     });
+
+    setLoading(false);
+    setSubmitted(true);
   };
 
   const initialValues: MyFormValues = {
     title: "",
     excerpt: "",
     featuredPost: true,
-    featuredImage: null,
+    img: null,
     content: [
       {
         type: "h1",
@@ -185,40 +213,62 @@ const NewArticle = () => {
       {publishError && <p>Hubo un problema, reintentar</p>}
       <Heading tertiary>New Article</Heading>
 
-      {loading && <Orbit size={35} color="#231F20" />}
       <Formik initialValues={initialValues} onSubmit={createArticle}>
         {({ values, setFieldValue }: FormikProps<MyFormValues>) => (
           <Form>
-            <div>
-              <label htmlFor="title">Titulo</label>
-              <Field id="title" name="title" required />
-            </div>
-            <div>
-              <label htmlFor="excerpt">Extracto</label>
-              <Field name="excerpt" id="excerpt" required />
-            </div>
-            <div id="feature-article">Destacar articulo</div>
-            <div role="group" aria-labelledby="feature-article">
-              <label>
-                <Field type="radio" name="featuredPost" value="yes" />
-                Yes
-              </label>
-              <label>
-                <Field type="radio" name="featuredPost" value="no" />
-                No
-              </label>
-              <p>Seleccionado: {values.featured}</p>
-            </div>
-            <ImageInput setFieldValue={setFieldValue} name="featuredImage" />
-            <Button elType="submit" type="submit" cta hero tw="mr-4">
-              <FiEdit />
-              Publicar
-            </Button>
-            <TextEditor
-              initialContent={values.content}
-              setFieldValue={setFieldValue}
-            />
-            {console.log(values.content)}
+            <>
+              {loading && <Orbit size={35} color="#231F20" />}
+              {featImgErr && (
+                <Err onClick={() => createArticle(values)}>
+                  Parece que tienes problemas de conexion. Reintentar?
+                </Err>
+              )}
+              {criticalContImgsError && (
+                <Err onClick={() => createArticle(values)}>
+                  Parece que tienes problemas de conexion. Vuelve a conectarte o
+                  recarga la pagina
+                </Err>
+              )}
+              {contImgErr.imgName && (
+                <Err>
+                  Problema al subir imagen {contImgErr.imgName}.
+                  Reintentando...`
+                </Err>
+              )}
+              {submitted && (
+                <Submitted>Articulo publicado exitosamente</Submitted>
+              )}
+              <div>
+                <label htmlFor="title">Titulo</label>
+                <Field id="title" name="title" required />
+              </div>
+              <div>
+                <label htmlFor="excerpt">Extracto</label>
+                <Field name="excerpt" id="excerpt" required />
+              </div>
+              <div id="feature-article">Destacar articulo</div>
+              <div role="group" aria-labelledby="feature-article">
+                <label>
+                  <Field type="radio" name="featuredPost" value="yes" />
+                  Yes
+                </label>
+                <label>
+                  <Field type="radio" name="featuredPost" value="no" />
+                  No
+                </label>
+                <p>Seleccionado: {values.featuredPost}</p>
+              </div>
+              <ImageInput setFieldValue={setFieldValue} name="img" />
+              <Button elType="submit" type="submit" cta hero tw="mr-4">
+                <FiEdit />
+                Publicar
+              </Button>
+              <TextEditor
+                initialContent={values.content}
+                setFieldValue={setFieldValue}
+              />
+              <>{console.log(values.content)}</>
+            </>
           </Form>
         )}
       </Formik>

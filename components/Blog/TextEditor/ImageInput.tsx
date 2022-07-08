@@ -69,7 +69,12 @@ const ImageInput = ({
     isFocused,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ onDrop });
+  } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".jpg", ".jpeg", ".png"],
+    },
+  });
 
   return (
     <>

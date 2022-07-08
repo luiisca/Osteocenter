@@ -15,9 +15,10 @@ interface UploadedData extends Uploaded {
 interface UploadedError extends Uploaded {
   message: string;
 }
-interface ImageState {
-  form: {};
+interface FailedImgData {
   id: number;
+  file: any;
+  form: {};
   uploaded: UploadedData | UploadedError;
   published: boolean;
   children: any;
@@ -27,10 +28,11 @@ interface ImageState {
 let crrAttempts = 1;
 const MAX_ATTEMPTS = 3;
 
-const postImage = async (form: {}, postImageAsset: any) => {
+const postImage = async (form: {}) => {
   const data = await postImageAsset(form);
   return data;
 };
+
 const publishImage = async (id: string, publishImageAsset: any) => {
   const { data } = await publishImageAsset({
     variables: {
@@ -62,63 +64,67 @@ export const rebuildImgNodes = (
   content: Array<{ type: string; url?: string }>,
   publishImageAsset: any,
   deleteImageAsset: any,
-  imageState: Array<ImageState> | [],
-  setFailedImgsState: any,
-  setCrticalImgsError: any
-) => {
-  let failedImgs: Array<ImageState> = [];
-
+  setContImgErr: any,
+  setCrticalContImgsError: any
+): {}[] | null => {
+  let contentNodes = [...Array(content.length)];
+  let failedImgs: Array<FailedImgData | undefined> = [...Array(content.length)];
   let postedImgIds: Array<string> = [];
 
-  let imgNodes = [...Array(content.length)];
-
   // try to upload and to publish all images
-  if (setFailedImgsState.length === 0) {
+  if (failedImgs.length === 0) {
     let form: any;
     let uploaded: UploadedError | UploadedData;
     let imgDetails: any;
 
-    content.forEach(async (node: any, id: number) => {
-      imgNodes[id] = node;
+    content.forEach(async (contentNode: any, id: number) => {
+      contentNodes[id] = contentNode;
+      console.log("On each content node");
 
-      if (node.type === "img") {
+      if (contentNode.type === "img") {
+        // transform base64 string to File object
+        console.log("On each IMG content node");
         const file = dataURLtoFile(
-          node.url as string,
+          contentNode.url as string,
           `content-image-${id + 1}`
         );
 
         form = new FormData();
-        form.append(`content-image-${id + 1}`, file);
+        form.append("img", file);
 
-        uploaded = await postImage(form, postImageAsset);
+        uploaded = await postImage(form);
+
+        // img succesfully uploaded
         if ("id" in uploaded) {
+          console.log("On each IMG content node, image uploaded", uploaded);
           postedImgIds.push(uploaded.id);
           imgDetails = await publishImage(uploaded.id, publishImageAsset);
         }
         if (!("id" in uploaded) || !imgDetails) {
-          setFailedImgsState([
-            ...imageState,
-            {
-              id,
-              form,
-              uploaded,
-              published: false,
-              children: node.children,
-              caption: node.caption,
-            },
-          ]);
-          failedImgs.push({
+          // setContImgErr({imgName: file.name})
+          console.log(
+            "On each IMG content node, image NOT uploaded or NOT published",
+            uploaded,
+            imgDetails
+          );
+          failedImgs[id] = {
             id,
+            file,
             form,
             uploaded,
             published: false,
             children: node.children,
             caption: node.caption,
-          });
+          };
         } else {
-          // if it is both uploaded and published
+          // if image is both uploaded and published
 
-          imgNodes[id] = {
+          console.log(
+            "On each IMG content node, img uploaded AND published",
+            uploaded,
+            imgDetails
+          );
+          contentNodes[id] = {
             ...imgDetails,
             children: node.children,
             caption: node.caption || {
@@ -131,51 +137,66 @@ export const rebuildImgNodes = (
   }
 
   // if some image wasnt uploaded or published retry only 3 times
-  while (failedImgs.length !== 0 && crrAttempts <= MAX_ATTEMPTS) {
+  while (
+    !failedImgs.every((e) => e === undefined) &&
+    crrAttempts <= MAX_ATTEMPTS
+  ) {
+    console.log("On some img failed or undefined", failedImgs);
     let uploaded: UploadedData | UploadedError;
     let imgDetails: any;
 
     failedImgs.forEach(async (img, id) => {
-      if (img.uploaded.type === "error") {
-        uploaded = await postImage(img.form, postImageAsset);
-        if ("id" in uploaded) {
-          postedImgIds.push(uploaded.id);
+      if (img) {
+        console.log("On img failed");
+        if (img.uploaded.type === "error") {
+          uploaded = await postImage(img.form);
+          if ("id" in uploaded) {
+            console.log("On img failed, img uploaded", uploaded);
+            postedImgIds.push(uploaded.id);
+            imgDetails = await publishImage(uploaded.id, publishImageAsset);
+          }
+        }
+        if ("id" in uploaded && !img.published) {
+          console.log(
+            "On img failed, img uploaded, not published",
+            uploaded,
+            imgDetails
+          );
           imgDetails = await publishImage(uploaded.id, publishImageAsset);
         }
-      }
-      if ("id" in uploaded && !img.published) {
-        imgDetails = await publishImage(uploaded.id, publishImageAsset);
-      }
 
-      if (!("id" in uploaded) || !imgDetails) {
-        setFailedImgsState([
-          ...imageState,
-          {
+        if (!("id" in uploaded) || !imgDetails) {
+          // setContImgErr({imgName: img.file.name})
+          console.log(
+            "On img failed, img NOT uploaded or NOT published",
+            uploaded,
+            imgDetails
+          );
+          failedImgs.push({
             id,
+            file: img.file,
             form: img.form,
             uploaded,
             published: false,
             children: img.children,
             caption: img.caption,
-          },
-        ]);
-        failedImgs.push({
-          id,
-          form: img.form,
-          uploaded,
-          published: false,
-          children: img.children,
-          caption: img.caption,
-        });
-      } else {
-        // if it is both uploaded and published
-        imgNodes[id] = {
-          ...imgDetails,
-          children: img.children,
-          caption: img.caption || {
-            text: "",
-          },
-        };
+          });
+        } else {
+          // if it is both uploaded and published
+          console.log(
+            "On img failed, img uploaded AND published",
+            uploaded,
+            imgDetails
+          );
+          failedImgs[id] = undefined;
+          contentNodes[id] = {
+            ...imgDetails,
+            children: img.children,
+            caption: img.caption || {
+              text: "",
+            },
+          };
+        }
       }
     });
 
@@ -184,15 +205,16 @@ export const rebuildImgNodes = (
 
   if (failedImgs.length !== 0) {
     // set a different error message telling the user to reload the page
-    setCrticalImgsError("Problemas de conexion por favor recarga la pagina");
+    // setCrticalContImgsError("Problemas de conexion por favor recarga la pagina");
     // delete every already created image on the db
+    console.log("On absolute fail", failedImgs, postedImgIds);
     postedImgIds.forEach(
       async (id: string) => await deleteImage(id, deleteImageAsset)
     );
 
     return null;
   } else {
-    return imgNodes;
+    return contentNodes;
   }
 };
 

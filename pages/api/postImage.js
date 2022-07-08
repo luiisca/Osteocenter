@@ -23,27 +23,28 @@ export default async function handler(req, res) {
   await multipartParser(req, res);
 
   // file upload to GraphCMS
-  const { featuredImage } = req.files;
+  const { img } = req.files;
 
   const form = new FormData();
 
   // expose raw data from File (imgObj) and save it on form
   // Form must store the image under a 'fileUpload' field for the server to extract it
-  form.append("fileUpload", fs.createReadStream(featuredImage.filepath));
+  form.append("fileUpload", fs.createReadStream(img.filepath));
   try {
-    const upload = await mainCaller(
-      `${process.env.NEXT_PUBLIC_GRAPHCMS_ASSET_ENDPOINT}`,
-      {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_PAT}`,
-        },
-        body: form,
-      }
-    );
+    const options = {
+      url: `${process.env.NEXT_PUBLIC_GRAPHCMS_ASSET_ENDPOINT}`,
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_PAT}`,
+      },
+      data: form,
+    };
+    const upload = await mainCaller(options);
+
     if (upload.type === "data")
-      return res.status(200).json({ type: 'data', id: upload.data?.id });
-    if (upload.type === "error") return res.status(200).json({type: 'error', message: upload.message});
+      return res.status(200).json({ type: "data", id: upload.data?.id });
+    if (upload.type === "error")
+      return res.status(200).json({ type: "error", message: upload.message });
   } catch (err) {
     console.log(error);
   }

@@ -9,6 +9,12 @@ interface Error {
     status: number;
   };
 }
+interface ReqOptions {
+  url: string;
+  method: string;
+  headers: Record<string, string>;
+  data: {};
+}
 
 function handleAxiosError(err: Error, url: string) {
   if (err.isAxiosError) {
@@ -30,32 +36,33 @@ function handleAxiosError(err: Error, url: string) {
   }
 }
 
-const MAX_ATTEMPTS = 10;
+const MAX_ATTEMPTS = 3;
 const CRR_ATTEMPTS = 1;
 
-async function axiosControlFlow(url: string, options?: {}) {
+async function axiosControlFlow(options: ReqOptions) {
   try {
-    const { data } = await axios(url, options);
+    const { data } = await axios(options);
     return data;
   } catch (err) {
-    return handleAxiosError(err as Error, url);
+    return handleAxiosError(err as Error, options.url);
   }
 }
 
 async function axiosWithRetry(
-  url: string,
+  options: ReqOptions,
   CRR_ATTEMPTS: number,
-  MAX_ATTEMPTS: number,
-  options?: {}
+  MAX_ATTEMPTS: number
 ) {
   console.log(`Attempting Request ${CRR_ATTEMPTS}/${MAX_ATTEMPTS}`);
 
-  const responseOrError = await axiosControlFlow(url, options);
+  const responseOrError = await axiosControlFlow(options);
 
   if (responseOrError instanceof NetworkError) {
     if (CRR_ATTEMPTS < MAX_ATTEMPTS) {
       return new Promise((resolve) => {
-        resolve(axiosWithRetry(url, CRR_ATTEMPTS + 1, MAX_ATTEMPTS, options));
+        setTimeout(() => {
+          resolve(axiosWithRetry(url, CRR_ATTEMPTS + 1, MAX_ATTEMPTS));
+        }, 1000);
       });
     } else {
       console.log("Maximum Attempts Reached");
@@ -67,14 +74,12 @@ async function axiosWithRetry(
   }
 }
 
-
-export async function mainCaller(url: string, options?: {}) {
+export async function mainCaller(options: ReqOptions) {
   try {
     const returnedValue = await axiosWithRetry(
-      url,
+      options,
       CRR_ATTEMPTS,
-      MAX_ATTEMPTS,
-      options
+      MAX_ATTEMPTS
     );
 
     // Always returns 2 kind of objects
