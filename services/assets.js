@@ -1,5 +1,7 @@
+import axios from "axios";
+
 export const postImageAsset = async (obj) => {
-  const result = await fetch("/api/postImage", {
+  const result = await axios("/api/postImage", {
     method: "POST",
     body: obj,
   });

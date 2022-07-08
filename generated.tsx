@@ -5570,6 +5570,13 @@ export type CreateArticleMutationVariables = Exact<{
 
 export type CreateArticleMutation = { __typename?: 'Mutation', createArticle?: { __typename?: 'Article', id: string } | null };
 
+export type DeleteAssetMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteAssetMutation = { __typename?: 'Mutation', deleteAsset?: { __typename?: 'Asset', id: string } | null };
+
 export type PublishArticleMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
@@ -5582,7 +5589,7 @@ export type PublishAssetMutationVariables = Exact<{
 }>;
 
 
-export type PublishAssetMutation = { __typename?: 'Mutation', publishAsset?: { __typename?: 'Asset', id: string } | null };
+export type PublishAssetMutation = { __typename?: 'Mutation', publishAsset?: { __typename?: 'Asset', id: string, url: string, fileName: string, width?: number | null, handle: string, height?: number | null, mimeType?: string | null } | null };
 
 export type ArticleQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -5637,6 +5644,39 @@ export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
 export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
 export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
+export const DeleteAssetDocument = gql`
+    mutation DeleteAsset($id: ID!) {
+  deleteAsset(where: {id: $id}) {
+    id
+  }
+}
+    `;
+export type DeleteAssetMutationFn = Apollo.MutationFunction<DeleteAssetMutation, DeleteAssetMutationVariables>;
+
+/**
+ * __useDeleteAssetMutation__
+ *
+ * To run a mutation, you first call `useDeleteAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAssetMutation, { data, loading, error }] = useDeleteAssetMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAssetMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAssetMutation, DeleteAssetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAssetMutation, DeleteAssetMutationVariables>(DeleteAssetDocument, options);
+      }
+export type DeleteAssetMutationHookResult = ReturnType<typeof useDeleteAssetMutation>;
+export type DeleteAssetMutationResult = Apollo.MutationResult<DeleteAssetMutation>;
+export type DeleteAssetMutationOptions = Apollo.BaseMutationOptions<DeleteAssetMutation, DeleteAssetMutationVariables>;
 export const PublishArticleDocument = gql`
     mutation PublishArticle($id: ID) {
   publishArticle(where: {id: $id}) {
@@ -5688,6 +5728,12 @@ export const PublishAssetDocument = gql`
     mutation PublishAsset($id: ID!) {
   publishAsset(where: {id: $id}) {
     id
+    url
+    fileName
+    width
+    handle
+    height
+    mimeType
   }
 }
     `;

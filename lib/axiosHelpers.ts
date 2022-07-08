@@ -30,9 +30,12 @@ function handleAxiosError(err: Error, url: string) {
   }
 }
 
-async function axiosControlFlow(url: string) {
+const MAX_ATTEMPTS = 10;
+const CRR_ATTEMPTS = 1;
+
+async function axiosControlFlow(url: string, options?: {}) {
   try {
-    const { data } = await axios(url);
+    const { data } = await axios(url, options);
     return data;
   } catch (err) {
     return handleAxiosError(err as Error, url);
@@ -42,16 +45,17 @@ async function axiosControlFlow(url: string) {
 async function axiosWithRetry(
   url: string,
   CRR_ATTEMPTS: number,
-  MAX_ATTEMPTS: number
+  MAX_ATTEMPTS: number,
+  options?: {}
 ) {
   console.log(`Attempting Request ${CRR_ATTEMPTS}/${MAX_ATTEMPTS}`);
 
-  const responseOrError = await axiosControlFlow(url);
+  const responseOrError = await axiosControlFlow(url, options);
 
   if (responseOrError instanceof NetworkError) {
     if (CRR_ATTEMPTS < MAX_ATTEMPTS) {
       return new Promise((resolve) => {
-        resolve(axiosWithRetry(url, CRR_ATTEMPTS + 1, MAX_ATTEMPTS));
+        resolve(axiosWithRetry(url, CRR_ATTEMPTS + 1, MAX_ATTEMPTS, options));
       });
     } else {
       console.log("Maximum Attempts Reached");
@@ -63,25 +67,31 @@ async function axiosWithRetry(
   }
 }
 
-const MAX_ATTEMPTS = 10;
-const CRR_ATTEMPTS = 1;
 
-export async function mainCaller(url: string) {
+export async function mainCaller(url: string, options?: {}) {
   try {
-    const returnedValue = await axiosWithRetry(url, CRR_ATTEMPTS, MAX_ATTEMPTS);
+    const returnedValue = await axiosWithRetry(
+      url,
+      CRR_ATTEMPTS,
+      MAX_ATTEMPTS,
+      options
+    );
 
+    // Always returns 2 kind of objects
     if (returnedValue instanceof Error) {
-      return console.log({
+      // 1. Error one
+      return {
         type: "error",
         message: returnedValue.message,
         error: returnedValue,
-      });
+      };
     }
 
-    return console.log({
+    // 2. Data one
+    return {
       type: "data",
       data: returnedValue,
-    });
+    };
   } catch (err) {
     // This should never happen unless there's a syntax error with the code
     console.log({

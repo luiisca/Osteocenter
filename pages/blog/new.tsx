@@ -17,6 +17,7 @@ import {
   useCreateArticleMutation,
   usePublishArticleMutation,
   usePublishAssetMutation,
+  useDeleteAssetMutation,
 } from "../../generated";
 import { postImageAsset } from "../../services/assets";
 import { toSlug, toRichTextFormat } from "../../lib/helpers";
@@ -78,6 +79,7 @@ const NewArticle = () => {
   ] = usePublishArticleMutation();
   const [publishAssetMutation, { data: publishImgData }] =
     usePublishAssetMutation();
+  const [deleteAssetMutation] = useDeleteAssetMutation();
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -91,6 +93,8 @@ const NewArticle = () => {
     formData.append("featuredImage", values.featuredImage);
 
     const { id: imageId } = await postImageAsset(formData);
+    // upload and publish all content images
+
     const { data: publishAssetData } = await publishAssetMutation({
       variables: {
         id: imageId,
