@@ -1,11 +1,15 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { GraphQLClient } from 'graphql-request';
+import { RequestInit } from 'graphql-request/dist/types.dom';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {} as const;
+
+function fetcher<TData, TVariables>(client: GraphQLClient, query: string, variables?: TVariables, headers?: RequestInit['headers']) {
+  return async (): Promise<TData> => client.request<TData, TVariables>(query, variables, headers);
+}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -5596,7 +5600,7 @@ export type ArticleQueryVariables = Exact<{
 }>;
 
 
-export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string } } | null };
+export type ArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id: string, slug: string, title: string, excerpt: string, publishedAt?: any | null, featuredPost: boolean, content: { __typename?: 'RichText', raw: any, markdown: string, html: string }, featuredImage: { __typename?: 'Asset', width?: number | null, height?: number | null, url: string }, categories: Array<{ __typename?: 'Category', name: string, slug: string }> } | null };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5604,7 +5608,7 @@ export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, publishedAt?: any | null, title: string, excerpt: string, slug: string, featuredPost: boolean, featuredImage: { __typename?: 'Asset', url: string, height?: number | null, width?: number | null }, categories: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 
-export const CreateArticleDocument = gql`
+export const CreateArticleDocument = `
     mutation CreateArticle($slug: String!, $title: String!, $excerpt: String!, $content: RichTextAST!, $featuredPost: Boolean!, $imageId: ID!) {
   createArticle(
     data: {slug: $slug, title: $title, excerpt: $excerpt, content: $content, featuredPost: $featuredPost, featuredImage: {connect: {id: $imageId}}}
@@ -5613,71 +5617,40 @@ export const CreateArticleDocument = gql`
   }
 }
     `;
-export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutation, CreateArticleMutationVariables>;
-
-/**
- * __useCreateArticleMutation__
- *
- * To run a mutation, you first call `useCreateArticleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateArticleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
- *   variables: {
- *      slug: // value for 'slug'
- *      title: // value for 'title'
- *      excerpt: // value for 'excerpt'
- *      content: // value for 'content'
- *      featuredPost: // value for 'featuredPost'
- *      imageId: // value for 'imageId'
- *   },
- * });
- */
-export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOptions<CreateArticleMutation, CreateArticleMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateArticleMutation, CreateArticleMutationVariables>(CreateArticleDocument, options);
-      }
-export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
-export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
-export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
-export const DeleteAssetDocument = gql`
+export const useCreateArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>(
+      ['CreateArticle'],
+      (variables?: CreateArticleMutationVariables) => fetcher<CreateArticleMutation, CreateArticleMutationVariables>(client, CreateArticleDocument, variables, headers)(),
+      options
+    );
+export const DeleteAssetDocument = `
     mutation DeleteAsset($id: ID!) {
   deleteAsset(where: {id: $id}) {
     id
   }
 }
     `;
-export type DeleteAssetMutationFn = Apollo.MutationFunction<DeleteAssetMutation, DeleteAssetMutationVariables>;
-
-/**
- * __useDeleteAssetMutation__
- *
- * To run a mutation, you first call `useDeleteAssetMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteAssetMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteAssetMutation, { data, loading, error }] = useDeleteAssetMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteAssetMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAssetMutation, DeleteAssetMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteAssetMutation, DeleteAssetMutationVariables>(DeleteAssetDocument, options);
-      }
-export type DeleteAssetMutationHookResult = ReturnType<typeof useDeleteAssetMutation>;
-export type DeleteAssetMutationResult = Apollo.MutationResult<DeleteAssetMutation>;
-export type DeleteAssetMutationOptions = Apollo.BaseMutationOptions<DeleteAssetMutation, DeleteAssetMutationVariables>;
-export const PublishArticleDocument = gql`
+export const useDeleteAssetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteAssetMutation, TError, DeleteAssetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteAssetMutation, TError, DeleteAssetMutationVariables, TContext>(
+      ['DeleteAsset'],
+      (variables?: DeleteAssetMutationVariables) => fetcher<DeleteAssetMutation, DeleteAssetMutationVariables>(client, DeleteAssetDocument, variables, headers)(),
+      options
+    );
+export const PublishArticleDocument = `
     mutation PublishArticle($id: ID) {
   publishArticle(where: {id: $id}) {
     id
@@ -5698,33 +5671,20 @@ export const PublishArticleDocument = gql`
   }
 }
     `;
-export type PublishArticleMutationFn = Apollo.MutationFunction<PublishArticleMutation, PublishArticleMutationVariables>;
-
-/**
- * __usePublishArticleMutation__
- *
- * To run a mutation, you first call `usePublishArticleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePublishArticleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [publishArticleMutation, { data, loading, error }] = usePublishArticleMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePublishArticleMutation(baseOptions?: Apollo.MutationHookOptions<PublishArticleMutation, PublishArticleMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PublishArticleMutation, PublishArticleMutationVariables>(PublishArticleDocument, options);
-      }
-export type PublishArticleMutationHookResult = ReturnType<typeof usePublishArticleMutation>;
-export type PublishArticleMutationResult = Apollo.MutationResult<PublishArticleMutation>;
-export type PublishArticleMutationOptions = Apollo.BaseMutationOptions<PublishArticleMutation, PublishArticleMutationVariables>;
-export const PublishAssetDocument = gql`
+export const usePublishArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<PublishArticleMutation, TError, PublishArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<PublishArticleMutation, TError, PublishArticleMutationVariables, TContext>(
+      ['PublishArticle'],
+      (variables?: PublishArticleMutationVariables) => fetcher<PublishArticleMutation, PublishArticleMutationVariables>(client, PublishArticleDocument, variables, headers)(),
+      options
+    );
+export const PublishAssetDocument = `
     mutation PublishAsset($id: ID!) {
   publishAsset(where: {id: $id}) {
     id
@@ -5737,39 +5697,27 @@ export const PublishAssetDocument = gql`
   }
 }
     `;
-export type PublishAssetMutationFn = Apollo.MutationFunction<PublishAssetMutation, PublishAssetMutationVariables>;
-
-/**
- * __usePublishAssetMutation__
- *
- * To run a mutation, you first call `usePublishAssetMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePublishAssetMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [publishAssetMutation, { data, loading, error }] = usePublishAssetMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePublishAssetMutation(baseOptions?: Apollo.MutationHookOptions<PublishAssetMutation, PublishAssetMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PublishAssetMutation, PublishAssetMutationVariables>(PublishAssetDocument, options);
-      }
-export type PublishAssetMutationHookResult = ReturnType<typeof usePublishAssetMutation>;
-export type PublishAssetMutationResult = Apollo.MutationResult<PublishAssetMutation>;
-export type PublishAssetMutationOptions = Apollo.BaseMutationOptions<PublishAssetMutation, PublishAssetMutationVariables>;
-export const ArticleDocument = gql`
+export const usePublishAssetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<PublishAssetMutation, TError, PublishAssetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<PublishAssetMutation, TError, PublishAssetMutationVariables, TContext>(
+      ['PublishAsset'],
+      (variables?: PublishAssetMutationVariables) => fetcher<PublishAssetMutation, PublishAssetMutationVariables>(client, PublishAssetDocument, variables, headers)(),
+      options
+    );
+export const ArticleDocument = `
     query Article($slug: String!) {
   article(where: {slug: $slug}) {
     id
     slug
     title
     excerpt
+    publishedAt
     content {
       raw
       markdown
@@ -5781,38 +5729,28 @@ export const ArticleDocument = gql`
       height
       url
     }
+    categories {
+      name
+      slug
+    }
   }
 }
     `;
-
-/**
- * __useArticleQuery__
- *
- * To run a query within a React component, call `useArticleQuery` and pass it any options that fit your needs.
- * When your component renders, `useArticleQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useArticleQuery({
- *   variables: {
- *      slug: // value for 'slug'
- *   },
- * });
- */
-export function useArticleQuery(baseOptions: Apollo.QueryHookOptions<ArticleQuery, ArticleQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ArticleQuery, ArticleQueryVariables>(ArticleDocument, options);
-      }
-export function useArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArticleQuery, ArticleQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ArticleQuery, ArticleQueryVariables>(ArticleDocument, options);
-        }
-export type ArticleQueryHookResult = ReturnType<typeof useArticleQuery>;
-export type ArticleLazyQueryHookResult = ReturnType<typeof useArticleLazyQuery>;
-export type ArticleQueryResult = Apollo.QueryResult<ArticleQuery, ArticleQueryVariables>;
-export const ArticlesDocument = gql`
+export const useArticleQuery = <
+      TData = ArticleQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ArticleQueryVariables,
+      options?: UseQueryOptions<ArticleQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ArticleQuery, TError, TData>(
+      ['Article', variables],
+      fetcher<ArticleQuery, ArticleQueryVariables>(client, ArticleDocument, variables, headers),
+      options
+    );
+export const ArticlesDocument = `
     query Articles {
   articles(first: 100) {
     id
@@ -5833,30 +5771,17 @@ export const ArticlesDocument = gql`
   }
 }
     `;
-
-/**
- * __useArticlesQuery__
- *
- * To run a query within a React component, call `useArticlesQuery` and pass it any options that fit your needs.
- * When your component renders, `useArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useArticlesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useArticlesQuery(baseOptions?: Apollo.QueryHookOptions<ArticlesQuery, ArticlesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ArticlesQuery, ArticlesQueryVariables>(ArticlesDocument, options);
-      }
-export function useArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArticlesQuery, ArticlesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ArticlesQuery, ArticlesQueryVariables>(ArticlesDocument, options);
-        }
-export type ArticlesQueryHookResult = ReturnType<typeof useArticlesQuery>;
-export type ArticlesLazyQueryHookResult = ReturnType<typeof useArticlesLazyQuery>;
-export type ArticlesQueryResult = Apollo.QueryResult<ArticlesQuery, ArticlesQueryVariables>;
+export const useArticlesQuery = <
+      TData = ArticlesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: ArticlesQueryVariables,
+      options?: UseQueryOptions<ArticlesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ArticlesQuery, TError, TData>(
+      variables === undefined ? ['Articles'] : ['Articles', variables],
+      fetcher<ArticlesQuery, ArticlesQueryVariables>(client, ArticlesDocument, variables, headers),
+      options
+    );

@@ -4,6 +4,7 @@ query Article($slug: String!) {
     slug
     title
     excerpt
+    publishedAt
     content {
       raw
       markdown
@@ -14,6 +15,10 @@ query Article($slug: String!) {
       width
       height
       url
+    }
+    categories {
+      name
+      slug
     }
   }
 }

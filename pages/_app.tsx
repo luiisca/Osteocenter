@@ -1,20 +1,24 @@
-import type {AppProps} from 'next/app';
+import type { AppProps } from "next/app";
+import { useState } from "react";
 
-import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../graphql/apolloClient'
+import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-import GlobalStyles from '../components/GlobalStyles';
+import GlobalStyles from "../components/GlobalStyles";
 
-
-function MyApp({Component, pageProps}: AppProps) {
-  const apolloClient = useApollo(pageProps)
+function MyApp({ Component, pageProps }: AppProps) {
+  // where cache and request defaults can be stored and accesed from
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <GlobalStyles />
-      <Component {...pageProps} />
-    </ApolloProvider>
-  )
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <GlobalStyles />
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
+      </Hydrate>
+    </QueryClientProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

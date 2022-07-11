@@ -2,27 +2,13 @@
 import axios from "axios";
 import { APIError, NetworkError } from "./cutomErrorClasses";
 
-interface Error {
-  isAxiosError: boolean;
-  response: {
-    data: {};
-    status: number;
-  };
-}
-interface ReqOptions {
-  url: string;
-  method: string;
-  headers: Record<string, string>;
-  data: {};
-}
-
-function handleAxiosError(err: Error, url: string) {
+function handleAxiosError(err: any, url: string) {
   if (err.isAxiosError) {
     if (err.response) {
       return new APIError({
         message: "API Error Detected",
-        data: err.response?.data,
-        statusCode: err.response?.status,
+        data: err.response.data,
+        statusCode: err.response.status,
       });
     } else {
       return new NetworkError({
@@ -36,32 +22,29 @@ function handleAxiosError(err: Error, url: string) {
   }
 }
 
-const MAX_ATTEMPTS = 3;
-const CRR_ATTEMPTS = 1;
-
-async function axiosControlFlow(options: ReqOptions) {
+async function axiosControlFlow(url: string) {
   try {
-    const { data } = await axios(options);
+    const { data } = await axios(url);
     return data;
   } catch (err) {
-    return handleAxiosError(err as Error, options.url);
+    return handleAxiosError(err, url);
   }
 }
 
 async function axiosWithRetry(
-  options: ReqOptions,
-  CRR_ATTEMPTS: number,
-  MAX_ATTEMPTS: number
+  url: string,
+  currentAttempt: number,
+  maximumAttempts: number
 ) {
-  console.log(`Attempting Request ${CRR_ATTEMPTS}/${MAX_ATTEMPTS}`);
+  console.log(`Attempting Request ${currentAttempt}/${maximumAttempts}`);
 
-  const responseOrError = await axiosControlFlow(options);
+  const responseOrError = await axiosControlFlow(url);
 
   if (responseOrError instanceof NetworkError) {
-    if (CRR_ATTEMPTS < MAX_ATTEMPTS) {
+    if (currentAttempt < maximumAttempts) {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(axiosWithRetry(url, CRR_ATTEMPTS + 1, MAX_ATTEMPTS));
+          resolve(axiosWithRetry(url, currentAttempt + 1, maximumAttempts));
         }, 1000);
       });
     } else {
@@ -74,17 +57,18 @@ async function axiosWithRetry(
   }
 }
 
-export async function mainCaller(options: ReqOptions) {
+const maximumAttempts = 3;
+const currentAttempt = 1;
+
+export async function mainCaller(url: string) {
   try {
     const returnedValue = await axiosWithRetry(
-      options,
-      CRR_ATTEMPTS,
-      MAX_ATTEMPTS
+      url,
+      currentAttempt,
+      maximumAttempts
     );
 
-    // Always returns 2 kind of objects
     if (returnedValue instanceof Error) {
-      // 1. Error one
       return {
         type: "error",
         message: returnedValue.message,
@@ -92,16 +76,15 @@ export async function mainCaller(options: ReqOptions) {
       };
     }
 
-    // 2. Data one
     return {
       type: "data",
       data: returnedValue,
     };
   } catch (err) {
     // This should never happen unless there's a syntax error with the code
-    console.log({
+    return {
       type: "error",
       error: err,
-    });
+    };
   }
 }

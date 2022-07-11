@@ -2,7 +2,6 @@
 import axios from "axios";
 import tw, { styled } from "twin.macro";
 import { useState } from "react";
-import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
   Formik,
