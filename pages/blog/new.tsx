@@ -11,6 +11,7 @@ import {
   Field,
   FieldProps,
 } from "formik";
+import { useMutation } from "react-query";
 
 // helpers
 import {
@@ -21,8 +22,9 @@ import {
 } from "../../generated";
 import { postImageAsset } from "../../services/assets";
 import { toSlug, rebuildImgNodes, toRichTextFormat } from "../../lib/helpers";
+import { graphqlRequestClient } from "../../lib/clients/graphqlRequest";
 
-// icons + visuls
+// icons + visuals
 import { Orbit } from "@uiball/loaders";
 import { FiEdit } from "react-icons/fi";
 
@@ -68,20 +70,29 @@ const Submitted = tw.div`bg-primary-tint-3 p-3 px-6 rounded-sm max-w-[300px]`;
 
 const NewArticle = () => {
   // mutations
-  const [createArticleMutation, { loading: createLoading }] =
-    useCreateArticleMutation();
-  const [
-    publishArticleMutation,
-    { loading: publishLoading, error: publishError },
-  ] = usePublishArticleMutation();
-  const [publishAssetMutation, { data: publishImgData }] =
-    usePublishAssetMutation();
-  const [deleteAssetMutation] = useDeleteAssetMutation();
+  const createArticleMutation = useCreateArticleMutation(graphqlRequestClient);
+
+  const publishArticleMutation =
+    usePublishArticleMutation(graphqlRequestClient);
+
+  const uploadAssetMutation = useMutation(["UploadAsset"], postImageAsset, {
+    onMutate: async (variables) => {
+      console.log("ONMUTATE", variables);
+      return { variables };
+    },
+    retry: 3,
+    retryDelay: (att) => att * 1000,
+  });
+
+  const publishAssetMutation = usePublishAssetMutation(graphqlRequestClient);
+
+  const deleteAssetMutation = useDeleteAssetMutation(graphqlRequestClient);
 
   // state
-  // TODO: Should probably move to reducer
+  // TODO: Should probably move to a reducer
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [noImage, setNoImage] = useState<boolean>(false);
   const [featImgErr, setFeatImgErr] = useState<boolean>(false);
   const [contImgErr, setContImgErr] = useState<{ imgName: string | null }>({
     imgName: null,
@@ -91,99 +102,118 @@ const NewArticle = () => {
   const router = useRouter();
 
   const createArticle = async (values: any) => {
-    if (!values.img) return;
+    console.log("IS createarticle running two times");
+    if (!values.img) {
+      setNoImage(true);
+      return;
+    }
 
     setLoading(true);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
     const formData = new FormData();
-    const { title, excerpt, content, featuredPost } = values;
-    formData.append("img", values.img);
+    const { title, excerpt, content, featuredPost, img } = values;
+    formData.append("img", img);
 
-    const imageAsset = await postImageAsset(formData);
-    let publishAsset;
-
-    console.log(imageAsset);
-    if (imageAsset.type === "data") {
-      const { data: publishedAssetData } = await publishAssetMutation({
-        variables: {
-          id: imageAsset?.id,
+    try {
+      let featImgId;
+      await uploadAssetMutation.mutateAsync(formData, {
+        onSuccess: (result, variables, context) => {
+          console.log("ONSUCCESS", result, variables, context);
+          featImgId = result;
+        },
+        onError: (error, variables, context) => {
+          console.log("ONERROR", error, variables, context);
         },
       });
-      publishAsset = publishedAssetData?.publishAsset;
-    } else {
-      setFeatImgErr(true);
-      setLoading(false);
+      console.log("DATA PUBLISHED WITH MUTATEASYNC", uploadAssetMutation.data);
+    } catch (err) {
+      console.log(err);
       return;
     }
 
-    const contentNodes = rebuildImgNodes(
-      content,
-      publishAssetMutation,
-      deleteAssetMutation,
-      setContImgErr,
-      setCrticalContImgsError
-    );
-    if (!contentNodes) {
-      setCrticalContImgsError(true);
-      setLoading(false);
-      return;
-    }
+    //     console.log(imageAsset);
+    //     if (imageAsset.type === "data") {
+    //       const { data: publishedAssetData } = await publishAssetMutation({
+    //         variables: {
+    //           id: imageAsset?.id,
+    //         },
+    //       });
+    //       publishAsset = publishedAssetData?.publishAsset;
+    //     } else {
+    //       setFeatImgErr(true);
+    //       setLoading(false);
+    //       return;
+    //     }
 
-    const mutationVariables = {
-      slug: toSlug(title),
-      title,
-      excerpt,
-      content: toRichTextFormat(contentNodes),
-      featuredPost: featuredPost === "yes",
-      imageId: publishAsset?.id || "",
-    };
+    //     const contentNodes = rebuildImgNodes(
+    //       content,
+    //       publishAssetMutation,
+    //       deleteAssetMutation,
+    //       setContImgErr,
+    //       setCrticalContImgsError
+    //     );
+    //     if (!contentNodes) {
+    //       setCrticalContImgsError(true);
+    //       setLoading(false);
+    //       return;
+    //     }
 
-    const { data } = await createArticleMutation({
-      variables: mutationVariables,
-    });
+    //     const mutationVariables = {
+    //       slug: toSlug(title),
+    //       title,
+    //       excerpt,
+    //       content: toRichTextFormat(contentNodes),
+    //       featuredPost: featuredPost === "yes",
+    //       imageId: publishAsset?.id || "",
+    //     };
 
-    await publishArticleMutation({
-      variables: {
-        id: data?.createArticle?.id,
-      },
+    //     const { data } = await createArticleMutation({
+    //       variables: mutationVariables,
+    //     });
 
-      // add new reference to articles list fields on apollo cache as it doesn't do that automatically
-      update: (cache, mutationResult) => {
-        const { data } = mutationResult;
-        cache.modify({
-          fields: {
-            articles(existingArticles = []) {
-              const newArticleRef = cache.writeFragment({
-                data: data?.publishArticle,
-                fragment: gql`
-                  fragment PublishedArticle on articles {
-                    id
-                    slug
-                    title
-                    excerpt
-                    content {
-                      raw
-                      markdown
-                      html
-                    }
-                    featuredPost
-                    featuredImage {
-                      width
-                      height
-                      url
-                    }
-                  }
-                `,
-              });
-              return [...existingArticles, newArticleRef];
-            },
-          },
-        });
-      },
-    });
+    //     await publishArticleMutation({
+    //       variables: {
+    //         id: data?.createArticle?.id,
+    //       },
+
+    //       // add new reference to articles list fields on apollo cache as it doesn't do that automatically
+    //       update: (cache, mutationResult) => {
+    //         const { data } = mutationResult;
+    //         cache.modify({
+    //           fields: {
+    //             articles(existingArticles = []) {
+    //               const newArticleRef = cache.writeFragment({
+    //                 data: data?.publishArticle,
+    //                 fragment: gql`
+    //                   fragment PublishedArticle on articles {
+    //                     id
+    //                     slug
+    //                     title
+    //                     excerpt
+    //                     content {
+    //                       raw
+    //                       markdown
+    //                       html
+    //                     }
+    //                     featuredPost
+    //                     featuredImage {
+    //                       width
+    //                       height
+    //                       url
+    //                     }
+    //                   }
+    //                 `,
+    //               });
+    //               return [...existingArticles, newArticleRef];
+    //             },
+    //           },
+    //         });
+    //       },
+    //     });
 
     setLoading(false);
     setSubmitted(true);
@@ -207,9 +237,21 @@ const NewArticle = () => {
   };
   return (
     <Layout>
+      {/*
       {createLoading && <p>Creando articulo</p>}
       {publishLoading && <p>Publicando articulo</p>}
       {publishError && <p>Hubo un problema, reintentar</p>}
+      */}
+      {uploadAssetMutation.isLoading && "Asset mutation running"}
+      {uploadAssetMutation.isIdle && "Asset mutation not yet runned"}
+      {uploadAssetMutation.isSuccess && "Asset mutation successed"}
+      {uploadAssetMutation.isError && "Asset mutation failed"}
+      {noImage && (
+        <Err>
+          La portada es requerida. Por favor elige una imagen y reintenta la
+          operacion
+        </Err>
+      )}
       <Heading tertiary>New Article</Heading>
 
       <Formik initialValues={initialValues} onSubmit={createArticle}>
@@ -266,7 +308,6 @@ const NewArticle = () => {
                 initialContent={values.content}
                 setFieldValue={setFieldValue}
               />
-              <>{console.log(values.content)}</>
             </>
           </Form>
         )}

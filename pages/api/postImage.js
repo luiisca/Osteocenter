@@ -32,19 +32,24 @@ export default async function handler(req, res) {
   form.append("fileUpload", fs.createReadStream(img.filepath));
   try {
     const options = {
+      method: "post",
       url: `${process.env.NEXT_PUBLIC_GRAPHCMS_ASSET_ENDPOINT}`,
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_PAT}`,
-      },
       data: form,
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_PAT}`,
+        "Content-Type": "multipart/form-data",
+      },
     };
     const upload = await mainCaller(options);
+
+    console.log('UPLOAD ASSET', upload)
 
     if (upload.type === "data")
       return res.status(200).json({ type: "data", id: upload.data?.id });
     if (upload.type === "error")
-      return res.status(200).json({ type: "error", message: upload.message });
+      return res
+        .status(400)
+        .json({ type: "error", message: upload.message || upload.error });
   } catch (err) {
     console.log(error);
   }

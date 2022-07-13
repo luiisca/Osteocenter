@@ -2,6 +2,16 @@
 import axios from "axios";
 import { APIError, NetworkError } from "./cutomErrorClasses";
 
+const maximumAttempts = 3;
+const currentAttempt = 1;
+
+interface Options {
+  method: "get" | "post" | "delete";
+  url: string;
+  data: any;
+  headers: any;
+}
+
 function handleAxiosError(err: any, url: string) {
   if (err.isAxiosError) {
     if (err.response) {
@@ -22,29 +32,31 @@ function handleAxiosError(err: any, url: string) {
   }
 }
 
-async function axiosControlFlow(url: string) {
+async function axiosControlFlow(options: Options) {
   try {
-    const { data } = await axios(url);
+    const { data } = await axios(options);
     return data;
   } catch (err) {
-    return handleAxiosError(err, url);
+    return handleAxiosError(err, options.url);
   }
 }
 
 async function axiosWithRetry(
-  url: string,
+  options: Options,
   currentAttempt: number,
   maximumAttempts: number
 ) {
   console.log(`Attempting Request ${currentAttempt}/${maximumAttempts}`);
 
-  const responseOrError = await axiosControlFlow(url);
+  const responseOrError = await axiosControlFlow(options);
+  console.log('responseOrError', responseOrError, responseOrError instanceof NetworkError)
 
   if (responseOrError instanceof NetworkError) {
     if (currentAttempt < maximumAttempts) {
+      console.log('inside retry')
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(axiosWithRetry(url, currentAttempt + 1, maximumAttempts));
+          resolve(axiosWithRetry(options, currentAttempt + 1, maximumAttempts));
         }, 1000);
       });
     } else {
@@ -57,13 +69,10 @@ async function axiosWithRetry(
   }
 }
 
-const maximumAttempts = 3;
-const currentAttempt = 1;
-
-export async function mainCaller(url: string) {
+export async function mainCaller(options: Options) {
   try {
     const returnedValue = await axiosWithRetry(
-      url,
+      options,
       currentAttempt,
       maximumAttempts
     );

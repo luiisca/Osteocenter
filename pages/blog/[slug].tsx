@@ -86,7 +86,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
       params: { slug: article?.slug as string },
     })) || [];
 
-  console.log(paths);
   return {
     paths: paths,
     fallback: false,
