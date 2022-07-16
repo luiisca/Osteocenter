@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "echo 'Building Sanity to public/admin' && cd admin && yarn && npx @sanity/cli build ../public/admin -y && echo 'Done'",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "sanity": "cd admin && sanity start",
     "generate-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
@@ -25,6 +27,7 @@
     "@udecode/plate": "^14.0.0",
     "@uiball/loaders": "^1.2.6",
     "axios": "^0.27.2",
+    "date-fns": "^2.28.0",
     "deepmerge": "^4.2.2",
     "favicons": "^7.0.0-beta.4",
     "fecha": "^4.2.3",
@@ -35,6 +38,7 @@
     "immutable": "^4.1.0",
     "lodash": "^4.17.21",
     "next": "12.2.0",
+    "next-sanity": "^0.6.0",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
