@@ -12,6 +12,7 @@ const STUDIO_REWRITE = {
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  rewrites: () => [STUDIO_REWRITE],
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

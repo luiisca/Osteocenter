@@ -34,9 +34,7 @@ const Blog = ({
             <Article key={post._id}>
               <Link href={`/blog/${post.slug}`}>
                 <a>
-                  <Heading subHeading>
-                    <Date dateString={post.date} />
-                  </Heading>
+                  <Heading subHeading>{post.date}</Heading>
                   {/*
                   <ImgWrap>
                     <Image
