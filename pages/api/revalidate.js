@@ -63,7 +63,7 @@ export default async function revalidate(req, res) {
   log(`Querying post slug for _id '${id}', type '${_type}' ..`);
   const slug = await sanityClient.fetch(getQueryForType(_type), { id });
   const slugs = (Array.isArray(slug) ? slug : [slug]).map(
-    (_slug) => `/posts/${_slug}`
+    (_slug) => `/blog/${_slug}`
   );
   const staleRoutes = ["/", ...slugs];
 

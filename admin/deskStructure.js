@@ -11,7 +11,7 @@ export const getDefaultDocumentNode = () => {
       .options({
         url: (doc) => resolveProductionUrl(doc),
       })
-      .title("Preview"),
+      .title("Vista previa"),
   ]);
 };
 

@@ -1,13 +1,15 @@
-import Head from 'next/head';
-import Header from './Sections/header';
+import Head from "next/head";
+import Header from "./Sections/header";
+import Alert from "./Alert";
 
-export const siteTitle: string = 'Osteocenter';
+export const siteTitle: string = "Osteocenter";
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
+  preview?: boolean;
 }
 
-const Layout = ({children}: Props): JSX.Element => {
+const Layout = ({ preview, children }: Props): JSX.Element => {
   return (
     <div>
       <Head>
@@ -16,11 +18,12 @@ const Layout = ({children}: Props): JSX.Element => {
         <meta name="description" content="Osteocenter" />
       </Head>
       <main>
+        {preview && <Alert preview={preview} />}
         <Header />
         {children}
       </main>
     </div>
-  )
-}
+  );
+};
 
 export default Layout;
