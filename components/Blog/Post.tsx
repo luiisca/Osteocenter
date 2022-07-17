@@ -7,6 +7,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 
 import { getImgComponent } from "../../components/Blog/components";
 import { Heading } from "../../components/Elements";
+import Date from "./Date";
 
 const StyledPostContainer = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
@@ -137,7 +138,7 @@ const Post = ({ post, top, intro }: Post) => {
           {intro ? (
             <div>
               <div className="text-sm text-[rgb(117, 117, 117)] mb-[10px] md:mb-[5px]">
-                Actualizado el {post._updatedAt}
+                Actualizado el <Date dateString={post._updatedAt} />
               </div>
               <Flex className="text-sm text-[rgb(195, 195, 194)]">
                 <AiOutlineClockCircle className="text-lg" />

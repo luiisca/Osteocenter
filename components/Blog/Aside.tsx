@@ -7,6 +7,8 @@ import { LinkBox, LinkOverlay } from "@chakra-ui/react";
 import { Heading } from "../../components/Elements";
 import { Divider } from "./layout";
 
+const Container = tw.aside`md:ml-[60px] md:sticky md:top-24 md:h-screen`;
+
 const Aside = ({
   recommendedPosts,
   post,
@@ -15,7 +17,7 @@ const Aside = ({
   post?: boolean;
 }) => {
   return (
-    <aside tw="md:ml-[60px] md:sticky md:top-24 md:h-screen">
+    <Container>
       {!post && (
         <form tw="w-full mb-10">
           <input type="search" placeholder="Buscar" />
@@ -42,7 +44,7 @@ const Aside = ({
           </>
         ))}
       </Stack>
-    </aside>
+    </Container>
   );
 };
 export default Aside;

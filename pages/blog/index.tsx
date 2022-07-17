@@ -1,8 +1,8 @@
 // libraries
-import { useRef } from "react";
+// import { useRef, useCallback } from "react";
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -20,7 +20,7 @@ import {
 
 // components
 import Layout from "../../components/Layout";
-import { Heading, Button } from "../../components/Elements";
+import { Heading } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
 import Filter from "../../components/Blog/Filter";
 import Post from "../../components/Blog/Post";
@@ -44,6 +44,23 @@ const Carousel = styled.div(() => [
   `,
 ]);
 
+const SlidePrevButton = () => {
+  const swiper = useSwiper();
+
+  const handlePrev = () => {
+    swiper?.slidePrev();
+  };
+  return <div onClick={handlePrev}>PREVIOUS_PAGE</div>;
+};
+const SlideNextButton = () => {
+  const swiper = useSwiper();
+
+  const handleNext = () => {
+    swiper?.slideNext();
+  };
+  return <div onClick={handleNext}>NEXT_PAGE</div>;
+};
+
 interface Blog {
   allPosts: any;
   allCategories: Array<string>;
@@ -55,8 +72,10 @@ const Blog = ({
   allCategories,
   allPostsByCategory,
 }: Blog): JSX.Element => {
-  const nextArrowRef = useRef<HTMLDivElement>(null);
-  const prevArrowRef = useRef<HTMLDivElement>(null);
+  // const sliderRef = useRef<HTMLDivElement>(null);
+
+  // const nextArrowRef = useRef<HTMLButtonElement>(null);
+  // const prevArrowRef = useRef<HTMLButtonElement>(null);
 
   return (
     <Layout>
@@ -75,21 +94,21 @@ const Blog = ({
                 speed={400}
                 grabCursor
                 loop
-                navigation={{
-                  nextEl: nextArrowRef.current!,
-                  prevEl: prevArrowRef.current!,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextArrowRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevArrowRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                // apparently needed for SSR
-                // url
-                // userAgent
+                // navigation={{
+                //   nextEl: nextArrowRef.current!,
+                //   prevEl: prevArrowRef.current!,
+                // }}
+                // onInit={(swiper) => {
+                //   // @ts-ignore
+                //   swiper.params.navigation.nextEl = nextArrowRef.current;
+                //   // @ts-ignore
+                //   swiper.params.navigation.prevEl = prevArrowRef.current;
+                //   swiper.navigation.init();
+                //   swiper.navigation.update();
+                // }}
+                // // apparently needed for SSR
+                // // url
+                // // userAgent
               >
                 {allPosts
                   .filter((post: any) => post.featured)
@@ -98,11 +117,18 @@ const Blog = ({
                       <Post top post={post} />
                     </SwiperSlide>
                   ))}
+                <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
+                  <SlidePrevButton />
+                  <SlideNextButton />
+                </div>
               </Swiper>
-              <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
+              {/*<div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
                 <Button elType="icon" elRef={prevArrowRef} top prev />
-                <Button elType="icon" elRef={nextArrowRef} top next />
-              </div>
+                <button ref={prevArrowRef}>Previous</button>
+                <button ref={nextArrowRef}>Next</button>
+                <div onClick={handlePrev}>PREVIOUS_PAGE</div>
+                <div onClick={handleNext}>NEXT_PAGE</div>
+                {/*<Button elType="icon" elRef={nextArrowRef} top next />*/}
             </Carousel>
           </div>
 

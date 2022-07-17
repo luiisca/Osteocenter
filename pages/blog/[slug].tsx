@@ -17,9 +17,8 @@ import {
 
 import Layout from "../../components/Layout";
 import components from "../../components/Blog/components";
-import { Heading, Button } from "../../components/Elements";
+import { Heading } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
-import Filter from "../../components/Blog/Filter";
 import Post from "../../components/Blog/Post";
 import Aside from "../../components/Blog/Aside";
 import { ContentGrid, Divider } from "../../components/Blog/layout";
