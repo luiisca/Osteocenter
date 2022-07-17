@@ -1,6 +1,6 @@
 export default {
-  name: "category",
-  title: "Categoría",
+  name: "source",
+  title: "Fuente",
   type: "document",
   fields: [
     {
@@ -9,9 +9,9 @@ export default {
       type: "string",
     },
     {
-      name: "description",
-      title: "Descripción",
-      type: "text",
+      name: "url",
+      title: "Enlace",
+      type: "url",
     },
   ],
 };

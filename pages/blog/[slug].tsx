@@ -1,8 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import ErrorPage from "next/error";
-// import Image from "next/image";
 import tw from "twin.macro";
 import { useRouter } from "next/router";
+import { PortableText } from "@portabletext/react";
+import { uuid } from "uuidv4";
 
 import { usePreviewSubscription } from "../../lib/sanity/sanity";
 import { sanityClient, getClient } from "../../lib/sanity/sanity.server";
@@ -10,8 +11,8 @@ import { postSlugsQuery, postQuery } from "../../lib/sanity/queries";
 
 import { Heading } from "../../components/Elements";
 import Layout from "../../components/Layout";
+import components from "../../components/Blog/components";
 
-// const ImgWrap = tw.div`w-full h-[500px] max-w-[800px] relative`;
 const PostTitle = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left
  `;
 const Category = tw.span`inline-block py-2 px-4 bg-primary-shade-1 hover:bg-primary-shade-2 rounded-lg text-white`;
@@ -44,32 +45,21 @@ const Article = ({
         <>
           <Heading subHeading>{post?.date}</Heading>
           <Heading primary>{post?.title}</Heading>
-          <p>{post?.excerpt}</p>
           {post?.categories.map((category: any) => (
-            <Category key={post?.id} tw="mt-3">
+            <Category key={uuid()} tw="mt-3">
               {category.name}
             </Category>
           ))}
         </>
       )}
 
-      {/*
-      <ImgWrap>
-        <Image
-          src={data?.article?.featuredImage?.url || ""}
-          alt={data?.article?.title}
-          layout="fill"
-          objectFit="cover"
-        />
-      </ImgWrap>
-      <div>{post?.content.html}</div>
-        */}
+      <PortableText value={post?.body} components={components} />
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps<{
-  post: any;
+  postData: any;
   preview: boolean;
 }> = async ({ params, preview = false }) => {
   const postData = await getClient(preview).fetch(postQuery, {

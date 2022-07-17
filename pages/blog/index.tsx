@@ -1,15 +1,14 @@
 import { GetStaticProps } from "next";
-// import Image from "next/image";
 import Link from "next/link";
 import tw from "twin.macro";
 import { overlayDrafts, getClient } from "../../lib/sanity/sanity.server";
 import { indexQuery } from "../../lib/sanity/queries";
+import { uuid } from "uuidv4";
 
 import Layout from "../../components/Layout";
 import { Heading } from "../../components/Elements";
-import Date from "../../components/Blog/Date";
-
-// import { FiEdit } from "react-icons/fi";
+// import Date from "../../components/Blog/Date";
+import { getImgComponent } from "../../components/Blog/components";
 
 const Articles = tw.div`grid grid-cols-2 gap-2 mx-5 mb-4`;
 const Article = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`;
@@ -18,7 +17,6 @@ const ImgWrap = tw.div`w-full h-[300px] max-w-[550px] relative`;
 
 const Blog = ({
   allPosts,
-  preview,
 }: {
   allPosts: any;
   preview: boolean;
@@ -31,24 +29,18 @@ const Blog = ({
       <Articles>
         {allPosts?.map((post: any) => {
           return (
-            <Article key={post._id}>
+            <Article key={uuid()}>
               <Link href={`/blog/${post.slug}`}>
                 <a>
                   <Heading subHeading>{post.date}</Heading>
-                  {/*
-                  <ImgWrap>
-                    <Image
-                      src={post.coverImage?.url}
-                      alt={post.title}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </ImgWrap>
-                  */}
+                  {getImgComponent({
+                    value: post.coverImage,
+                    isInline: false,
+                  })}
                   <Heading tertiary>{post.title}</Heading>
                   <p>{post.excerpt}</p>
                   {post.categories.map((category: any) => (
-                    <Category key={category._id} tw="mt-3">
+                    <Category key={uuid()} tw="mt-3">
                       {category.name}
                     </Category>
                   ))}

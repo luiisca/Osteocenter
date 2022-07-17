@@ -3,6 +3,7 @@ import tw, {styled, css, theme} from 'twin.macro';
 import Image from 'next/image';
 import {useReducer} from 'react';
 import {useSpring, animated} from 'react-spring';
+import {uuid} from 'uuidv4'
 
 import {BsArrowLeft, BsArrowRight} from 'react-icons/bs';
 
@@ -115,7 +116,7 @@ const Articles = (): JSX.Element => {
       <CarouselWrap>
         <Carousel style={carouselSpring}>
           {data.articles.map((article, i) => (
-            <Article key={i}>
+            <Article key={uuid()}>
               <ImgWrap tw='mb-4'>
                 <Image
                   src={`/img/articles/${article.picture}`}

@@ -52,6 +52,30 @@ export default {
       title: "Cuerpo",
       type: "blockContent",
     },
+    {
+      name: "references",
+      title: "Referencias",
+      type: "array",
+      of: [
+        {
+          name: "source",
+          title: "Fuente",
+          type: "document",
+          fields: [
+            {
+              name: "title",
+              title: "Título",
+              type: "string",
+            },
+            {
+              name: "url",
+              title: "Enlace",
+              type: "url",
+            },
+          ],
+        },
+      ],
+    },
   ],
 
   // preview: {
