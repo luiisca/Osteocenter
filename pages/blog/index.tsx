@@ -152,6 +152,9 @@ export const getStaticProps: GetStaticProps<{
     {}
   );
 
+  console.log("getStaticProps index");
+  console.log("is this getting executed after webhook?", allPosts);
+
   return {
     props: {
       allPosts,

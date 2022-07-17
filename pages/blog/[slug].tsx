@@ -136,6 +136,9 @@ export const getStaticProps: GetStaticProps<{
   });
   const featuredPosts = await getClient(preview).fetch(featuredPostsQuery);
 
+  console.log("getStaticProps [slug]");
+  console.log("is this getting executed after webhook?", postData);
+
   return {
     props: {
       preview,
