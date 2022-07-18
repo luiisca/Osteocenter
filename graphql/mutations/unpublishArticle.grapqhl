@@ -1,8 +1,0 @@
-mutation unpublishArticle($id: ID!) {
-  unpublishArticle(where: {
-    id: $id
-  }) {
-    id
-  }
-}
-

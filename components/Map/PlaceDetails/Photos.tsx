@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useReducer, useState } from "react";
 import tw, { css, styled } from "twin.macro";
-import { uuid } from "uuidv4";
+import {v4} from 'uuid'
 
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
@@ -79,7 +79,7 @@ const Photos = ({
         )}
         <Carousel crrPage={page}>
           {imgs.map((img) => (
-            <ImgWrap key={uuid()}>
+            <ImgWrap key={v4()}>
               <Image
                 loader={loader}
                 src={img.getUrl()}

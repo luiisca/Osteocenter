@@ -7,10 +7,10 @@ const StyledNavLink = styled(BaseLink)(() => [
 ])
 
 interface Props {
-  nextLink?: boolean
-  custom?: boolean
   destination: string
   children: React.ReactNode
+  nextLink?: boolean
+  custom?: boolean
 }
 
 const PageLink = ({nextLink, custom, destination, children}: Props): JSX.Element => {
@@ -20,8 +20,7 @@ const PageLink = ({nextLink, custom, destination, children}: Props): JSX.Element
         {children}
       </Link>
     )
-  }
-
+  } 
   return (
     nextLink ? (
       <Link href={destination} passHref>

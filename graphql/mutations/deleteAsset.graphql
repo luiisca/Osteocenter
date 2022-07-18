@@ -1,6 +1,0 @@
-mutation DeleteAsset($id: ID!) {
-  deleteAsset(where: {id: $id}) {
-    id
-  }
-}
-

@@ -3,7 +3,7 @@ import tw, { styled } from "twin.macro";
 import { Heading } from "../Elements";
 import { urlForImage } from "../../lib/sanity/sanity";
 import { getImageDimensions } from "@sanity/asset-utils";
-import { uuid } from "uuidv4";
+import {v4} from 'uuid'
 
 const ImgWrap = styled.div((props: { isInline: boolean }) => [
   props.isInline ? tw`inline-block` : tw`block`,
@@ -51,8 +51,8 @@ const components = {
     ),
   },
   listItem: {
-    bullet: ({ children }: any) => <li key={uuid()}>{children}</li>,
-    number: ({ children }: any) => <li key={uuid()}>{children}</li>,
+    bullet: ({ children }: any) => <li key={v4()}>{children}</li>,
+    number: ({ children }: any) => <li key={v4()}>{children}</li>,
   },
 };
 

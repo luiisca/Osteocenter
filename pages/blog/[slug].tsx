@@ -3,7 +3,7 @@ import ErrorPage from "next/error";
 import tw from "twin.macro";
 import { useRouter } from "next/router";
 import { PortableText } from "@portabletext/react";
-import { uuid } from "uuidv4";
+import {v4} from 'uuid'
 
 import { usePreviewSubscription } from "../../lib/sanity/sanity";
 import { sanityClient, getClient } from "../../lib/sanity/sanity.server";
@@ -46,7 +46,7 @@ const Article = ({
           <Heading subHeading>{post?.date}</Heading>
           <Heading primary>{post?.title}</Heading>
           {post?.categories.map((category: any) => (
-            <Category key={uuid()} tw="mt-3">
+            <Category key={v4()} tw="mt-3">
               {category.name}
             </Category>
           ))}
