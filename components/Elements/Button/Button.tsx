@@ -2,6 +2,8 @@ import tw, { css, styled } from "twin.macro";
 import { animated } from "react-spring";
 import { BaseLink } from "../../BaseStyle";
 
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+
 interface ButtonProps {
   children?: React.ReactNode;
   onClick?: (e?: any) => boolean | Promise<void> | void;
@@ -11,6 +13,10 @@ interface ButtonProps {
 interface IconProps extends ButtonProps {
   elType: "icon";
   inactive?: boolean;
+  carousel?: boolean;
+  elRef?: any;
+  prev?: boolean;
+  next?: boolean;
 }
 interface TextProps extends ButtonProps {
   elType: "text";
@@ -29,6 +35,15 @@ interface SubmitProps extends ButtonProps {
   hero?: boolean;
 }
 type Props = TextProps | IconProps | SubmitProps;
+
+const CarouselNavArrow = (props: any) => {
+  return (
+    <button ref={props.elRef} className={props.className}>
+      {props.prev && <BsArrowLeft />}
+      {props.next && <BsArrowRight />}
+    </button>
+  );
+};
 
 const bttnStyling = (props: any) => {
   return css`
@@ -67,22 +82,28 @@ const Text = styled(BaseLink)<TextProps>((props) => [
     }
   `,
 ]);
-const Icon = styled(animated.button)<IconProps>((props) => [
-  tw`flex items-center justify-center transition-all`,
-  tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
-  props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
+const GetIconBttn = (props: any) => {
+  const Icon = styled(
+    props.carousel ? CarouselNavArrow : animated.button
+  )<IconProps>((props) => [
+    tw`flex items-center justify-center transition-all`,
+    tw`w-[50px] h-[50px] text-3xl text-primary-shade-1 bg-white rounded-full shadow-md`,
+    props.inactive && tw`cursor-not-allowed text-primary-tint-1`,
 
-  css`
-    box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
-    &:hover {
-      box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
-    }
-  `,
-]);
+    css`
+      box-shadow: 1px 1px 10px 0 rgb(116 192 252 / 15%);
+      &:hover {
+        box-shadow: 1px 1px 15px 0 rgb(116 192 252 / 25%);
+      }
+    `,
+  ]);
+
+  return <Icon {...props}>{props.children}</Icon>;
+};
 
 const Button = (props: Props): JSX.Element => {
   if (props.elType === "icon") {
-    return <Icon {...props}>{props.children}</Icon>;
+    return GetIconBttn(props);
   }
   if (props.elType == "text") {
     return <Text {...props}>{props.children}</Text>;
