@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { GetStaticProps } from "next";
-import Link from "next/link";
+import NextLink from "next/link";
 import tw, { styled, css } from "twin.macro";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper";
@@ -9,6 +9,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { v4 } from "uuid";
+import {
+  LinkBox,
+  LinkOverlay,
+  Link,
+  Stack,
+  Badge,
+  Text,
+} from "@chakra-ui/react";
 
 import { overlayDrafts, getClient } from "../../lib/sanity/sanity.server";
 import { indexQuery } from "../../lib/sanity/queries";
@@ -23,11 +31,12 @@ const Container = tw(BaseContainer)``;
 const Carousel = styled.div(() => [
   css`
     .swiper {
-      ${tw`h-[200px]`}
+      ${tw`lg:h-[minmax(380px, 600px)]`}
       .swiper-wrapper {
+        height: 100%;
         .swiper-slide {
           --webkit-transform: translateZ(0);
-          ${tw`px-8 py-4 text-lg rounded-md bg-primary-tint-3`}
+          height: 100%;
         }
       }
     }
@@ -43,8 +52,10 @@ const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
     <Layout>
       <Container>
         <>
-          <Heading subHeading>Lo ultimo</Heading>
-          <Carousel>
+          <Heading subHeading tw="mt-12 mb-4">
+            Lo ultimo
+          </Heading>
+          <Carousel tw="lg:relative">
             <Swiper
               modules={[Pagination, Navigation]}
               slidesPerView={1}
@@ -71,15 +82,54 @@ const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
               {allPosts
                 .filter((post: any) => post.featured)
                 .map((post: any) => (
-                  <SwiperSlide key={v4()}>{post.title}</SwiperSlide>
+                  // <SwiperSlide key={v4()}>{post.title}</SwiperSlide>
+                  <SwiperSlide key={v4()}>
+                    <LinkBox
+                      as="article"
+                      className="lg:grid lg:grid-cols-[55% 45%] lg:h-full"
+                    >
+                      <div className="lg:h-full">
+                        {/*Image*/}
+                        {getImgComponent({
+                          value: post.coverImage,
+                          isInline: false,
+                        })}
+                      </div>
+
+                      <div className="py-5 lg:pl-24 lg:pt-14 lg:pb-20">
+                        {/*Category*/}
+                        <Heading
+                          subHeading
+                          as="span"
+                          className="text-primary mb-5"
+                        >
+                          <NextLink href="#" passHref>
+                            <Link className="relative z-10 no-underline hover:text-primary-shade-1">
+                              {post.categories[0]}
+                            </Link>
+                          </NextLink>
+                        </Heading>
+                        {/*Title*/}
+                        <Heading secondary className="mb-5 text-4xl lg:mb-7">
+                          <NextLink href={`/blog/${post.slug}`} passHref>
+                            <LinkOverlay>{post.title}</LinkOverlay>
+                          </NextLink>
+                        </Heading>
+                        {/*Excerpt*/}
+                        <Text className="mb-7 text-accent-555">
+                          {post.excerpt}
+                        </Text>
+                      </div>
+                    </LinkBox>
+                  </SwiperSlide>
                 ))}
             </Swiper>
+            <div className="flex gap-3 lg:absolute lg:left-[55%] lg:bottom-0 lg:pl-24 lg:mb-5 lg:z-10">
+              <Button elType="icon" elRef={prevArrowRef} carousel prev />
+              <Button elType="icon" elRef={nextArrowRef} carousel next />
+            </div>
           </Carousel>
         </>
-        <div className="flex gap-3">
-          <Button elType="icon" elRef={prevArrowRef} carousel prev />
-          <Button elType="icon" elRef={nextArrowRef} carousel next />
-        </div>
       </Container>
     </Layout>
   );
@@ -90,6 +140,7 @@ export const getStaticProps: GetStaticProps<{
   preview: boolean;
 }> = async ({ preview = false }) => {
   const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery));
+  console.log(allPosts);
 
   return {
     props: {
@@ -108,17 +159,6 @@ export default Blog;
 //         <Link href={`/blog/${post.slug}`}>
 //           <a>
 //             <Heading subHeading>{post.date}</Heading>
-//             {getImgComponent({
-//               value: post.coverImage,
-//               isInline: false,
-//             })}
-//             <Heading tertiary>{post.title}</Heading>
-//             <p>{post.excerpt}</p>
-//             {post.categories.map((category: any) => (
-//               <Category key={v4()} tw="mt-3">
-//                 {category.name}
-//               </Category>
-//             ))}
 //           </a>
 //         </Link>
 //       </Article>
