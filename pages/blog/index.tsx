@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import tw, { styled, css } from "twin.macro";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -20,9 +20,19 @@ import { BaseContainer } from "../../components/BaseStyle";
 import { getImgComponent } from "../../components/Blog/components";
 
 const Container = tw(BaseContainer)``;
-const Articles = tw.div`grid grid-cols-2 gap-2 mx-5 mb-4`;
-const Article = tw.div`px-6 py-3 w-auto bg-primary-tint-3 rounded-md hover:bg-primary-tint-2 transition-all`;
-const Category = tw.span`inline-block py-2 px-4 bg-primary-shade-1 hover:bg-primary-shade-2 rounded-lg text-white`;
+const Carousel = styled.div(() => [
+  css`
+    .swiper {
+      ${tw`h-[200px]`}
+      .swiper-wrapper {
+        .swiper-slide {
+          --webkit-transform: translateZ(0);
+          ${tw`px-8 py-4 text-lg rounded-md bg-primary-tint-3`}
+        }
+      }
+    }
+  `,
+]);
 // const ImgWrap = tw.div`w-full h-[300px] max-w-[550px] relative`;
 
 const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
@@ -34,40 +44,37 @@ const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
       <Container>
         <>
           <Heading subHeading>Lo ultimo</Heading>
-          <Swiper
-            className="h-[300px]"
-            slidesPerView={1}
-            spaceBetween={30}
-            speed={400}
-            // apparently needed for SSR
-            // url
-            // userAgent
-            grabCursor
-            loop={true}
-            navigation={{
-              nextEl: nextArrowRef.current!,
-              prevEl: prevArrowRef.current!,
-            }}
-            modules={[Pagination, Navigation]}
-            onInit={(swiper) => {
-              // @ts-ignore
-              swiper.params.navigation.nextEl = nextArrowRef.current;
-              // @ts-ignore
-              swiper.params.navigation.prevEl = prevArrowRef.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }}
-          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
-          </Swiper>
+          <Carousel>
+            <Swiper
+              modules={[Pagination, Navigation]}
+              slidesPerView={1}
+              spaceBetween={30}
+              speed={400}
+              grabCursor
+              loop
+              navigation={{
+                nextEl: nextArrowRef.current!,
+                prevEl: prevArrowRef.current!,
+              }}
+              onInit={(swiper) => {
+                // @ts-ignore
+                swiper.params.navigation.nextEl = nextArrowRef.current;
+                // @ts-ignore
+                swiper.params.navigation.prevEl = prevArrowRef.current;
+                swiper.navigation.init();
+                swiper.navigation.update();
+              }}
+              // apparently needed for SSR
+              // url
+              // userAgent
+            >
+              {allPosts
+                .filter((post: any) => post.featured)
+                .map((post: any) => (
+                  <SwiperSlide key={v4()}>{post.title}</SwiperSlide>
+                ))}
+            </Swiper>
+          </Carousel>
         </>
         <div className="flex gap-3">
           <Button elType="icon" elRef={prevArrowRef} carousel prev />
@@ -78,16 +85,6 @@ const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
   );
 };
 
-// {allPosts
-//   // .filter((post: any) => post.featured)
-//   .map((post: any) => (
-//     <div
-//       className="px-8 py-4 m-2 rounded-sm bg-primary-tint-2"
-//       key={v4()}
-//     >
-//       {post.title}
-//     </div>
-//   ))}
 export const getStaticProps: GetStaticProps<{
   allPosts: any;
   preview: boolean;
