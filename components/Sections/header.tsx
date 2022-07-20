@@ -3,15 +3,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
+import { useScroll } from "framer-motion";
 
 import tw, { styled, css } from "twin.macro";
 import Nav from "../Nav";
 
-const Container = styled.header(() => [
-  tw`relative z-30 flex items-center justify-between h-24 px-12 bg-primary-tint-3`,
+const Container = styled(animated.header)(() => [
+  tw`sticky top-0 z-30 flex items-center justify-between h-24 px-12 bg-primary-tint-3 shadow-sm`,
 ]);
 
 const Logo = tw.a`block relative min-w-[200px] h-full`;
+
+const Overlay = styled.div(({ isOpen }: { isOpen: boolean }) => [
+  tw`left-0 absolute z-[-1] w-screen h-screen top-full bg-transparent`,
+  !isOpen && tw`hidden`,
+]);
 
 const LogoWrap = () => (
   <Link href="/" passHref>
@@ -26,78 +32,67 @@ const LogoWrap = () => (
     </Logo>
   </Link>
 );
-const Overlay = styled.div(({ headerHeight }: { headerHeight: number }) => [
-  tw`absolute z-10 w-screen h-screen bg-transparent`,
-  css`
-    top: ${headerHeight}px;
-  `,
-]);
-
 const Header = (): JSX.Element => {
-  const [screenWidth, setScreenWidth] = useState<number>(1023);
   const [isOpen, setOpen] = useState<boolean>(undefined as unknown as boolean);
+  const [isInView, setIsInView] = useState<boolean>(true);
   const [navHeight, setNavHeight] = useState<number>(0);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
+  const { scrollY } = useScroll();
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
 
   const headerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setHeaderHeight(headerRef?.current?.clientHeight || 0);
   }, [headerRef?.current?.clientHeight, setHeaderHeight]);
 
+  const headerSpring = useSpring({
+    transform: isInView ? "translateY(0px)" : `translateY(-${headerHeight}px)`,
+  });
   const navSpring = useSpring({
     position: "absolute",
     left: 0,
-    top: isOpen ? `${headerHeight}px` : `-${navHeight - headerHeight}px`,
+    top:
+      isOpen === undefined
+        ? "-1000px"
+        : isOpen
+        ? `${headerHeight}px`
+        : `-${navHeight - headerHeight}px`,
   });
 
   useEffect(() => {
-    setScreenWidth(window.innerWidth);
-    if (window.innerWidth >= 1024) {
-      setOpen(undefined as unknown as boolean);
-    } else setOpen(false);
-
-    const setWidth = () => {
-      setScreenWidth(window.innerWidth);
-      if (window.innerWidth >= 1024) {
-        setOpen(undefined as unknown as boolean);
-      } else setOpen(false);
-    };
-    window.addEventListener("resize", setWidth);
-
-    return () => window.removeEventListener("resize", setWidth);
-  }, []);
+    scrollY.onChange((latest) => {
+      if (latest > lastScrollY) {
+        setIsInView(false);
+      } else {
+        setIsInView(true);
+      }
+      setLastScrollY(latest);
+    });
+  }, [scrollY, lastScrollY, headerHeight]);
 
   return (
-    <>
-      <Container ref={headerRef}>
-        {screenWidth < 1024 ? (
-          <>
-            <LogoWrap />
-            {typeof isOpen === "boolean" && (
-              <Hamburger
-                toggled={isOpen}
-                toggle={setOpen}
-                direction="right"
-                rounded
-                hideOutline={false}
-                label="Abrir barra de navegación"
-              />
-            )}
-          </>
-        ) : (
-          <>
-            <LogoWrap />
-            <Nav />
-          </>
-        )}
-      </Container>
-      {screenWidth < 1024 && (
+    <Container ref={headerRef} style={headerSpring}>
+      <>
+        <div className="flex items-center justify-between w-full h-full bg-primary-tint-3 lg:w-auto">
+          <LogoWrap />
+          <div className="lg:hidden">
+            <Hamburger
+              toggled={isOpen}
+              toggle={setOpen}
+              direction="right"
+              rounded
+              hideOutline={false}
+              label="Abrir barra de navegación"
+            />
+          </div>
+        </div>
         <>
-          <Overlay headerHeight={headerHeight} onClick={() => setOpen(false)} />
-          <Nav style={navSpring} setHeight={setNavHeight} />
+          <Overlay isOpen={isOpen} onClick={() => setOpen(false)} />
+          <Nav style={navSpring} setHeight={setNavHeight} device="mobile" />
+          <Nav device="desktop" />
         </>
-      )}
-    </>
+      </>
+    </Container>
   );
 };
 

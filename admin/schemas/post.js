@@ -53,6 +53,14 @@ export default {
       type: "blockContent",
     },
     {
+      name: "featured",
+      title: "Destacado",
+      type: "boolean",
+      description:
+        "Los posts destacados seran parte del carrusel en la pantalla principal del blog",
+      initialValue: false,
+    },
+    {
       name: "references",
       title: "Referencias",
       type: "array",

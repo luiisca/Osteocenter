@@ -2,19 +2,20 @@ import tw, { styled } from "twin.macro";
 import { PageLink } from "../Elements";
 import { BaseLink } from "../../components/BaseStyle";
 
-const StyledNavLink = styled(BaseLink)(() => [
-  tw`text-lg font-medium`,
-  tw`w-full py-3`,
+export const StyledNavLink = styled(BaseLink)(() => [
+  tw`text-base font-medium`,
+  tw`w-full py-5`,
+  tw`lg:px-5 lg:w-auto`,
 ]);
 
 interface Props {
   nextLink?: boolean;
-  destination: string;
+  destination?: string;
   children: React.ReactNode;
 }
 
 const NavLink = ({ nextLink, destination, children }: Props): JSX.Element => {
-  if (!destination.includes("/")) {
+  if (!destination?.includes("/")) {
     return <StyledNavLink href={destination}>{children}</StyledNavLink>;
   }
 

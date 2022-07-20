@@ -7,8 +7,8 @@ const StyledNavLink = styled(BaseLink)(() => [
 ])
 
 interface Props {
-  destination: string
   children: React.ReactNode
+  destination: string
   nextLink?: boolean
   custom?: boolean
 }

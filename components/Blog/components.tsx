@@ -13,8 +13,6 @@ const ImgWrap = styled.div((props: { isInline: boolean }) => [
 export const getImgComponent = ({ value, isInline }: any) => {
   const { width, height } = getImageDimensions(value);
 
-  console.log(value, isInline, urlForImage(value).size(width, height).url());
-  console.log("SIZES", width, height);
   return (
     <ImgWrap isInline={isInline}>
       <Image
