@@ -16,6 +16,11 @@ import {
   Stack,
   Badge,
   Divider,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
   Text,
 } from "@chakra-ui/react";
 
@@ -51,7 +56,10 @@ const Carousel = styled.div(() => [
 
 const Post = ({ post }: any) => {
   return (
-    <LinkBox as="article" className="lg:grid lg:grid-cols-[55% 45%] lg:h-full">
+    <LinkBox
+      as="article"
+      className="relative lg:grid lg:grid-cols-[55% 45%] lg:h-full"
+    >
       <div className="lg:h-full">
         {/*Image*/}
         {getImgComponent({
@@ -64,7 +72,7 @@ const Post = ({ post }: any) => {
         {/*Category*/}
         <Heading subHeading as="span" className="mb-5 text-primary">
           <NextLink href="#" passHref>
-            <Link className="relative z-10 no-underline hover:text-primary-shade-1">
+            <Link className="relative z-10 hover:text-primary-shade-1">
               {post.category}
             </Link>
           </NextLink>
@@ -82,7 +90,17 @@ const Post = ({ post }: any) => {
   );
 };
 
-const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
+interface Blog {
+  allPosts: any;
+  allCategories: Array<string>;
+  allPostsByCategory: any;
+}
+
+const Blog = ({
+  allPosts,
+  allCategories,
+  allPostsByCategory,
+}: Blog): JSX.Element => {
   const nextArrowRef = useRef<HTMLDivElement>(null);
   const prevArrowRef = useRef<HTMLDivElement>(null);
 
@@ -139,7 +157,22 @@ const Blog = ({ allPosts }: { allPosts: any }): JSX.Element => {
                 <Heading subHeading className="mb-5">
                   Filtrar por
                 </Heading>
-                <Stack direction="row" spacing="12px"></Stack>
+                <Tabs>
+                  <TabList>
+                    {allCategories.map((cat) => (
+                      <Tab key={v4()}>{cat}</Tab>
+                    ))}
+                  </TabList>
+                  <TabPanels className="mt-12">
+                    {allCategories.map((cat) => (
+                      <TabPanel key={v4()}>
+                        <div>
+                          <Post post={allPostsByCategory[cat][0]} />
+                        </div>
+                      </TabPanel>
+                    ))}
+                  </TabPanels>
+                </Tabs>
               </div>
             </div>
           </div>
@@ -177,6 +210,7 @@ export const getStaticProps: GetStaticProps<{
   return {
     props: {
       allPosts,
+      allCategories,
       allPostsByCategory,
       preview,
     },
