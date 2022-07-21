@@ -37,10 +37,10 @@ export default {
       },
     },
     {
-      name: "categories",
-      title: "Categorías",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }],
+      name: "category",
+      title: "Categoría",
+      type: "reference",
+      to: {type: 'category'}
     },
     {
       name: "date",
