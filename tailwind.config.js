@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'blog-lg': '992px', 
+      },
       colors: {
         transparent: "transparent",
         current: "currentColor",

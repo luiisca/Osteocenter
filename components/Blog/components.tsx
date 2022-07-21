@@ -8,10 +8,11 @@ import { v4 } from "uuid";
 const ImgWrap = styled.div(
   (props: { isInline: boolean; w: number; h: number }) => [
     props.isInline ? tw`inline-block` : tw`block`,
-    tw`relative lg:h-full`,
+    tw`relative blog-lg:h-full blog-lg:max-h-full`,
     css`
-      height: clamp(400px, ${props.h}px, 45vh);
+      height: clamp(250px, 25vh, 600px);
     `,
+    tw`w-full max-h-[400px] sm:max-h-[480px] md:min-h-[450px] md:max-h-[600px]`,
   ]
 );
 
