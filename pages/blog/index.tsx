@@ -115,7 +115,8 @@ const Blog = ({
               allPosts={allPosts}
               postsByCategory={allPostsByCategory}
             />
-            <aside className="md:ml-[60px] md:sticky md:top-24">
+            {/* recommended aside*/}
+            <aside className="md:ml-[60px] md:sticky md:top-24 md:h-screen">
               <form className="w-full mb-10">
                 <input type="search" placeholder="Buscar" />
               </form>
