@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'blog-lg': '992px', 
+        "blog-lg": "992px",
       },
       colors: {
         transparent: "transparent",
@@ -37,6 +37,7 @@ module.exports = {
           DEFAULT: "#74c0fc", // 400
           "shade-1": "#3f9cf5",
           "shade-2": "#3688e3", // 600
+          "shade-3": "#317acc",
         },
         accent: {
           DEFAULT: "#888",
