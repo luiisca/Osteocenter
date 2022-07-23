@@ -38,7 +38,7 @@ type Props = TextProps | IconProps | SubmitProps;
 
 const CarouselNavBttn = (props: any) => {
   return (
-    <button ref={props.elRef} className={props.className}>
+    <button {...props}>
       {props.prev && <BsArrowLeft />}
       {props.next && <BsArrowRight />}
     </button>

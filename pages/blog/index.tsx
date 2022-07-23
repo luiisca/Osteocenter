@@ -1,5 +1,4 @@
 // libraries
-// import { useRef, useCallback } from "react";
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -20,7 +19,7 @@ import {
 
 // components
 import Layout from "../../components/Layout";
-import { Heading } from "../../components/Elements";
+import { Heading, Button } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
 import Filter from "../../components/Blog/Filter";
 import Post from "../../components/Blog/Post";
@@ -50,7 +49,8 @@ const SlidePrevButton = () => {
   const handlePrev = () => {
     swiper?.slidePrev();
   };
-  return <div onClick={handlePrev}>PREVIOUS_PAGE</div>;
+  // return <button onClick={handlePrev}>Previous</button>;
+  return <Button elType="icon" onClick={handlePrev} top prev />;
 };
 const SlideNextButton = () => {
   const swiper = useSwiper();
@@ -58,7 +58,8 @@ const SlideNextButton = () => {
   const handleNext = () => {
     swiper?.slideNext();
   };
-  return <div onClick={handleNext}>NEXT_PAGE</div>;
+  // return <button onClick={handleNext}>Next</button>;
+  return <Button elType="icon" onClick={handleNext} top next />;
 };
 
 interface Blog {
@@ -72,11 +73,6 @@ const Blog = ({
   allCategories,
   allPostsByCategory,
 }: Blog): JSX.Element => {
-  // const sliderRef = useRef<HTMLDivElement>(null);
-
-  // const nextArrowRef = useRef<HTMLButtonElement>(null);
-  // const prevArrowRef = useRef<HTMLButtonElement>(null);
-
   return (
     <Layout>
       <Container tw="mt-12 ">
@@ -94,21 +90,6 @@ const Blog = ({
                 speed={400}
                 grabCursor
                 loop
-                // navigation={{
-                //   nextEl: nextArrowRef.current!,
-                //   prevEl: prevArrowRef.current!,
-                // }}
-                // onInit={(swiper) => {
-                //   // @ts-ignore
-                //   swiper.params.navigation.nextEl = nextArrowRef.current;
-                //   // @ts-ignore
-                //   swiper.params.navigation.prevEl = prevArrowRef.current;
-                //   swiper.navigation.init();
-                //   swiper.navigation.update();
-                // }}
-                // // apparently needed for SSR
-                // // url
-                // // userAgent
               >
                 {allPosts
                   .filter((post: any) => post.featured)
