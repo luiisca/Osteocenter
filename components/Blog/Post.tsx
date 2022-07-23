@@ -10,33 +10,34 @@ import { Heading } from "../../components/Elements";
 
 const StyledPostContainer = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
-    tw`relative grid grid-rows-[45% 55%] `,
+    tw`relative grid grid-rows-[45% 55%] hover:translate-y-[-5px] transition ease-in-out duration-300`,
     top &&
-      tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center`,
-    intro && tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px]`,
+      tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center hover:translate-y-0`,
+    intro &&
+      tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px] hover:translate-y-0`,
   ]
 );
 const StyledPostImgContainer = styled.div(({ intro }: { intro?: boolean }) => [
   tw`blog-lg:h-full`,
-  intro && tw`blog-lg:h-4/5`,
+  intro && tw`mb-7 blog-lg:mb-0`,
 ]);
-const StyledPostText = styled.div(
+const StyledPostDetails = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
     tw`pt-5`,
     top && tw`py-5 blog-lg:pl-24 blog-lg:pb-20 md:pt-14 md:pb-7`,
     intro &&
-      tw`pb-0 md:pb-0 blog-lg:pb-0 blog-lg:col-start-1 blog-lg:row-start-1 blog-lg:pl-0 blog-lg:pr-32`,
+      tw`p-0 md:p-0 blog-lg:p-0 blog-lg:col-start-1 blog-lg:row-start-1 blog-lg:pl-0 blog-lg:mr-32`,
   ]
 );
 const StyledPostCategory = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
-    tw`text-primary`,
+    tw`mb-2.5 text-xs leading-[1.125rem] text-primary`,
     top && tw`mb-5`,
-    intro && tw`md:mb-7`,
+    intro && tw`text-sm md:mb-7`,
   ]
 );
 const StyledPostTitle = styled.div(({ top }: { top?: boolean }) => [
-  tw`mb-5 text-xl blog-lg:mb-[10px]`,
+  tw`mb-5 text-xl leading-[1.625rem] blog-lg:mb-[10px]`,
   top && tw`text-2xl md:mb-7 md:text-4xl`,
 ]);
 
@@ -83,7 +84,7 @@ const Post = ({ post, top, intro }: Post) => {
           })}
         </StyledPostImgContainer>
 
-        <StyledPostText top={top} intro={intro}>
+        <StyledPostDetails top={top} intro={intro}>
           {/*Category*/}
           {intro ? (
             <Breadcrumb
@@ -93,14 +94,16 @@ const Post = ({ post, top, intro }: Post) => {
               }
             >
               <BreadcrumbItem className="text-accent-555 hover:text-accent-333">
-                <BreadcrumbLink
-                  href=""
-                  _hover={{
-                    textDecoration: "none",
-                  }}
-                >
-                  Blog
-                </BreadcrumbLink>
+                <NextLink href="/blog" passHref>
+                  <BreadcrumbLink
+                    _hover={{
+                      textDecoration: "none",
+                    }}
+                    tw="text-sm"
+                  >
+                    Blog
+                  </BreadcrumbLink>
+                </NextLink>
               </BreadcrumbItem>
               <BreadcrumbItem textDecoration="none">
                 <BreadcrumbLink
@@ -142,9 +145,11 @@ const Post = ({ post, top, intro }: Post) => {
               </Flex>
             </div>
           ) : (
-            <Text className="blog-lg:mb-7 text-accent-555">{post.excerpt}</Text>
+            <Text className="text-sm leading-6 blog-lg:mb-7 text-accent-555">
+              {post.excerpt}
+            </Text>
           )}
-        </StyledPostText>
+        </StyledPostDetails>
       </StyledPostContainer>
     </LinkBox>
   );

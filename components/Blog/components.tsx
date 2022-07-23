@@ -19,7 +19,7 @@ const ImgWrap = styled.div(
   ]
 );
 const Text = styled.p(() => [
-  tw`text-[#525252] text-[.95rem] leading-[1.575rem] mb-5 tracking-[0.02px] font-normal`,
+  tw`text-[#525252] text-[.95rem] leading-[1.575rem] mb-5 tracking-[0.02px] font-normal max-w-[75ch]`,
   tw`md:text-lg md:leading-[1.875rem] md:mb-7`,
 ]);
 

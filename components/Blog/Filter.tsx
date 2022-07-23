@@ -26,7 +26,7 @@ const Filter = ({
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   return (
-    <>
+    <div tw="mb-24 md:mb-0">
       <Tabs index={tabIndex} onChange={setTabIndex} variant="unstyled">
         <TabList mb={7}>
           <div className="flex flex-wrap justify-between w-full blog-lg:justify-start">
@@ -106,7 +106,7 @@ const Filter = ({
           ))}
         </TabPanels>
       </Tabs>
-    </>
+    </div>
   );
 };
 export default Filter;

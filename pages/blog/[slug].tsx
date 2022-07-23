@@ -27,7 +27,7 @@ import { ContentGrid, Divider } from "../../components/Blog/layout";
 const Loading = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left
  `;
 const Container = tw(BaseContainer)``;
-const IconWrap = tw.div`text-[rgb(175, 175, 174)] text-2xl md:text-[1.35rem]`;
+const IconWrap = tw.div`text-[#AFAFAE] hover:text-[#9e9e9d] text-2xl md:text-[1.35rem]`;
 
 const Article = ({
   postData,
@@ -92,23 +92,32 @@ const Article = ({
           </div>
         </ContentGrid>
 
-        <Divider />
+        <Divider tw="my-20 md:my-24 blog-lg:my-[7.5rem]" />
         {/*Related Posts*/}
-        <div>
-          <Heading subHeading as="span">
-            Relacionados
+        <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
+          <Heading
+            tertiary
+            as="h3"
+            tw="text-primary-shade-3 text-2xl mb-12 md:leading-[2.125rem]"
+          >
+            Artículos Relacionados
           </Heading>
-          <div>
-            {relatedPosts.map((post: any) => (
-              <Post post={post} key={v4()} />
-            ))}
+          <div tw="grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-7 blog-lg:grid-cols-3 blog-lg:gap-x-14 blog-lg:gap-y-4">
+            {[
+              ...relatedPosts,
+              ...featuredPosts,
+              ...relatedPosts,
+              ...featuredPosts,
+            ].map((related: any) => {
+              if (related._id === post._id) return;
+              return <Post post={related} key={v4()} />;
+            })}
           </div>
         </div>
 
-        <Divider />
-        {/*Related Posts*/}
-        <div tw="md:hidden">
-          <Aside recommendedPosts={featuredPosts} />
+        {/*Recommended Posts*/}
+        <div tw="md:hidden mb-20 ">
+          <Aside recommendedPosts={featuredPosts} post />
         </div>
       </Container>
     </Layout>

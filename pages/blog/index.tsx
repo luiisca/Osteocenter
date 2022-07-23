@@ -108,18 +108,20 @@ const Blog = ({
 
           <Divider tw="mb-20" />
 
-          <ContentGrid>
-            {/* Filtered Articles */}
-            <Filter
-              categories={["Todos", ...allCategories]}
-              allPosts={allPosts}
-              postsByCategory={allPostsByCategory}
-            />
-            {/* Recommended aside*/}
-            <Aside
-              recommendedPosts={allPosts.filter((post: any) => post.featured)}
-            />
-          </ContentGrid>
+          <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
+            <ContentGrid>
+              {/* Filtered Articles */}
+              <Filter
+                categories={["Todos", ...allCategories]}
+                allPosts={allPosts}
+                postsByCategory={allPostsByCategory}
+              />
+              {/* Recommended aside*/}
+              <Aside
+                recommendedPosts={allPosts.filter((post: any) => post.featured)}
+              />
+            </ContentGrid>
+          </div>
         </>
       </Container>
     </Layout>
