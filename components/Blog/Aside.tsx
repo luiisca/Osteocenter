@@ -7,7 +7,7 @@ import { LinkBox, LinkOverlay } from "@chakra-ui/react";
 import { Heading } from "../../components/Elements";
 import { Divider } from "./layout";
 
-const Container = tw.aside`md:ml-[60px] md:sticky md:top-24 md:h-screen`;
+const Container = tw.aside`md:ml-[60px] md:sticky md:top-24`;
 
 const Aside = ({
   recommendedPosts,

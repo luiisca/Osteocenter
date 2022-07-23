@@ -115,7 +115,7 @@ const Article = ({
         </div>
 
         {/*Recommended Posts*/}
-        <div tw="md:hidden mb-20 ">
+        <div tw="md:hidden mb-20">
           <Aside recommendedPosts={featuredPosts} post />
         </div>
       </Container>

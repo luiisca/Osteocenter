@@ -124,9 +124,12 @@ const Blog = ({
                 postsByCategory={allPostsByCategory}
               />
               {/* Recommended aside*/}
-              <Aside
+ 
+              <div>
+                <Aside
                 recommendedPosts={allPosts.filter((post: any) => post.featured)}
-              />
+                />
+              </div>
             </ContentGrid>
           </div>
         </>
@@ -155,7 +158,7 @@ export const getStaticProps: GetStaticProps<{
         ...prevPosts,
         [category]: posts,
       };
-    },
+    } ,
     {}
   );
 
