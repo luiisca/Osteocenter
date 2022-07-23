@@ -4,24 +4,30 @@ import { Heading } from "../Elements";
 import { urlForImage } from "../../lib/sanity/sanity";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { v4 } from "uuid";
+import { Link } from "@chakra-ui/react";
 
 const ImgWrap = styled.div(
-  (props: { isInline: boolean; carousel: boolean }) => [
+  (props: { isInline: boolean; top: boolean; intro: boolean }) => [
     props.isInline ? tw`inline-block` : tw`block`,
     tw`relative `,
     css`
       height: clamp(250px, 25vh, 600px);
     `,
-    props.carousel &&
+    props.top &&
       tw`w-full max-h-[400px] sm:max-h-[480px] md:min-h-[450px] md:max-h-[600px] blog-lg:h-full blog-lg:max-h-full`,
+    props.intro && tw`blog-lg:min-h-full`,
   ]
 );
+const Text = styled.p(() => [
+  tw`text-[#525252] text-[.95rem] leading-[1.575rem] mb-5 tracking-[0.02px] font-normal`,
+  tw`md:text-lg md:leading-[1.875rem] md:mb-7`,
+]);
 
-export const getImgComponent = ({ value, isInline, carousel }: any) => {
+export const getImgComponent = ({ value, isInline, top, intro }: any) => {
   const { width, height } = getImageDimensions(value);
 
   return (
-    <ImgWrap isInline={isInline} carousel={carousel}>
+    <ImgWrap isInline={isInline} top={top} intro={intro}>
       <Image
         src={urlForImage(value).size(width, height).url()}
         // placeholder="blur"
@@ -38,23 +44,65 @@ const components = {
     image: getImgComponent,
   },
   block: {
-    h2: ({ children }: any) => <Heading secondary>{children}</Heading>,
-    h3: ({ children }: any) => <Heading tertiary>{children}</Heading>,
-    blockquote: ({ children }: any) => (
-      <blockquote className="border-l-purple-500">{children}</blockquote>
+    h2: ({ children }: any) => (
+      <Heading
+        secondary
+        tw="mb-5 text-3xl text-primary-shade-3 md:mb-7 md:text-4xl"
+      >
+        {children}
+      </Heading>
     ),
+    h3: ({ children }: any) => (
+      <Heading tertiary tw="mb-5 text-2xl text-primary-shade-3 md:mb-7">
+        {children}
+      </Heading>
+    ),
+    blockquote: ({ children }: any) => (
+      <Text as="blockquote" tw="italic text-primary-shade-1">
+        {children}
+      </Text>
+    ),
+    normal: ({ children }: any) => <Text>{children}</Text>,
+  },
+  marks: {
+    link: ({ value, children }: any) => {
+      const target = (value?.href || "").startsWith("http")
+        ? "_blank"
+        : undefined;
+      return (
+        <Text
+          as="span"
+          tw="text-primary-shade-2 underline hover:text-primary blog-lg:no-underline"
+        >
+          <Link
+            href={value?.href}
+            target={target}
+            rel={target == "_blank" ? "noindex nofollow" : ""}
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            {children}
+          </Link>
+        </Text>
+      );
+    },
   },
   list: {
-    bullet: ({ children }: any) => (
-      <ul className="pl-4 mt-5 list-disc">{children}</ul>
-    ),
-    number: ({ children }: any) => (
-      <ol className="pl-4 mt-4 list-decimal">{children}</ol>
-    ),
+    bullet: ({ children }: any) => <ul>{children}</ul>,
+    number: ({ children }: any) => <ol>{children}</ol>,
   },
   listItem: {
-    bullet: ({ children }: any) => <li key={v4()}>{children}</li>,
-    number: ({ children }: any) => <li key={v4()}>{children}</li>,
+    bullet: ({ children }: any) => (
+      <Text as="li" tw="" key={v4()}>
+        {children}
+      </Text>
+    ),
+    number: ({ children }: any) => (
+      <Text as="li" tw="" key={v4()}>
+        {children}
+      </Text>
+    ),
   },
 };
 

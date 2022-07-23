@@ -13,7 +13,6 @@ const StyledMenuItem = styled.div(({ selected }: any) => [
   tw`text-[#919191] px-1.5 py-2.5`,
   selected && tw`text-primary-shade-1`,
 ]);
-const StyledTabPanel = styled.div(() => [tw``]);
 
 const Filter = ({
   categories,

@@ -1,7 +1,6 @@
 // libraries
 import { useRef } from "react";
 import { GetStaticProps } from "next";
-import NextLink from "next/link";
 import tw, { styled, css } from "twin.macro";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -10,14 +9,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { v4 } from "uuid";
-import { Divider, Stack } from "@chakra-ui/react";
 
 // helpers
 import { overlayDrafts, getClient } from "../../lib/sanity/sanity.server";
 import {
   indexQuery,
-  categories,
-  postByCategory,
+  categoriesQuery,
+  postsByCategoryQuery,
 } from "../../lib/sanity/queries";
 
 // components
@@ -26,6 +24,8 @@ import { Heading, Button } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
 import Filter from "../../components/Blog/Filter";
 import Post from "../../components/Blog/Post";
+import Aside from "../../components/Blog/Aside";
+import { ContentGrid, Divider } from "../../components/Blog/layout";
 
 // styled components
 const Container = tw(BaseContainer)``;
@@ -60,11 +60,11 @@ const Blog = ({
 
   return (
     <Layout>
-      <Container>
+      <Container tw="mt-12 ">
         <>
           {/*Carousel */}
           <div className="mb-20">
-            <Heading subHeading tw="mt-12 mb-4">
+            <Heading subHeading tw="mb-4">
               Lo ultimo
             </Heading>
             <Carousel tw="blog-lg:relative">
@@ -95,54 +95,31 @@ const Blog = ({
                   .filter((post: any) => post.featured)
                   .map((post: any) => (
                     <SwiperSlide key={v4()}>
-                      <Post carousel post={post} />
+                      <Post top post={post} />
                     </SwiperSlide>
                   ))}
               </Swiper>
               <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
-                <Button elType="icon" elRef={prevArrowRef} carousel prev />
-                <Button elType="icon" elRef={nextArrowRef} carousel next />
+                <Button elType="icon" elRef={prevArrowRef} top prev />
+                <Button elType="icon" elRef={nextArrowRef} top next />
               </div>
             </Carousel>
           </div>
 
-          <Divider bg="hsla(0,0%,78%,.37)" className="mb-20" />
+          <Divider tw="mb-20" />
 
-          {/* Articles */}
-          <div className="md:grid md:grid-cols-[60% 40%] lg:grid-cols-[70% 30%]">
+          <ContentGrid>
+            {/* Filtered Articles */}
             <Filter
               categories={["Todos", ...allCategories]}
               allPosts={allPosts}
               postsByCategory={allPostsByCategory}
             />
-            {/* recommended aside*/}
-            <aside className="md:ml-[60px] md:sticky md:top-24 md:h-screen">
-              <form className="w-full mb-10">
-                <input type="search" placeholder="Buscar" />
-              </form>
-              <Heading as="div" subHeading tw="mb-4">
-                Recomendados
-              </Heading>
-              <Stack direction="column">
-                {allPosts
-                  .filter((post: any) => post.featured)
-                  .map((post: any) => (
-                    <>
-                      <NextLink href={`/blog/${post.slug}`} passHref key={v4()}>
-                        <Heading
-                          secondary
-                          as="h4"
-                          className="py-6 m-0 text-xl cursor-pointer first:pt-0 text-primary-shade-3 hover:text-primary"
-                        >
-                          {post.title}
-                        </Heading>
-                      </NextLink>
-                      <Divider bg="hsla(0,0%,78%,.37)" m="0px" />
-                    </>
-                  ))}
-              </Stack>
-            </aside>
-          </div>
+            {/* Recommended aside*/}
+            <Aside
+              recommendedPosts={allPosts.filter((post: any) => post.featured)}
+            />
+          </ContentGrid>
         </>
       </Container>
     </Layout>
@@ -154,13 +131,13 @@ export const getStaticProps: GetStaticProps<{
   preview: boolean;
 }> = async ({ preview = false }) => {
   const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery));
-  const allCategories = await getClient(preview).fetch(categories);
+  const allCategories = await getClient(preview).fetch(categoriesQuery);
 
   // https://stackoverflow.com/questions/4215737/convert-array-to-object?page=1&tab=scoredesc#tab-top
   // https://zellwk.com/blog/async-await-in-loops/
   const allPostsByCategory = await allCategories.reduce(
     async (promisedPost: any, category: string) => {
-      const posts = await getClient(preview).fetch(postByCategory, {
+      const posts = await getClient(preview).fetch(postsByCategoryQuery, {
         category,
       });
       const prevPosts = await promisedPost;

@@ -1,63 +1,149 @@
 import NextLink from "next/link";
-import { LinkBox, LinkOverlay, Link, Text } from "@chakra-ui/react";
-import tw, { styled} from "twin.macro";
+import { LinkBox, LinkOverlay, Link, Text, Flex } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import tw, { styled } from "twin.macro";
+import { IoIosArrowForward } from "react-icons/io";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 import { getImgComponent } from "../../components/Blog/components";
 import { Heading } from "../../components/Elements";
 
 const StyledPostContainer = styled.div(
-  ({ carousel }: { carousel: boolean }) => [
+  ({ top, intro }: { top?: boolean; intro?: boolean }) => [
     tw`relative grid grid-rows-[45% 55%] `,
-    carousel && tw`blog-lg:grid-cols-[55% 45%] h-full`,
+    top &&
+      tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center`,
+    intro && tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px]`,
   ]
 );
-const StyledPostText = styled.div(({ carousel }: { carousel: boolean }) => [
-  tw`pt-5`,
-  carousel && tw`py-5 blog-lg:pl-24 blog-lg:pb-20 md:pt-14 md:pb-7`,
+const StyledPostImgContainer = styled.div(({ intro }: { intro?: boolean }) => [
+  tw`blog-lg:h-full`,
+  intro && tw`blog-lg:h-4/5`,
 ]);
-const StyledPostCategory = styled.div(({ carousel }: { carousel: boolean }) => [
-  tw`mb-[10px] md:mb-3 text-primary`,
-  carousel && tw`mb-5`,
-]);
-const StyledPostTitle = styled.div(({ carousel }: { carousel: boolean }) => [
+const StyledPostText = styled.div(
+  ({ top, intro }: { top?: boolean; intro?: boolean }) => [
+    tw`pt-5`,
+    top && tw`py-5 blog-lg:pl-24 blog-lg:pb-20 md:pt-14 md:pb-7`,
+    intro &&
+      tw`pb-0 md:pb-0 blog-lg:pb-0 blog-lg:col-start-1 blog-lg:row-start-1 blog-lg:pl-0 blog-lg:pr-32`,
+  ]
+);
+const StyledPostCategory = styled.div(
+  ({ top, intro }: { top?: boolean; intro?: boolean }) => [
+    tw`text-primary`,
+    top && tw`mb-5`,
+    intro && tw`md:mb-7`,
+  ]
+);
+const StyledPostTitle = styled.div(({ top }: { top?: boolean }) => [
   tw`mb-5 text-xl blog-lg:mb-[10px]`,
-  carousel && tw`text-2xl md:mb-7 md:text-4xl`,
+  top && tw`text-2xl md:mb-7 md:text-4xl`,
 ]);
 
-const Post = ({ post, carousel }: any) => {
+interface Post {
+  post: any;
+  top?: boolean;
+  intro?: boolean;
+}
+
+const Category = ({
+  top,
+  post,
+  intro,
+}: {
+  post: any;
+  top?: boolean;
+  intro?: boolean;
+}) => (
+  <StyledPostCategory top={top} intro={intro}>
+    <NextLink href="#" passHref>
+      <Link
+        _hover={{
+          textDecoration: "none",
+        }}
+        className="relative z-10 hover:text-primary-shade-1"
+      >
+        {post.category}
+      </Link>
+    </NextLink>
+  </StyledPostCategory>
+);
+
+const Post = ({ post, top, intro }: Post) => {
   return (
     <LinkBox as="article">
-      <StyledPostContainer carousel={carousel}>
-        <div className="blog-lg:h-full">
+      <StyledPostContainer top={top} intro={intro}>
+        <StyledPostImgContainer intro={intro}>
           {/*Image*/}
           {getImgComponent({
             value: post.coverImage,
             isInline: false,
-            carousel,
+            top,
+            intro,
           })}
-        </div>
+        </StyledPostImgContainer>
 
-        <StyledPostText carousel={carousel}>
+        <StyledPostText top={top} intro={intro}>
           {/*Category*/}
-          <Heading subHeading as="span" tw="m-0">
-            <StyledPostCategory carousel={carousel}>
-              <NextLink href="#" passHref>
-                <Link className="relative z-10 hover:text-primary-shade-1">
-                  {post.category}
-                </Link>
-              </NextLink>
-            </StyledPostCategory>
-          </Heading>
+          {intro ? (
+            <Breadcrumb
+              spacing="10px"
+              separator={
+                <IoIosArrowForward className="text-[#757575] text-sm leading-6" />
+              }
+            >
+              <BreadcrumbItem className="text-accent-555 hover:text-accent-333">
+                <BreadcrumbLink
+                  href=""
+                  _hover={{
+                    textDecoration: "none",
+                  }}
+                >
+                  Blog
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbItem textDecoration="none">
+                <BreadcrumbLink
+                  href=""
+                  _hover={{
+                    textDecoration: "none",
+                  }}
+                >
+                  <Category post={post} top={top} intro={intro} />
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          ) : (
+            <Heading subHeading as="span" tw="m-0">
+              <Category post={post} top={top} tw="mb-[10px] md:mb-3 " />
+            </Heading>
+          )}
           {/*Title*/}
           <Heading secondary as="h2" tw="m-0">
-            <StyledPostTitle carousel={carousel}>
-              <NextLink href={`/blog/${post.slug}`} passHref>
-                <LinkOverlay>{post.title}</LinkOverlay>
-              </NextLink>
+            <StyledPostTitle top={top}>
+              {intro ? (
+                <>{post.title}</>
+              ) : (
+                <NextLink href={`/blog/${post.slug}`} passHref>
+                  <LinkOverlay>{post.title}</LinkOverlay>
+                </NextLink>
+              )}
             </StyledPostTitle>
           </Heading>
           {/*Excerpt*/}
-          <Text className="blog-lg:mb-7 text-accent-555">{post.excerpt}</Text>
+          {intro ? (
+            <div>
+              <div className="text-sm text-[rgb(117, 117, 117)] mb-[10px] md:mb-[5px]">
+                Actualizado el {post._updatedAt}
+              </div>
+              <Flex className="text-sm text-[rgb(195, 195, 194)]">
+                <AiOutlineClockCircle className="text-lg" />
+                <span className="ml-[10px]">5 min</span>
+              </Flex>
+            </div>
+          ) : (
+            <Text className="blog-lg:mb-7 text-accent-555">{post.excerpt}</Text>
+          )}
         </StyledPostText>
       </StyledPostContainer>
     </LinkBox>

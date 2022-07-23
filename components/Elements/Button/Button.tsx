@@ -13,7 +13,7 @@ interface ButtonProps {
 interface IconProps extends ButtonProps {
   elType: "icon";
   inactive?: boolean;
-  carousel?: boolean;
+  top?: boolean;
   elRef?: any;
   prev?: boolean;
   next?: boolean;
@@ -100,7 +100,7 @@ const CarouselBttn = styled(CarouselNavBttn)<IconProps>(getIconStyles);
 
 const Button = (props: Props): JSX.Element => {
   if (props.elType === "icon") {
-    if (props.carousel) {
+    if (props.top) {
       return <CarouselBttn {...props}>{props.children}</CarouselBttn>;
     }
     return <Icon {...props}>{props.children}</Icon>;
