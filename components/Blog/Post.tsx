@@ -11,7 +11,8 @@ import Date from "./Date";
 
 const StyledPostContainer = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
-    tw`relative grid grid-rows-[45% 55%] hover:translate-y-[-5px] transition ease-in-out duration-300`,
+    tw`relative hover:translate-y-[-5px] transition ease-in-out duration-300`,
+    (top || intro) && tw`grid grid-rows-[45% 55%]`,
     top &&
       tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center hover:translate-y-0`,
     intro &&

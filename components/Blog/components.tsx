@@ -9,7 +9,7 @@ import { Link } from "@chakra-ui/react";
 const ImgWrap = styled.div(
   (props: { isInline: boolean; top: boolean; intro: boolean }) => [
     props.isInline ? tw`inline-block` : tw`block`,
-    tw`relative `,
+    tw`relative`,
     css`
       height: clamp(250px, 25vh, 600px);
     `,
