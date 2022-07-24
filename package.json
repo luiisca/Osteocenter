@@ -38,6 +38,7 @@
     "react-icons": "^4.4.0",
     "react-query": "^3.39.1",
     "react-query-devtools": "^2.6.3",
+    "react-share": "^4.4.0",
     "react-spring": "^9.4.5",
     "react-syntax-highlighter": "^15.5.0",
     "styled-components": "^5.3.5",

@@ -6,6 +6,7 @@ type Libraries = (
   | "visualization"
 )[];
 
+export const WEB_LINK = "https://osteocenter.vercel.app";
 // CMS
 export const GRAPHQL_ENDPOINT = "https://spacexdata.herokuapp.com/graphql";
 

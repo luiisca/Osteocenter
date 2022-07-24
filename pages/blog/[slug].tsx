@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { PortableText } from "@portabletext/react";
 import { v4 } from "uuid";
 import { Flex } from "@chakra-ui/react";
-import { BsTwitter, BsFacebook } from "react-icons/bs";
+import { BsWhatsapp, BsFacebook } from "react-icons/bs";
 import { usePreviewSubscription } from "../../lib/sanity/sanity";
 import { sanityClient, getClient } from "../../lib/sanity/sanity.server";
 import {
@@ -14,6 +14,7 @@ import {
   postsByCategoryQuery,
   featuredPostsQuery,
 } from "../../lib/sanity/queries";
+import { FacebookShareButton, WhatsappShareButton } from "react-share";
 
 import Layout from "../../components/Layout";
 import components from "../../components/Blog/components";
@@ -22,6 +23,7 @@ import { BaseContainer } from "../../components/BaseStyle";
 import Post from "../../components/Blog/Post";
 import Aside from "../../components/Blog/Aside";
 import { ContentGrid, Divider } from "../../components/Blog/layout";
+import { WEB_LINK } from "../../static/ts/constants";
 
 const Loading = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left
  `;
@@ -76,12 +78,22 @@ const Article = ({
                 Compartir
               </Heading>
               <Flex tw="gap-5">
-                <IconWrap>
-                  <BsTwitter />
-                </IconWrap>
-                <IconWrap>
-                  <BsFacebook />
-                </IconWrap>
+                <FacebookShareButton
+                  quote={post.title}
+                  url={`${WEB_LINK}/blog/${slug}`}
+                >
+                  <IconWrap>
+                    <BsFacebook />
+                  </IconWrap>
+                </FacebookShareButton>
+                <WhatsappShareButton
+                  title={post.title}
+                  url={`${WEB_LINK}/blog/${slug}`}
+                >
+                  <IconWrap>
+                    <BsWhatsapp />
+                  </IconWrap>
+                </WhatsappShareButton>
               </Flex>
             </Flex>
             <PortableText value={post?.body} components={components} />
@@ -134,9 +146,6 @@ export const getStaticProps: GetStaticProps<{
     category: postData?.category,
   });
   const featuredPosts = await getClient(preview).fetch(featuredPostsQuery);
-
-  console.log("getStaticProps [slug]");
-  console.log("is this getting executed after webhook?", postData);
 
   return {
     props: {
