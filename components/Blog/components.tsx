@@ -1,7 +1,7 @@
 import Image from "next/image";
 import tw, { styled, css } from "twin.macro";
 import { Heading } from "../Elements";
-import { urlForImage } from "../../lib/sanity/sanity";
+import { urlForImage } from "../../utils/sanity/sanity";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { v4 } from "uuid";
 import { Link } from "@chakra-ui/react";
@@ -24,6 +24,7 @@ const Text = styled.p(() => [
 ]);
 
 export const getImgComponent = ({ value, isInline, top, intro }: any) => {
+  console.log('GetImageComponent',value)
   const { width, height } = getImageDimensions(value);
 
   return (

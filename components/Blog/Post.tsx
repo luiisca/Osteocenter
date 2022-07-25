@@ -71,6 +71,9 @@ const Category = ({
 );
 
 const Post = ({ post, top, intro }: Post) => {
+  {
+    console.log("INSIDE <POST />", post);
+  }
   return (
     <LinkBox as="article">
       <StyledPostContainer top={top} intro={intro}>

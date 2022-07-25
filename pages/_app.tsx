@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
+import Layout from '../components/Layout'
 
 // import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
 // import { ReactQueryDevtools } from "react-query/devtools";
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     // <Hydrate state={pageProps.dehydratedState}>
     <ChakraProvider>
       <GlobalStyles />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
       {/*
         <ReactQueryDevtools />
         */}

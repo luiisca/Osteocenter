@@ -7,20 +7,26 @@ export default {
       name: "title",
       title: "Título",
       type: "string",
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "slug",
       title: "Link",
       type: "slug",
+      description:
+        "La URL de este post (/blog/tu-url). Un slug ideal tiene entre 3 y 5 palabras.",
       options: {
         source: "title",
-        maxLength: 96,
+        maxLength: 23,
       },
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "excerpt",
       title: "Resumen",
       type: "string",
+
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     // {
     //   name: 'author',
@@ -35,22 +41,26 @@ export default {
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "category",
       title: "Categoría",
       type: "reference",
-      to: {type: 'category'}
+      to: { type: "category" },
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "date",
       title: "Fecha",
       type: "datetime",
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "body",
       title: "Cuerpo",
       type: "blockContent",
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "featured",
@@ -83,6 +93,7 @@ export default {
           ],
         },
       ],
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
   ],
 

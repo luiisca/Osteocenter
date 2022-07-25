@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Header from "./Sections/header";
-import Alert from "./Alert";
-
 import tw from "twin.macro";
-export const siteTitle: string = "Osteocenter";
+
+import Alert from "./Alert";
+import {SITE_TITLE} from '../static/ts/constants'
 
 interface Props {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
     <div>
       <Head>
         <link rel="icon" href="/favicon.svg" />
-        <meta name="og:title" content={siteTitle} />
+        <meta name="og:title" content={SITE_TITLE} />
         <meta name="description" content="Osteocenter" />
       </Head>
       <Main>

@@ -1,5 +1,5 @@
-import { postBySlugQuery } from "../../lib/sanity/queries";
-import { previewClient } from "../../lib/sanity/sanity.server";
+import { postBySlugQuery } from "../../utils/sanity/queries";
+import { previewClient } from "../../utils/sanity/sanity.server";
 
 export default async function preview(req, res) {
   // Check the secret and next parameters

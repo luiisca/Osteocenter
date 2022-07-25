@@ -2,6 +2,7 @@ import { useState } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { v4 } from "uuid";
+import type { PostType, BlogProps } from "../../pages/blog/index";
 
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
@@ -14,15 +15,7 @@ const StyledMenuItem = styled.div(({ selected }: any) => [
   selected && tw`text-primary-shade-1`,
 ]);
 
-const Filter = ({
-  categories,
-  allPosts,
-  postsByCategory,
-}: {
-  categories: Array<string>;
-  allPosts: any;
-  postsByCategory: any;
-}) => {
+const Filter = ({ allCategories, allPosts, allPostsByCategory }: BlogProps) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   return (
@@ -30,7 +23,7 @@ const Filter = ({
       <Tabs index={tabIndex} onChange={setTabIndex} variant="unstyled">
         <TabList mb={7}>
           <div className="flex flex-wrap justify-between w-full blog-lg:justify-start">
-            {/*badges DESKTOP*/}
+            {/*tabs DESKTOP*/}
             <Tab p={0} alignItems="flex-start">
               <Heading
                 subHeading
@@ -41,7 +34,7 @@ const Filter = ({
               </Heading>
             </Tab>
             <div className="hidden blog-lg:flex">
-              {categories.slice(1).map((cat: string) => (
+              {allCategories.slice(1).map((cat) => (
                 <Tab
                   _selected={{
                     borderBottom: "1px",
@@ -53,7 +46,7 @@ const Filter = ({
                   borderColor="transparent"
                   key={v4()}
                 >
-                  {cat}
+                  {cat.title}
                 </Tab>
               ))}
             </div>
@@ -64,17 +57,17 @@ const Filter = ({
                 <MenuButton>
                   <div className="flex items-center text-primary-shade-1">
                     <span className="mr-5 border-b-2 border-primary-shade-1">
-                      {categories[tabIndex]}
+                      {allCategories[tabIndex].title}
                     </span>
                     <IoIosArrowDown className="text-primary-shade-1" />
                   </div>
                 </MenuButton>
                 <MenuList>
-                  {categories.map((cat, i) => (
+                  {allCategories.map((cat, i) => (
                     <MenuItem key={v4()} onClick={() => setTabIndex(i)} p={0}>
                       {/*@ts-ignore */}
                       <StyledMenuItem selected={tabIndex == i}>
-                        {cat}
+                        {cat.title}
                       </StyledMenuItem>
                     </MenuItem>
                   ))}
@@ -89,19 +82,19 @@ const Filter = ({
             p={0}
             className="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
           >
-            {allPosts.map((post: any) => (
+            {allPosts.map((post) => (
               <Post key={v4()} post={post} />
             ))}
           </TabPanel>
-          {categories.slice(1).map((cat: string) => (
+          {allCategories.slice(1).map((cat) => (
             <TabPanel
               p={0}
               key={v4()}
               className="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
             >
-              <div>
-                <Post post={postsByCategory[cat][0]} />
-              </div>
+              {allPostsByCategory[cat.title].map((post: PostType) => (
+                <Post post={post} />
+              ))}
             </TabPanel>
           ))}
         </TabPanels>

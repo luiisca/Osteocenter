@@ -7,6 +7,7 @@ export default {
       name: "title",
       title: "Título",
       type: "string",
+      validation: (Rule) => Rule.required().error("Campo requerido"),
     },
     {
       name: "url",

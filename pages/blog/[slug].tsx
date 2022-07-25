@@ -6,20 +6,20 @@ import { PortableText } from "@portabletext/react";
 import { v4 } from "uuid";
 import { Flex } from "@chakra-ui/react";
 import { BsTwitter, BsFacebook } from "react-icons/bs";
-import { usePreviewSubscription } from "../../lib/sanity/sanity";
-import { sanityClient, getClient } from "../../lib/sanity/sanity.server";
+import { usePreviewSubscription } from "../../utils/sanity/sanity";
+import { sanityClient, getClient } from "../../utils/sanity/sanity.server";
 import {
   postSlugsQuery,
   postQuery,
   postsByCategoryQuery,
   featuredPostsQuery,
-} from "../../lib/sanity/queries";
+} from "../../utils/sanity/queries";
+import type {PostType} from './index'
 
 import Layout from "../../components/Layout";
 import components from "../../components/Blog/components";
-import { Heading, Button } from "../../components/Elements";
+import { Heading} from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
-import Filter from "../../components/Blog/Filter";
 import Post from "../../components/Blog/Post";
 import Aside from "../../components/Blog/Aside";
 import { ContentGrid, Divider } from "../../components/Blog/layout";
@@ -29,24 +29,30 @@ const Loading = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight
 const Container = tw(BaseContainer)``;
 const IconWrap = tw.div`text-[#AFAFAE] hover:text-[#9e9e9d] text-2xl md:text-[1.35rem]`;
 
+interface PostData extends PostType {
+  body: any
+}
+interface ArticleProps {
+  postData: PostData;
+  relatedPosts: PostType[];
+  featuredPosts: PostType[];
+  preview: boolean;
+}
+
 const Article = ({
   postData,
   relatedPosts,
   featuredPosts,
   preview,
-}: {
-  postData: any;
-  relatedPosts: any;
-  featuredPosts: any;
-  preview: boolean;
-}): JSX.Element => {
+}: ArticleProps 
+): JSX.Element => {
   const router = useRouter();
   const slug = postData?.slug;
 
   const { data: post } = usePreviewSubscription(postQuery, {
     params: { slug },
     initialData: postData,
-    enabled: preview && slug,
+    enabled: !!(preview && slug),
   });
 
   if (!router.isFallback && !slug) {
@@ -124,9 +130,12 @@ const Article = ({
   );
 };
 
+
 export const getStaticProps: GetStaticProps<{
-  postData: any;
+  postData: PostData;
   preview: boolean;
+  relatedPosts: PostType[];
+  featuredPosts: PostType[];
 }> = async ({ params, preview = false }) => {
   const postData = await getClient(preview).fetch(postQuery, {
     slug: params?.slug,

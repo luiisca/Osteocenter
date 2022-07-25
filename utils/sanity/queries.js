@@ -19,14 +19,19 @@ export const featuredPostsQuery = `
   }
 `;
 export const categoriesQuery = `
-  *[_type == 'category'].title
+  *[_type == 'category'] {
+    title,
+    'slug': slug.current,
+  }
+`;
+export const categoryBySlugQuery = `
+  *[_type == 'category' && slug == $slug'].title
 `;
 export const postsByCategoryQuery = `
-  *[_type == 'post' && category._ref in *[_type == 'category' && title == $category]._id] | order(date desc, _updatedAt desc) {
+  *[_type == 'post' && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
     ${postFields}
   }
 `;
-
 export const postQuery = `
   *[_type == "post" && slug.current == $slug] | order(_updatedAt desc) {
     body[] {

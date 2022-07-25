@@ -1,19 +1,20 @@
 import Head from "next/head";
 import type { NextPage } from "next";
-import Layout, { siteTitle } from "../components/Layout";
 import Main from "../components/Sections/main";
+
+import {SITE_TITLE} from '../static/ts/constants'
 
 const Home: NextPage = (): JSX.Element => {
   return (
-    <Layout>
+    <>
       <Head>
-        <title>{siteTitle}</title>
+        <title>{SITE_TITLE}</title>
       </Head>
       <Main />
       {/*
             <Footer />
         */}
-    </Layout>
+    </>
   );
 };
 
