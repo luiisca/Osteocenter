@@ -3,7 +3,7 @@ const postFields = `
   title,
   excerpt,
   'category': category->title,
-  'categorySlug': category->slug,
+  'categorySlug': category->slug.current,
   coverImage,
   featured,
   "slug": slug.current,

@@ -57,7 +57,7 @@ const Category = ({
   intro?: boolean;
 }) => (
   <StyledPostCategory top={top} intro={intro}>
-  <NextLink href={`/blog/categorias/${post.categorySlug}`} passHref>
+    <NextLink href={`/blog/categorias/${post.categorySlug}`} passHref>
       <Link
         _hover={{
           textDecoration: "none",
@@ -107,7 +107,7 @@ const Post = ({ post, top, intro }: Post) => {
               </BreadcrumbItem>
               <BreadcrumbItem textDecoration="none">
                 <BreadcrumbLink
-                  href=""
+                  href={`/blog/categorias/${post.categorySlug}`}
                   _hover={{
                     textDecoration: "none",
                   }}
