@@ -3,6 +3,7 @@ const postFields = `
   title,
   excerpt,
   'category': category->title,
+  'categorySlug': category->slug,
   coverImage,
   featured,
   "slug": slug.current,
@@ -25,7 +26,7 @@ export const categoriesQuery = `
   }
 `;
 export const categoryBySlugQuery = `
-  *[_type == 'category' && slug == $slug'].title
+  *[_type == 'category' && slug.current == $slug].title
 `;
 export const postsByCategoryQuery = `
   *[_type == 'post' && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {

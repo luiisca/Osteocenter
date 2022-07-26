@@ -57,7 +57,7 @@ const Category = ({
   intro?: boolean;
 }) => (
   <StyledPostCategory top={top} intro={intro}>
-    <NextLink href="#" passHref>
+  <NextLink href={`/blog/categorias/${post.categorySlug}`} passHref>
       <Link
         _hover={{
           textDecoration: "none",
@@ -71,9 +71,6 @@ const Category = ({
 );
 
 const Post = ({ post, top, intro }: Post) => {
-  {
-    console.log("INSIDE <POST />", post);
-  }
   return (
     <LinkBox as="article">
       <StyledPostContainer top={top} intro={intro}>

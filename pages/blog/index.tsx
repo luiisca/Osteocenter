@@ -126,7 +126,6 @@ export const getStaticProps: GetStaticProps<{
   allCategories: Array<Record<string, string>>;
   allPostsByCategory: Record<string, PostType[]>;
 }> = async ({ preview = false }) => {
-  console.log("GET_STATIC_PROPS");
   const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery));
   const allCategories = await getClient(preview).fetch(categoriesQuery);
 

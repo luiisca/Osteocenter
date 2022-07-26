@@ -11,6 +11,7 @@ const Container = tw(BaseContainer)``;
 
 interface IndexLayoutProps extends BlogProps {
   children: React.ReactNode;
+  categoryPage?: boolean
 }
 
 const IndexLayout = ({
@@ -18,6 +19,7 @@ const IndexLayout = ({
   allCategories,
   allPostsByCategory,
   children,
+  categoryPage,
 }: IndexLayoutProps): JSX.Element => {
   return (
     <Container tw="mt-12 ">
@@ -38,6 +40,7 @@ const IndexLayout = ({
               ]}
               allPosts={allPosts}
               allPostsByCategory={allPostsByCategory}
+              categoryPage={categoryPage}
             />
             {/* Recommended aside*/}
             <Aside

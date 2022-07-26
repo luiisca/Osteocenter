@@ -1,4 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import NextLink from "next/link";
+import tw from "twin.macro";
 import {
   sanityClient,
   overlayDrafts,
@@ -30,11 +32,12 @@ const Category = ({
       allPosts={allPosts}
       allCategories={allCategories}
       allPostsByCategory={allPostsByCategory}
+      categoryPage
     >
       <Heading
         as="h1"
         primary
-        tw="text-center mb-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:mb-20 md:text-4xl md:leading-[2.875rem]"
+        tw="w-full text-center mb-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:mb-20 md:text-4xl md:leading-[2.875rem]"
       >
         {categoryTitle}
       </Heading>
@@ -68,7 +71,7 @@ export const getStaticProps: GetStaticProps<CategoryProps> = async ({
   const category = await sanityClient.fetch(categoryBySlugQuery, {
     slug: params?.slug,
   });
-  const categoryTitle = category.title;
+  const categoryTitle = category[0];
 
   return {
     props: {

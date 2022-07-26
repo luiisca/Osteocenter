@@ -24,7 +24,6 @@ const Text = styled.p(() => [
 ]);
 
 export const getImgComponent = ({ value, isInline, top, intro }: any) => {
-  console.log('GetImageComponent',value)
   const { width, height } = getImageDimensions(value);
 
   return (
