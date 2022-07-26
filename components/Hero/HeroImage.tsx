@@ -1,7 +1,6 @@
 import Image from "next/future/image";
 import tw, { css, styled } from "twin.macro";
 
-const Container = tw.div`w-4/5 h-full`;
 const ImgWrap = styled.span(() => [
   css`
     & img {
@@ -14,7 +13,7 @@ const ImgWrap = styled.span(() => [
 
 const HeroImage = () => {
   return (
-    <Container tw="w-2/5 h-auto mx-auto blog-lg:mx-0 blog-lg:w-4/5 blog-lg:h-full">
+    <div tw="w-3/5 h-auto mx-auto max-w-[300px] blog-lg:mx-0 blog-lg:w-4/5 blog-lg:h-full blog-lg:max-w-[450px]">
       <ImgWrap>
         <Image
           priority={true}
@@ -25,7 +24,7 @@ const HeroImage = () => {
           alt="Doctor cirujano Ronal Cadillo"
         />
       </ImgWrap>
-    </Container>
+    </div>
   );
 };
 export default HeroImage;

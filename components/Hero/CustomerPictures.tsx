@@ -2,7 +2,7 @@ import Image from "next/future/image";
 import tw, { css, styled } from "twin.macro";
 import { v4 } from "uuid";
 
-const Container = tw.div`flex items-center gap-4 mt-20`;
+const Container = tw.div`flex items-center gap-4 mt-8 blog-lg:mt-20 justify-center blog-lg:justify-start`;
 
 const ImageWrap = styled.span(() => [
   tw`mr-[-16px] rounded-full last:mr-0`,
@@ -15,7 +15,7 @@ const ImageWrap = styled.span(() => [
 
 const CustomerPictures = () => {
   return (
-    <Container tw="justify-center blog-lg:justify-start">
+    <Container>
       <div tw="flex">
         {[1, 2, 3, 4, 5].map((imgId) => (
           <ImageWrap key={v4()}>
@@ -30,7 +30,7 @@ const CustomerPictures = () => {
         ))}
       </div>
 
-      <p tw="text-sm md:text-base xl:text-lg font-semibold">
+      <p tw="text-lg leading-none text-accent-555 font-semibold">
         <span tw="font-bold text-primary-shade-1">250+</span> pacientes
         satisfechos con nuestros servicios.
       </p>

@@ -1,30 +1,27 @@
-import tw from 'twin.macro';
-import {BaseContainer} from '../BaseStyle';
-import {Heading} from '../Elements';
-import Value from './Value';
+import tw from "twin.macro";
+import { BaseContainer } from "../BaseStyle";
+import { Heading } from "../Elements";
+import Value from "./Value";
 
-const Container = tw(BaseContainer)``
-const Text = tw.p`text-xl m-auto mb-20 max-w-prose`
-
-const ValuesContainer = tw.div`flex justify-center gap-16`
+const Container = tw(BaseContainer)``;
 
 const Values = (): JSX.Element => {
   return (
     <Container>
-      <Heading as='h2' secondary>
+      <Heading as="h2" secondary tw="text-4xl md:text-5xl">
         Cirugía ortopédica y traumatología.
       </Heading>
-      <Text>
+      <p tw="text-xl text-accent-555 mx-auto mb-20 max-w-prose">
         Con más de 5 años de experiencia y más de 500 cirugías realizadas, el
         Dr. Cadillo le ofrece: Confianza, humanidad, buenos resultados.
-      </Text>
-      <ValuesContainer>
-        <Value name='confianza' shapePosition='left' />
-        <Value name='calidad' shapePosition='center' />
-        <Value name='humanidad' shapePosition='right' />
-      </ValuesContainer>
+      </p>
+      <div tw="flex flex-col md:flex-row gap-12 justify-center md:gap-16">
+        <Value name="confianza" shapePosition="left" />
+        <Value name="calidad" shapePosition="center" />
+        <Value name="humanidad" shapePosition="right" />
+      </div>
     </Container>
-  )
-}
+  );
+};
 
 export default Values;

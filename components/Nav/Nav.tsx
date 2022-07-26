@@ -6,7 +6,7 @@ import { animated } from "react-spring";
 
 const Container = styled(animated.nav)(
   ({ device }: { device: "mobile" | "desktop" }) => [
-    tw`w-full px-12 pb-5 list-none bg-primary-tint-3 shadow-sm z-[-1]`,
+    tw`w-full px-8 pb-5 list-none bg-primary-tint-3 shadow-sm z-[-1]`,
     tw`lg:relative lg:w-auto lg:p-0 lg:h-24 lg:shadow-none lg:z-10`,
 
     device === "mobile" && tw`lg:hidden`,

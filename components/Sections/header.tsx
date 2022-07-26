@@ -5,11 +5,11 @@ import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
 import { useScroll } from "framer-motion";
 
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import Nav from "../Nav";
 
 const Container = styled(animated.header)(() => [
-  tw`sticky top-0 z-30 flex items-center justify-between h-24 px-12 bg-primary-tint-3 shadow-sm`,
+  tw`sticky top-0 z-30 flex items-center justify-between h-24 px-8 bg-primary-tint-3 shadow-sm`,
 ]);
 
 const Logo = tw.a`block relative min-w-[200px] h-full`;
@@ -80,9 +80,12 @@ const Header = (): JSX.Element => {
               toggled={isOpen}
               toggle={setOpen}
               direction="right"
+              distance="sm"
+              size={30}
               rounded
               hideOutline={false}
               label="Abrir barra de navegación"
+              color={`${theme<string>`colors.accent.555`}`}
             />
           </div>
         </div>

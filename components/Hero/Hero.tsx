@@ -17,18 +17,12 @@ const Hero = (): JSX.Element => {
           {" "}
           Cirugía ortopédica y traumatología con las mejores garantías.
         </Heading>
-        <p tw="text-xl mb-12">
+        <p tw="text-xl text-accent-555 leading-relaxed mb-12">
           Médico traumatólogo con amplia experiencia en el manejo quirúrgico de
           fracturas, reconstrucciones óseas, Prótesis de caderas, tumores óseos
           y músculo esquelético.
         </p>
-        <Button
-          elType="text"
-          cta
-          hero
-          href="#"
-          tw="mr-4 blog-lg:text-lg xl:text-xl"
-        >
+        <Button elType="text" cta hero href="#" tw="mr-4 text-lg">
           Pide una cita
         </Button>
         <Button elType="text" outline href="#biography">

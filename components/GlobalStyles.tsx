@@ -1,6 +1,6 @@
-import {Fragment} from 'react';
-import {createGlobalStyle} from 'styled-components';
-import tw, {GlobalStyles as BaseStyles} from 'twin.macro';
+import { Fragment } from "react";
+import { createGlobalStyle } from "styled-components";
+import tw, { GlobalStyles as BaseStyles } from "twin.macro";
 
 const Normalize = createGlobalStyle`
   /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -15,8 +15,7 @@ const Normalize = createGlobalStyle`
 
 html {
   line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
-}
+  -webkit-text-size-adjust: 100%; /* 2 */ }
 
 /* Sections
    ========================================================================== */
@@ -352,8 +351,12 @@ template {
 [hidden] {
   display: none;
 }
-`
+`;
 const Global = createGlobalStyle`
+  html {
+    ${tw`text-[87.5%] blog-lg:text-[93.75%] xl:text-[100%]`}
+  }
+
   body {
     ${tw`font-sans font-normal leading-none text-accent-555`}
   }
@@ -378,5 +381,5 @@ const GlobalStyles = (): JSX.Element => (
     <Normalize />
     <Global />
   </Fragment>
-)
-export default GlobalStyles
+);
+export default GlobalStyles;

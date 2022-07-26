@@ -1,38 +1,35 @@
-import Image from 'next/image';
-import tw, {styled} from 'twin.macro';;
+import Image from "next/image";
+import tw, { styled } from "twin.macro";
 
-import {Heading} from '../../Elements';
-import {ImgWrap} from '../style';
+import { Heading } from "../../Elements";
 
 interface Props {
-  period: string
-  name: string
-  image: string
-  children?: React.ReactNode
+  period: string;
+  name: string;
+  image: string;
+  children?: React.ReactNode;
 }
 
-const Text = styled.p(() => [
-  tw`text-lg font-medium leading-6`,
-])
+const Text = styled.p(() => [tw`text-lg font-medium leading-6`]);
 
-const Card = ({period, name, image, children}: Props): JSX.Element => {
+const Card = ({ period, name, image, children }: Props): JSX.Element => {
   return (
     <div>
-      <ImgWrap>
+      <div tw="w-[50px]">
         <Image
           src={`/img/icons/${image}.svg`}
           alt={`${name} icon`}
-          layout='responsive'
-          sizes='10vw'
-          width='1'
-          height='1'
+          layout="responsive"
+          sizes="10vw"
+          width="1"
+          height="1"
         />
-      </ImgWrap>
+      </div>
       <Heading subHeading>{period}</Heading>
-      <Text tw='mb-2'>{name}</Text>
-      <Text tw='text-sm'>{children}</Text>
+      <Text tw="mb-2">{name}</Text>
+      <Text tw="text-sm text-accent-555">{children}</Text>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;
