@@ -6,10 +6,10 @@ type Libraries = (
   | "visualization"
 )[];
 
-export const SITE_TITLE: string = 'Osteocenter'
-
+export const WEB_LINK = "https://osteocenter.vercel.app";
 // CMS
-export const GRAPHQL_ENDPOINT: string = "https://spacexdata.herokuapp.com/graphql";
+export const GRAPHQL_ENDPOINT: string =
+  "https://spacexdata.herokuapp.com/graphql";
 
 // Map
 export const BUSINESS_LOCATION: google.maps.LatLngLiteral = {
@@ -31,7 +31,9 @@ export const PLACE_FIELDS: string[] = [
 ];
 
 export const LIBRARIES: Libraries = ["places"];
-export const MAP_DIRECTIONS: (userLocation: google.maps.LatLngLiteral) => string = (userLocation) =>
+export const MAP_DIRECTIONS: (
+  userLocation: google.maps.LatLngLiteral
+) => string = (userLocation) =>
   `https://www.google.com/maps/dir/${userLocation?.lat},${userLocation?.lng}/${BUSINESS_LOCATION.lat},${BUSINESS_LOCATION.lng}`;
 
 export const TOTAL_STARS: number = 5;

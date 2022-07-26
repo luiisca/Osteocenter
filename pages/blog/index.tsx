@@ -1,8 +1,7 @@
 // libraries
-import { useRef } from "react";
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -27,6 +26,24 @@ import { Heading, Button } from "../../components/Elements";
 import Post from "../../components/Blog/Post";
 import IndexLayout from "../../components/Blog/IndexLayout";
 
+const SlidePrevButton = () => {
+  const swiper = useSwiper();
+
+  const handlePrev = () => {
+    swiper?.slidePrev();
+  };
+  // return <button onClick={handlePrev}>Previous</button>;
+  return <Button elType="icon" onClick={handlePrev} top prev />;
+};
+const SlideNextButton = () => {
+  const swiper = useSwiper();
+
+  const handleNext = () => {
+    swiper?.slideNext();
+  };
+  // return <button onClick={handleNext}>Next</button>;
+  return <Button elType="icon" onClick={handleNext} top next />;
+};
 // styled components
 const Carousel = styled.div(() => [
   css`
@@ -64,9 +81,6 @@ const Blog = ({
   allCategories,
   allPostsByCategory,
 }: BlogProps): JSX.Element => {
-  const nextArrowRef = useRef<HTMLDivElement>(null);
-  const prevArrowRef = useRef<HTMLDivElement>(null);
-
   return (
     <IndexLayout
       allPosts={allPosts}
@@ -86,21 +100,6 @@ const Blog = ({
             speed={400}
             grabCursor
             loop
-            navigation={{
-              nextEl: nextArrowRef.current!,
-              prevEl: prevArrowRef.current!,
-            }}
-            onInit={(swiper) => {
-              // @ts-ignore
-              swiper.params.navigation.nextEl = nextArrowRef.current;
-              // @ts-ignore
-              swiper.params.navigation.prevEl = prevArrowRef.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }}
-            // apparently needed for SSR
-            // url
-            // userAgent
           >
             {allPosts
               .filter((post: any) => post.featured)
@@ -109,11 +108,11 @@ const Blog = ({
                   <Post top post={post} />
                 </SwiperSlide>
               ))}
+            <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
+              <SlidePrevButton />
+              <SlideNextButton />
+            </div>
           </Swiper>
-          <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
-            <Button elType="icon" elRef={prevArrowRef} top prev />
-            <Button elType="icon" elRef={nextArrowRef} top next />
-          </div>
         </Carousel>
       </div>
     </IndexLayout>
@@ -148,6 +147,9 @@ export const getStaticProps: GetStaticProps<{
     },
     {}
   );
+
+  console.log("getStaticProps index");
+  console.log("is this getting executed after webhook?", allPosts);
 
   return {
     props: {
