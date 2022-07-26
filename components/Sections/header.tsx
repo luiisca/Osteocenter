@@ -5,7 +5,7 @@ import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
 import { useScroll } from "framer-motion";
 
-import tw, { styled, css } from "twin.macro";
+import tw, { styled } from "twin.macro";
 import Nav from "../Nav";
 
 const Container = styled(animated.header)(() => [

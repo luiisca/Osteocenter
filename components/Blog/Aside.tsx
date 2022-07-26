@@ -9,11 +9,7 @@ import { Divider } from "./layout";
 
 const Container = tw.aside`md:ml-[60px] md:sticky md:top-24`;
 
-const Aside = ({
-  recommendedPosts,
-}: {
-  recommendedPosts: any;
-}) => {
+const Aside = ({ recommendedPosts }: { recommendedPosts: any }) => {
   return (
     <Container>
       <Heading as="div" subHeading tw="mb-4">
