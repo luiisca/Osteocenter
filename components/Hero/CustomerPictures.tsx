@@ -1,8 +1,8 @@
 import Image from "next/future/image";
 import tw, { css, styled } from "twin.macro";
+import { v4 } from "uuid";
 
 const Container = tw.div`flex items-center gap-4 mt-20`;
-const Images = tw.div`flex`;
 
 const ImageWrap = styled.span(() => [
   tw`mr-[-16px] rounded-full last:mr-0`,
@@ -13,69 +13,27 @@ const ImageWrap = styled.span(() => [
   `,
 ]);
 
-const Text = styled.p(() => [
-  tw`text-lg font-semibold`,
-  css`
-    & > span {
-      ${tw`font-bold text-primary-shade-1`}
-    }
-  `,
-]);
-
 const CustomerPictures = () => {
   return (
-    <Container>
-      <Images>
-        <ImageWrap>
-          <Image
-            sizes="10vw"
-            src="/img/customers/customer-1.jpg"
-            alt="Foto de paciente satisfecho"
-            width="48"
-            height="48"
-          />
-        </ImageWrap>
-        <ImageWrap>
-          <Image
-            sizes="10vw"
-            src="/img/customers/customer-2.jpg"
-            alt="Foto de paciente satisfecho"
-            width="48"
-            height="48"
-          />
-        </ImageWrap>
-        <ImageWrap>
-          <Image
-            sizes="10vw"
-            src="/img/customers/customer-3.jpg"
-            alt="Foto de paciente satisfecho"
-            width="48"
-            height="48"
-          />
-        </ImageWrap>
-        <ImageWrap>
-          <Image
-            sizes="10vw"
-            src="/img/customers/customer-4.jpg"
-            alt="Foto de paciente satisfecho"
-            width="48"
-            height="48"
-          />
-        </ImageWrap>
-        <ImageWrap>
-          <Image
-            sizes="10vw"
-            src="/img/customers/customer-5.jpg"
-            alt="Foto de paciente satisfecho"
-            width="48"
-            height="48"
-          />
-        </ImageWrap>
-      </Images>
+    <Container tw="justify-center blog-lg:justify-start">
+      <div tw="flex">
+        {[1, 2, 3, 4, 5].map((imgId) => (
+          <ImageWrap key={v4()}>
+            <Image
+              sizes="10vw"
+              src={`/img/customers/customer-${imgId}.jpg`}
+              alt="Foto de paciente satisfecho"
+              width="48"
+              height="48"
+            />
+          </ImageWrap>
+        ))}
+      </div>
 
-      <Text>
-        <span>250+</span> pacientes satisfechos con nuestros servicios.
-      </Text>
+      <p tw="text-sm md:text-base xl:text-lg font-semibold">
+        <span tw="font-bold text-primary-shade-1">250+</span> pacientes
+        satisfechos con nuestros servicios.
+      </p>
     </Container>
   );
 };

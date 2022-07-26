@@ -32,7 +32,6 @@ const SlidePrevButton = () => {
   const handlePrev = () => {
     swiper?.slidePrev();
   };
-  // return <button onClick={handlePrev}>Previous</button>;
   return <Button elType="icon" onClick={handlePrev} top prev />;
 };
 const SlideNextButton = () => {
@@ -41,9 +40,9 @@ const SlideNextButton = () => {
   const handleNext = () => {
     swiper?.slideNext();
   };
-  // return <button onClick={handleNext}>Next</button>;
   return <Button elType="icon" onClick={handleNext} top next />;
 };
+
 // styled components
 const Carousel = styled.div(() => [
   css`

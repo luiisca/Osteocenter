@@ -1,7 +1,7 @@
-import Image from 'next/future/image';
-import tw, {css, styled} from 'twin.macro';
+import Image from "next/future/image";
+import tw, { css, styled } from "twin.macro";
 
-const Container = tw.div`w-4/5 h-full`
+const Container = tw.div`w-4/5 h-full`;
 const ImgWrap = styled.span(() => [
   css`
     & img {
@@ -10,21 +10,22 @@ const ImgWrap = styled.span(() => [
       ${tw`rounded-[230px] w-full h-auto`}
     }
   `,
-])
+]);
 
 const HeroImage = () => {
   return (
-    <Container>
+    <Container tw="w-2/5 h-auto mx-auto blog-lg:mx-0 blog-lg:w-4/5 blog-lg:h-full">
       <ImgWrap>
         <Image
           priority={true}
-          sizes='50vw'
-          width='400'
-          height='600'
+          sizes="50vw"
+          width="400"
+          height="600"
           src="/img/hero.png"
-          alt="Doctor cirujano Ronal Cadillo" />
+          alt="Doctor cirujano Ronal Cadillo"
+        />
       </ImgWrap>
     </Container>
-  )
-}
-export default HeroImage
+  );
+};
+export default HeroImage;
