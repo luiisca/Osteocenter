@@ -16,7 +16,6 @@ import {
 } from "../../utils/sanity/queries";
 import type { PostType } from "./index";
 
-import Layout from "../../components/Layout";
 import components from "../../components/Blog/components";
 import { Heading } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";

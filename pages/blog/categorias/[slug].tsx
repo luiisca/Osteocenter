@@ -1,5 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import NextLink from "next/link";
 import tw from "twin.macro";
 import {
   sanityClient,
@@ -16,6 +15,10 @@ import type { PostType, BlogProps } from "../index";
 
 import IndexLayout from "../../../components/Blog/IndexLayout";
 import { Heading } from "../../../components/Elements";
+
+const StyledHeading = tw(
+  Heading
+)`w-full text-center mb-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:mb-20 md:text-4xl md:leading-[2.875rem]`;
 
 interface CategoryProps extends BlogProps {
   categoryTitle: string;
@@ -34,13 +37,9 @@ const Category = ({
       allPostsByCategory={allPostsByCategory}
       categoryPage
     >
-      <Heading
-        as="h1"
-        primary
-        tw="w-full text-center mb-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:mb-20 md:text-4xl md:leading-[2.875rem]"
-      >
+      <StyledHeading as="h1" primary>
         {categoryTitle}
-      </Heading>
+      </StyledHeading>
     </IndexLayout>
   );
 };

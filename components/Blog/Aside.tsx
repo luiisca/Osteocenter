@@ -11,18 +11,11 @@ const Container = tw.aside`md:ml-[60px] md:sticky md:top-24`;
 
 const Aside = ({
   recommendedPosts,
-  post,
 }: {
   recommendedPosts: any;
-  post?: boolean;
 }) => {
   return (
     <Container>
-      {!post && (
-        <form tw="w-full mb-10">
-          <input type="search" placeholder="Buscar" />
-        </form>
-      )}
       <Heading as="div" subHeading tw="mb-4">
         Recomendados
       </Heading>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import tw, { styled, theme } from "twin.macro";
+import tw, { styled} from "twin.macro";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { v4 } from "uuid";
 import type { PostType, BlogProps } from "../../pages/blog/index";

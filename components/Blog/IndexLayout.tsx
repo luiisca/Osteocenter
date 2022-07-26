@@ -1,6 +1,5 @@
-import tw, { styled, css } from "twin.macro";
+import tw from "twin.macro";
 import type { BlogProps } from "../../pages/blog/index";
-import type { PostType } from "../../pages/blog/index";
 
 import { BaseContainer } from "../../components/BaseStyle";
 import Filter from "../../components/Blog/Filter";

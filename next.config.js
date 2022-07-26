@@ -26,6 +26,15 @@ const nextConfig = {
       "cdn.sanity.io",
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/blog/categorias",
+        destination: "/blog/categorias/sintomas",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
