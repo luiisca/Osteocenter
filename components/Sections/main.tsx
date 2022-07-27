@@ -41,12 +41,12 @@ const Main = (): JSX.Element => {
       <Section>
         <Steps />
       </Section>
+      <Section>
+        <Testimonials />
+      </Section>
     </Fragment>
   );
 };
-//   <Section>
-//     <Testimonials />
-//     </Section>
 //     <Section>
 //       <LocationProvider>
 //         <Location />

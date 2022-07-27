@@ -1,4 +1,4 @@
-import tw, { styled, css } from "twin.macro";
+import tw, { styled} from "twin.macro";
 import { v4 } from "uuid";
 
 import { Heading } from "../Elements";
@@ -55,7 +55,7 @@ const Steps = (): JSX.Element => {
   return (
     <Container>
       <div>
-        <Heading as="span" subHeading>
+        <Heading as="span" subHeading tw='mb-4'>
           Proceso
         </Heading>
         <Heading as="h2" secondary tw="mb-12 text-4xl md:text-5xl">

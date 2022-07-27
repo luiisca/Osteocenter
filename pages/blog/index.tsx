@@ -1,13 +1,6 @@
 // libraries
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import { v4 } from "uuid";
 
 // helpers
 import {
@@ -22,29 +15,14 @@ import {
 } from "../../utils/sanity/queries";
 
 // components
-import { Heading, Button } from "../../components/Elements";
+import withCarousel from "../../components/withCarousel";
+import { Heading } from "../../components/Elements";
 import Post from "../../components/Blog/Post";
 import IndexLayout from "../../components/Blog/IndexLayout";
 
-const SlidePrevButton = () => {
-  const swiper = useSwiper();
-
-  const handlePrev = () => {
-    swiper?.slidePrev();
-  };
-  return <Button elType="icon" onClick={handlePrev} top prev />;
-};
-const SlideNextButton = () => {
-  const swiper = useSwiper();
-
-  const handleNext = () => {
-    swiper?.slideNext();
-  };
-  return <Button elType="icon" onClick={handleNext} top next />;
-};
-
 // styled components
-const Carousel = styled.div(() => [
+const StyledCarousel = styled.div(() => [
+  tw`blog-lg:relative`,
   css`
     .swiper {
       ${tw`blog-lg:h-[minmax(380px, 600px)]`}
@@ -75,11 +53,25 @@ export interface BlogProps {
   allPostsByCategory: any;
 }
 
+const StyledButtons = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
+    {children}
+  </div>
+);
+const CarouselPost = ({ data }: { data: any }) => <Post top post={data} />;
+
 const Blog = ({
   allPosts,
   allCategories,
   allPostsByCategory,
 }: BlogProps): JSX.Element => {
+  const Carousel = withCarousel(
+    StyledCarousel,
+    allPosts.filter((post) => post.featured),
+    CarouselPost,
+    StyledButtons
+  );
+
   return (
     <IndexLayout
       allPosts={allPosts}
@@ -91,28 +83,7 @@ const Blog = ({
         <Heading subHeading tw="mb-4">
           Lo ultimo
         </Heading>
-        <Carousel tw="blog-lg:relative">
-          <Swiper
-            modules={[Pagination, Navigation]}
-            slidesPerView={1}
-            spaceBetween={30}
-            speed={400}
-            grabCursor
-            loop
-          >
-            {allPosts
-              .filter((post: any) => post.featured)
-              .map((post: any) => (
-                <SwiperSlide key={v4()}>
-                  <Post top post={post} />
-                </SwiperSlide>
-              ))}
-            <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
-              <SlidePrevButton />
-              <SlideNextButton />
-            </div>
-          </Swiper>
-        </Carousel>
+        <Carousel />
       </div>
     </IndexLayout>
   );
