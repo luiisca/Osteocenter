@@ -28,7 +28,7 @@ const ImgWrap = styled.span(() => [
 
 const Testimonial = ({ name, message, img }: Props): JSX.Element => {
   return (
-    <div>
+    <div tw="mb-6 md:mb-8">
       <Quote>{message}</Quote>
       <Text>
         <ImgWrap>
