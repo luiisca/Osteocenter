@@ -38,12 +38,12 @@ const Main = (): JSX.Element => {
       <Section biography>
         <Biography />
       </Section>
+      <Section>
+        <Steps />
+      </Section>
     </Fragment>
   );
 };
-//   <Section>
-//   <Steps />
-//   </Section>
 //   <Section>
 //     <Testimonials />
 //     </Section>
