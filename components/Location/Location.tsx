@@ -1,28 +1,28 @@
-import Map from '../Map';
-import Button from './Button';
-import {BaseContainer} from '../BaseStyle';
-import {Heading} from '../Elements';
+import Map from "./Map";
+import tw from "twin.macro";
+import { BaseContainer } from "../BaseStyle";
+import { Heading } from "../Elements";
 
-import useIsMobile from '../../hooks/useIsMobile';
-import MapProvider from '../../context/MapProvider';
+import MapProvider from "./MapProvider";
+import LocationProvider from "./LocationProvider";
 
 const Location = (): JSX.Element => {
-  const IS_MOBILE = useIsMobile();
-
   return (
-    <BaseContainer tw='text-center'>
-      <Heading as='span' subHeading>Ubicación</Heading>
-      <Heading as='h2' secondary>Dónde encontrarnos?</Heading>
+    <LocationProvider>
+      <BaseContainer tw="text-center">
+        <Heading as="span" subHeading tw="mb-4">
+          Ubicación
+        </Heading>
+        <Heading as="h2" secondary tw="text-4xl md:text-5xl">
+          Dónde encontrarnos?
+        </Heading>
 
-      <MapProvider>
-        <Map />
-      </MapProvider>
+        <MapProvider>
+          <Map />
+        </MapProvider>
+      </BaseContainer>
+    </LocationProvider>
+  );
+};
 
-      <Button mobile={IS_MOBILE} />
-
-      <h1>{IS_MOBILE ? 'It is Mobile' : 'It is not Mobile'}</h1>
-    </BaseContainer>
-  )
-}
-
-export default Location
+export default Location;

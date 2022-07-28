@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {Marker} from '@react-google-maps/api';
-import {BUSINESS_LOCATION} from '../../static/ts/constants';
+import {BUSINESS_LOCATION} from '@/static/ts/constants';
 
-import {useMapContext} from '../../context/MapProvider';
+import {useMapContext} from '../MapProvider';
 
 interface Props {
   position?: google.maps.LatLngLiteral

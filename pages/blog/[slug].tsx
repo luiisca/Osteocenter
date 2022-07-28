@@ -23,7 +23,7 @@ import { BaseContainer } from "../../components/BaseStyle";
 import Post from "../../components/Blog/Post";
 import Aside from "../../components/Blog/Aside";
 import { ContentGrid, Divider } from "../../components/Blog/layout";
-import { WEB_LINK } from "../../static/ts/constants";
+import { WEB_LINK } from "@/static/ts/constants";
 
 const Loading = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left
  `;

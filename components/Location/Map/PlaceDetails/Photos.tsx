@@ -7,7 +7,7 @@ import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
 import { loader } from "./helpers";
 
-import { Button } from "../../Elements";
+import { Button } from "../../../Elements";
 import { Title } from "./Elements";
 
 type ACTIONTYPE = { type: "PREVIOUS_PAGE" } | { type: "NEXT_PAGE" };

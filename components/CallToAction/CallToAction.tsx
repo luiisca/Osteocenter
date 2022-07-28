@@ -1,41 +1,43 @@
-import Image from 'next/image';
-import tw, {styled} from 'twin.macro';
-import {Button, Heading} from '../Elements';
-import {BaseContainer} from '../BaseStyle';
+import Image from "next/image";
+import tw, { styled } from "twin.macro";
+import { Button, Heading } from "../Elements";
+import { BaseContainer } from "../BaseStyle";
 
 const BackColor = styled(BaseContainer)(() => [
   tw`max-w-none bg-primary-tint-2 py-28`,
-])
-const Container = tw.div`max-w-screen-xl flex items-center gap-14 mx-auto`
-const Text = tw.p`text-lg max-w-[50ch]`
-const ImgWrap = tw.div`w-1/3 h-1/3`
+]);
 
 const CallToAction = (): JSX.Element => (
   <BackColor>
-    <Container>
-      <div>
-        <Heading primary as='h1' tw='max-w-[20ch]'>
+    <div tw="max-w-screen-xl flex justify-center flex-col md:flex-row text-center md:text-left items-center gap-8 md:gap-14 mx-auto">
+      <div tw="flex flex-col items-center md:items-start">
+        <Heading
+          primary
+          as="h1"
+          tw="text-[2.75rem] xl:text-[3.5rem] md:max-w-[20ch]"
+        >
           Tu salud en las mejores manos.
         </Heading>
-        <Text tw='mb-5'>
-          Reserva tu cita hoy mismo y nos comunicaremos contigo para darte la atencion que mereces lo antes posible.
-        </Text>
-        <Button elType='text' cta href='#'>
+        <p tw="mb-5 text-lg max-w-[50ch] text-accent-555">
+          Reserva tu cita hoy mismo y nos comunicaremos contigo para darte la
+          atencion que mereces lo antes posible.
+        </p>
+        <Button elType="text" cta href="#">
           Pide una cita
         </Button>
       </div>
-      <ImgWrap>
+      <div tw="w-3/5 max-w-[230px] h-auto md:w-1/3 md:max-w-[300px] md:h-1/3">
         <Image
-          src='/img/cta-health.svg'
-          alt='corazon junto con equipo medico'
-          layout='responsive'
-          width='1'
-          height='1'
-          sizes='50vw'
+          src="/img/cta-health.svg"
+          alt="corazon junto con equipo medico"
+          layout="responsive"
+          width="1"
+          height="1"
+          sizes="50vw"
         />
-      </ImgWrap>
-    </Container>
+      </div>
+    </div>
   </BackColor>
-)
+);
 
-export default CallToAction
+export default CallToAction;

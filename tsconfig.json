@@ -27,7 +27,13 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/static/*": ["static/*"],
+      "@/utils/*": ["utils/*"]
+    }
   },
   "exclude": [
     "node_modules"

@@ -2,7 +2,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import Main from "../components/Sections/main";
 
-import {SITE_TITLE} from '../static/ts/constants'
+import { SITE_TITLE } from "@/static/ts/constants";
 
 const Home: NextPage = (): JSX.Element => {
   return (

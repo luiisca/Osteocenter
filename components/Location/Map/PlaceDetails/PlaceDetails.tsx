@@ -10,13 +10,13 @@ import { BsClock } from "react-icons/bs";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 
 // helpers
-import { useMapContext } from "../../../context/MapProvider";
+import { useMapContext } from "../../MapProvider";
 import { loader } from "./helpers";
 
 // components
 import Photos from "./Photos";
 import Reviews from "./Reviews";
-import { Button } from "../../Elements";
+import { Button } from "../../../Elements";
 import { Title, Rating, Separator } from "./Elements";
 
 const Container = styled(animated.div)(() => [

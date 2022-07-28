@@ -3,7 +3,7 @@ import Header from "./Sections/header";
 import tw from "twin.macro";
 
 import Alert from "./Alert";
-import {SITE_TITLE} from '../static/ts/constants'
+import {SITE_TITLE} from '@/static/ts/constants'
 
 interface Props {
   children: React.ReactNode;

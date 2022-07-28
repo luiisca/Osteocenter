@@ -8,6 +8,7 @@ interface ButtonProps {
   children?: React.ReactNode;
   onClick?: (e?: any) => boolean | Promise<void> | void;
   style?: {};
+  fullscreen?: boolean;
 }
 
 interface IconProps extends ButtonProps {

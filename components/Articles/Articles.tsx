@@ -9,7 +9,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 import { BaseContainer, BaseLink } from "../BaseStyle";
 import { Button, Heading, PageLink } from "../Elements";
-import { ARTICLES_PER_PAGE } from "../../static/ts/constants";
+import { ARTICLES_PER_PAGE } from "@/static/ts/constants";
 
 const Container = styled(BaseContainer)(() => [
   tw`flex gap-6`,

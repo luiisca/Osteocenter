@@ -9,8 +9,6 @@ import Location from "../Location";
 import CallToAction from "../CallToAction";
 import Articles from "../Articles";
 
-import LocationProvider from "../../context/LocationProvider";
-
 interface SectionProps {
   hero?: boolean;
   valuesSection?: boolean;
@@ -25,7 +23,6 @@ const Section = styled.section((props: SectionProps) => [
   props.biography && tw`p-0 mx-8 md:mx-16`,
   props.cta && tw`p-0`,
 ]);
-
 const Main = (): JSX.Element => {
   return (
     <Fragment>
@@ -41,20 +38,18 @@ const Main = (): JSX.Element => {
       <Section>
         <Steps />
       </Section>
-      <Section>
+      <Section tw="py-[7rem] bg-primary-tint-3">
         <Testimonials />
+      </Section>
+      <Section>
+        <Location />
+      </Section>
+      <Section cta>
+        <CallToAction />
       </Section>
     </Fragment>
   );
 };
-//     <Section>
-//       <LocationProvider>
-//         <Location />
-//         </LocationProvider>
-//         </Section>
-//         <Section cta>
-//           <CallToAction />
-//           </Section>
 //           <Section>
 //           <Articles />
 //           </Section>

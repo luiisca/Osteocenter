@@ -1,6 +1,6 @@
 import Image from "next/image";
 import tw from "twin.macro";
-import { TOTAL_STARS } from "../../../../static/ts/constants";
+import { TOTAL_STARS } from "@/static/ts/constants";
 import { v4 } from "uuid";
 
 const ImgWrap = tw.div`w-4 h-4`;
