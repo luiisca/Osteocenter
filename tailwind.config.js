@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        "mob-md": "545px",
         "blog-lg": "992px",
       },
       colors: {

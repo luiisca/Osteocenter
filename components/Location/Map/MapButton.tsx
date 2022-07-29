@@ -1,7 +1,8 @@
-import tw, { styled, css } from "twin.macro";
+import { useState } from "react";
+import tw, { styled, theme } from "twin.macro";
 import { Button } from "@/components/Elements";
 import { FaRoute } from "react-icons/fa";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, Spinner } from "@chakra-ui/react";
 
 import { MAP_DIRECTIONS } from "@/static/ts/constants";
 import { getUserLocation } from "./helpers";
@@ -10,6 +11,7 @@ import { useLocationContext } from "../LocationProvider";
 const StyledButton = styled(Button)((props: any) => [
   props.fullscreen &&
     tw`fixed bottom-0 z-50 mx-auto mb-6 translate-x-[-50%] left-1/2`,
+  props.loadingRoute && tw`cursor-wait`,
 ]);
 
 const MapButton = ({
@@ -17,9 +19,12 @@ const MapButton = ({
   fullscreen,
 }: Record<string, boolean>): JSX.Element => {
   const { location, dispatchLocation } = useLocationContext();
+  const [loadingRoute, setLoadingRoute] = useState<boolean>(false);
 
   const getLocation = async (): Promise<void> => {
+    setLoadingRoute(true);
     const pos = await getUserLocation();
+    setLoadingRoute(false);
     dispatchLocation({ type: "USER_LOCATION", user: pos });
   };
 
@@ -43,15 +48,31 @@ const MapButton = ({
   return (
     <StyledButton
       elType="icon"
-      onClick={location.user ? toggleRoute : getLocation}
+      onClick={
+        loadingRoute ? () => {} : location.user ? toggleRoute : getLocation
+      }
       fullscreen={fullscreen}
+      loadingRoute={loadingRoute}
       tw="mt-6 mx-auto"
     >
-      <Tooltip label="Mostrar ruta" fontSize="sm">
-        <span>
-          <FaRoute />
-        </span>
-      </Tooltip>
+      {loadingRoute ? (
+        <Spinner
+          thickness="3px"
+          speed="1.3s"
+          emptyColor="gray.200"
+          color={`${theme<string>`colors.primary`}`}
+          size="lg"
+        />
+      ) : (
+        <Tooltip
+          label={location.routeActive ? "Ocultar ruta" : "Mostrar ruta"}
+          fontSize="sm"
+        >
+          <span tw="flex w-full h-full items-center justify-center mb-2">
+            <FaRoute />
+          </span>
+        </Tooltip>
+      )}
     </StyledButton>
   );
 };

@@ -42,11 +42,6 @@ export const Container = styled.div(
   ]
 );
 
-export const HideBttn = styled(Button)(() => [
-  tw`w-10 h-10`,
-  tw`absolute top-3 z-[2]`,
-  tw`text-lg`,
-]);
 
 export const GoogleMapContainer = styled(animated.div)(() => [
   tw`w-full h-full`,
@@ -83,25 +78,12 @@ const Map = (): JSX.Element => {
 
     config: config.default,
   });
-  const hideBttnSpring = useSpring({
-    left: map.open ? "30%" : "-5%",
-    opacity: map.open ? "1" : "0",
-
-    config: config.default,
-  });
 
   const renderMap = (): JSX.Element => {
     return (
       <>
         <Container mapFullscreen={isFullscreen} ref={containerRef}>
           <PlaceDetails />
-          <HideBttn
-            elType="icon"
-            style={hideBttnSpring}
-            onClick={() => dispatchMap({ type: "HIDE" })}
-          >
-            <MdClose />
-          </HideBttn>
 
           <GoogleMapContainer style={mapSpring} ref={mapContainerRef}>
             <GoogleMap

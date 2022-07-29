@@ -19,22 +19,14 @@ const Container = styled.div((props: { position: any }) => [
 const Number = tw.p`text-7xl md:text-[4.75rem] blog-lg:text-[5.375rem] font-semibold text-[#ddd] mb-3`;
 const ImgWrap = styled.div(() => [
   tw`flex justify-center w-full h-full`,
-  css`
-    @media (min-width: 545px) {
-      ${tw`w-1/2`}
-    }
-  `,
+  tw`mob-md:w-1/2`,
 ]);
 const Img = styled.div(() => [
   tw`justify-self-center w-[clamp(200px, 80%, 400px)]`,
   tw`rounded-[9px] overflow-hidden`,
 ]);
 const Text = styled.div(() => [
-  css`
-    @media (min-width: 545px) {
-      ${tw`w-4/5`}
-    }
-  `,
+  tw`mob-md:w-4/5`,
   tw`md:w-1/2`,
 ]);
 const Step = ({ src, name, num, children }: Props): JSX.Element => {

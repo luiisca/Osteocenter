@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Header from "./Sections/header";
-import tw from "twin.macro";
+import tw, { styled, css } from "twin.macro";
 
 import Alert from "./Alert";
-import {SITE_TITLE} from '@/static/ts/constants'
+import { SITE_TITLE } from "@/static/ts/constants";
+import { MdArrowLeft, MdArrowRight, MdClose } from "react-icons/md";
+
+import { Button } from "@/components/Elements";
 
 interface Props {
   children: React.ReactNode;

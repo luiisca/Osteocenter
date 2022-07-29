@@ -47,10 +47,10 @@ const Main = (): JSX.Element => {
       <Section cta>
         <CallToAction />
       </Section>
+      <Section>
+        <Articles />
+      </Section>
     </Fragment>
   );
 };
-//           <Section>
-//           <Articles />
-//           </Section>
 export default Main;

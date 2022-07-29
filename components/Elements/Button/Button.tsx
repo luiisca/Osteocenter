@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: (e?: any) => boolean | Promise<void> | void;
   style?: {};
   fullscreen?: boolean;
+  loadingRoute?: boolean;
 }
 
 interface IconProps extends ButtonProps {

@@ -1,13 +1,13 @@
 // libraries
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import tw, { css, styled } from "twin.macro";
 import { animated, useSpring, config } from "react-spring";
 
 // icons
 import { GoLocation } from "react-icons/go";
 import { BsClock } from "react-icons/bs";
-import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { MdArrowLeft, MdArrowRight, MdClose } from "react-icons/md";
 
 // helpers
 import { useMapContext } from "../../MapProvider";
@@ -20,17 +20,23 @@ import { Button } from "../../../Elements";
 import { Title, Rating, Separator } from "./Elements";
 
 const Container = styled(animated.div)(() => [
-  tw`w-[35%] h-full`,
-  tw`absolute z-[1] inline-block opacity-100`,
+  tw`w-[75%] mob-md:w-[50%] md:w-[35%]! h-full`,
+  tw`relative z-[1] inline-block opacity-100`,
   tw`overflow-x-hidden`,
 
   tw`text-sm bg-primary-tint-2`,
 ]);
 
+export const HideBttn = styled(Button)(() => [
+  tw`w-10 h-10`,
+  tw`absolute top-3 right-3 z-[2]`,
+  tw`text-lg`,
+]);
+
 const OpenBttnContainer = styled(animated.div)(() => [
   tw`w-[40px] h-[80px]`,
   tw`flex items-center justify-items-start`,
-  tw`absolute top-1/2 left-[35%] z-20`,
+  tw`absolute top-1/2 left-[75%] mob-md:left-1/2 md:left-[35%] z-20`,
   tw`hover:cursor-pointer`,
 
   css`
@@ -58,8 +64,58 @@ const Flex = styled.div((props: { icon: boolean }) => [
     `,
 ]);
 
+const useBreakPointChange = () => {
+  const [matchesValue, setMatchesValue] = useState<string>("0%");
+
+  useEffect(() => {
+    const defaultMediaQuery = window.matchMedia(
+      "(min-width: 0px) and (max-width: 544px)"
+    );
+    const mobMdMediaQuery = window.matchMedia(
+      "(min-width: 545px) and (max-width: 767px)"
+    );
+    const mdMediaQuery = window.matchMedia("(min-width: 768px)");
+    if (mdMediaQuery.matches) {
+      setMatchesValue("35%");
+    } else if (mobMdMediaQuery.matches) {
+      setMatchesValue("50%");
+    } else if (defaultMediaQuery.matches) {
+      setMatchesValue("75%");
+    }
+
+    const listener = (ev: any, value: string) => {
+      if (ev.matches) {
+        console.log(`MEDIA QUERY MATCH ON ${value}`);
+        setMatchesValue(value);
+      }
+    };
+    defaultMediaQuery.addEventListener("change", (ev) => listener(ev, "75%"));
+    mobMdMediaQuery.addEventListener("change", (ev) => listener(ev, "50%"));
+    mdMediaQuery.addEventListener("change", (ev) => listener(ev, "35%"));
+
+    return () => {
+      defaultMediaQuery.removeEventListener("change", (ev) =>
+        listener(ev, "75%")
+      );
+      mobMdMediaQuery.removeEventListener("change", (ev) =>
+        listener(ev, "50%")
+      );
+      mdMediaQuery.removeEventListener("change", (ev) => listener(ev, "35%"));
+    };
+  }, [setMatchesValue]);
+
+  return matchesValue;
+};
+
 const PlaceDetails = (): JSX.Element | null => {
   const { map, dispatchMap } = useMapContext();
+  const matchesValue = useBreakPointChange();
+
+  const hideBttnSpring = useSpring({
+    opacity: map.open ? "1" : "0",
+
+    config: config.default,
+  });
 
   const detailsSpring = useSpring({
     opacity: map.invisible ? 0 : 1,
@@ -67,7 +123,7 @@ const PlaceDetails = (): JSX.Element | null => {
     config: config.default,
   });
   const openBttnSpring = useSpring({
-    left: map.open ? "35%" : "0%",
+    left: map.open ? matchesValue : "0%",
     config: config.default,
   });
 
@@ -113,6 +169,14 @@ const PlaceDetails = (): JSX.Element | null => {
           <ContentWrap>
             <Reviews reviews={map.details?.reviews || []} />
           </ContentWrap>
+
+          <HideBttn
+            elType="icon"
+            style={hideBttnSpring}
+            onClick={() => dispatchMap({ type: "HIDE" })}
+          >
+            <MdClose />
+          </HideBttn>
         </Container>
 
         {map.openBttn && (

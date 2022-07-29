@@ -17,7 +17,7 @@ interface Props {
 
 const initialState = {
   user: null,
-  routeActive: true,
+  routeActive: false,
 };
 
 const LocationContext = createContext<{
@@ -34,7 +34,7 @@ const locationReducer = (
 ): InitialState => {
   switch (action.type) {
     case "USER_LOCATION":
-      return { ...state, user: action.user };
+      return { user: action.user, routeActive: true };
     case "ROUTE_VISIBILITY":
       return { ...state, routeActive: !state.routeActive };
     default:
