@@ -1,23 +1,29 @@
 import tw, { styled, css, theme } from "twin.macro";
-
+import { useQuery } from "react-query";
 import Image from "next/image";
+import NextLink from "next/link";
+import { getImageDimensions } from "@sanity/asset-utils";
+import { LinkBox, LinkOverlay, Link } from "@chakra-ui/react";
+
 import { useReducer } from "react";
-import { useSpring, animated } from "react-spring";
 import { v4 } from "uuid";
 
+import { urlForImage } from "@/utils/sanity/sanity";
+import { sanityClient } from "@/utils/sanity/sanity.server";
+import { featuredPostsQuery } from "@/utils/sanity/queries";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
+import withCarousel from "@/components/withCarousel";
+import useBreakPointChange from "@/components/hooks/useBreakPointChange";
 import { BaseContainer, BaseLink } from "../BaseStyle";
 import { Button, Heading, PageLink } from "../Elements";
 import { ARTICLES_PER_PAGE } from "@/static/ts/constants";
+import { PostType } from "pages/blog";
 
 const Container = styled(BaseContainer)(() => [
-  tw`flex gap-6`,
-  css`
-    height: clamp(350px, 15vh, 400px);
-  `,
+  tw`relative`,
+  tw`grid grid-cols-1 md:grid-cols-[37.5% 62.5%] blog-lg:grid-cols-[35% 65%] md:items-end gap-4`,
 ]);
-const Flex = tw.div`flex gap-3`;
 const WrapLink = styled(BaseLink)(() => [
   tw`leading-7`,
   css`
@@ -33,119 +39,116 @@ const WrapLink = styled(BaseLink)(() => [
     }
   `,
 ]);
-const CarouselWrap = tw.div`overflow-hidden`;
-const Carousel = styled(animated.div)(() => [tw`flex w-full h-full`]);
-const Article = styled.div(() => [
-  tw`flex flex-col h-full min-w-[50%] pl-7`,
+const StyledCarousel = styled.div(() => [
+  tw`flex w-full h-full`,
   css`
-    flex-shrink: 0;
+    .swiper {
+      position: static;
+    }
   `,
 ]);
-const ImgWrap = tw.div`w-full h-full relative`;
+const PlaceholderStyledButtons = tw.div`invisible pt-12 mb-2.5 blog-lg:mb-0 flex gap-2.5`;
+const StyledButtons = styled.div(() => [
+  tw`absolute bottom-2.5 left-8`,
+  tw`pt-12 mb-2.5 blog-lg:mb-0 flex gap-2.5`,
+]);
+const StyledArticle = styled.div(() => [tw`flex flex-col`, tw`md:h-full`]);
+const ImgWrap = styled.div(() => [
+  tw`relative w-full h-full`,
+  css`
+    height: clamp(250px, 25vh, 600px);
+  `,
+]);
 
-const initialState = {
-  articles: [
-    {
-      title: "Article 1",
-      type: "Caso de estudio",
-      picture: "article1.jpg",
-    },
-    {
-      title: "Article 2",
-      type: "Tratamiento",
-      picture: "article2.jpg",
-    },
-    {
-      title: "Article 3",
-      type: "Caso de estudio",
-      picture: "article3.jpg",
-    },
-    {
-      title: "Article 4",
-      type: "Prevención",
-      picture: "article4.jpg",
-    },
-  ],
-  page: 0,
+const CarouselArticle = ({ data }: { data: any }) => {
+  const { width, height } = getImageDimensions(data.coverImage);
+
+  return (
+    <LinkBox as="div" tw="h-full w-full">
+      <StyledArticle>
+        <ImgWrap tw="mb-4">
+          <Image
+            src={urlForImage(data.coverImage).size(width, height).url()}
+            alt={data.title}
+            layout="fill"
+            objectFit="cover"
+          />
+        </ImgWrap>
+        <Heading subHeading as="span" tw="text-xs mb-0.5">
+          <NextLink href={`/blog/categorias/${data.categorySlug}`} passHref>
+            <Link
+              _hover={{
+                textDecoration: "none",
+              }}
+              className="relative z-10 hover:text-primary-shade-1"
+            >
+              {data.category}
+            </Link>
+          </NextLink>
+        </Heading>
+        <Heading secondary as="h2" tw="text-3xl md:text-4xl mb-1.5">
+          <NextLink href={`/blog/${data.slug}`} passHref>
+            <LinkOverlay>{data.title}</LinkOverlay>
+          </NextLink>
+        </Heading>
+      </StyledArticle>
+    </LinkBox>
+  );
 };
-type ACTIONTYPE = { type: "PREVIOUS" } | { type: "NEXT" };
-
-const articlesOrderReducer = (
-  state: typeof initialState,
-  action: ACTIONTYPE
-): typeof initialState => {
-  switch (action.type) {
-    case "PREVIOUS":
-      // state.articles.unshift(state.articles.pop())
-      return { ...state, page: state.page - 1 };
-    case "NEXT":
-      // state.articles.push(state.articles.shift())
-      return { ...state, page: state.page + 1 };
-    default:
-      return state;
-  }
-};
-
 const Articles = (): JSX.Element => {
-  const [data, dispatch] = useReducer(articlesOrderReducer, initialState);
-  const carouselSpring = useSpring({
-    transform: `translate(${-data.page * 50}%)`,
+  const { isLoading, isError, data, error } = useQuery<
+    PostType[],
+    { message: string }
+  >(["featuredPosts"], {
+    queryFn: (): Promise<PostType[]> => sanityClient.fetch(featuredPostsQuery),
   });
+
+  const matchesValue: number = useBreakPointChange({
+    initialValue: 1,
+    defaultValue: 1,
+    mobMdValue: 1,
+    mdValue: 1,
+    blogLgValue: 2,
+  }) as number;
+
+  if (isLoading) {
+    return <span>Cargando articulos destacados</span>;
+  }
+
+  if (isError) {
+    return (
+      <p>
+        <span>Error:</span>
+        <span>{error.message}</span>
+      </p>
+    );
+  }
+
+  const Carousel = withCarousel(
+    StyledCarousel,
+    data,
+    CarouselArticle,
+    StyledButtons,
+    matchesValue
+  );
 
   return (
     <Container>
-      <div>
+      <div tw="mb-10 md:mb-0 md:pr-5 blog-lg:pr-14 md:h-[max-content]">
         <Heading subHeading as="span">
           Artículos
         </Heading>
-        <Heading secondary as="h2" tw="max-w-[15ch] mb-6">
+        <Heading secondary as="h2" tw="mb-6">
           Lo último de Osteocenter
         </Heading>
         <PageLink nextLink custom destination="/blog">
-          <WrapLink tw="mb-5">Ver todos</WrapLink>
+          <WrapLink tw="mb-0">Ver todos</WrapLink>
         </PageLink>
-        <Flex>
-          <Button
-            elType="icon"
-            inactive={data.page == 0}
-            onClick={() => data.page == 0 || dispatch({ type: "PREVIOUS" })}
-          >
-            <BsArrowLeft />
-          </Button>
-          <Button
-            elType="icon"
-            inactive={data.page == data.articles.length / ARTICLES_PER_PAGE}
-            onClick={() =>
-              data.page == data.articles.length / ARTICLES_PER_PAGE ||
-              dispatch({ type: "NEXT" })
-            }
-          >
-            <BsArrowRight />
-          </Button>
-        </Flex>
+        <PlaceholderStyledButtons>
+          <Button elType="icon" top prev />
+        </PlaceholderStyledButtons>
       </div>
-      <CarouselWrap>
-        <Carousel style={carouselSpring}>
-          {data.articles.map((article) => (
-            <Article key={v4()}>
-              <ImgWrap tw="mb-4">
-                <Image
-                  src={`/img/articles/${article.picture}`}
-                  alt={article.title}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </ImgWrap>
-              <Heading subHeading as="span" tw="text-xs">
-                {article.type}
-              </Heading>
-              <Heading secondary as="h2" tw="m-0 text-4xl">
-                {article.title}
-              </Heading>
-            </Article>
-          ))}
-        </Carousel>
-      </CarouselWrap>
+      <Carousel />
     </Container>
   );
 };

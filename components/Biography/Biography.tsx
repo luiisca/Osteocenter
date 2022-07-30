@@ -64,7 +64,7 @@ const Biography = (): JSX.Element => {
             <Heading
               as="h2"
               secondary
-              tw="mb-4 text-center md:text-left text-4xl md:text-5xl"
+              tw="mb-4 text-center md:text-left"
             >
               Dr. Ronal Cadillo Medina.
             </Heading>

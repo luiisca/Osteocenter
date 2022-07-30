@@ -25,7 +25,7 @@ const Title = () => (
   <Heading
     subHeading
     as="span"
-    className="text-base mr-9 text-primary-shade-2 shrink-0 leading-5"
+    className="text-base mb-0.5 mr-9 text-primary-shade-2 shrink-0 leading-5"
   >
     Filtrar por
   </Heading>

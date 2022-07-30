@@ -80,8 +80,8 @@ const Blog = ({
     >
       {/*Carousel */}
       <div className="mb-20">
-        <Heading subHeading tw="mb-4">
-          Lo ultimo
+        <Heading subHeading>
+         Lo ultimo
         </Heading>
         <Carousel />
       </div>

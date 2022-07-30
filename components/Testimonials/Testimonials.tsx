@@ -57,10 +57,10 @@ const Testimonials = (): JSX.Element => {
 
   return (
     <Container>
-      <Heading as="span" subHeading tw="mb-4">
+      <Heading as="span" subHeading>
         Testimonios
       </Heading>
-      <Heading as="h2" secondary tw="text-4xl md:text-5xl mb-12">
+      <Heading as="h2" secondary tw="mb-12">
         Lo que dicen nuestros pacientes.
       </Heading>
       <Carousel />

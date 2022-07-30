@@ -55,10 +55,10 @@ const Steps = (): JSX.Element => {
   return (
     <Container>
       <div>
-        <Heading as="span" subHeading tw='mb-4'>
+        <Heading as="span" subHeading>
           Proceso
         </Heading>
-        <Heading as="h2" secondary tw="mb-12 text-4xl md:text-5xl">
+        <Heading as="h2" secondary tw="mb-12">
           La atención que mereces
         </Heading>
       </div>

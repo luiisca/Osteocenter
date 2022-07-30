@@ -11,6 +11,7 @@ import { MdArrowLeft, MdArrowRight, MdClose } from "react-icons/md";
 
 // helpers
 import { useMapContext } from "../../MapProvider";
+import useBreakPointChange from "@/components/hooks/useBreakPointChange";
 import { loader } from "./helpers";
 
 // components
@@ -64,52 +65,15 @@ const Flex = styled.div((props: { icon: boolean }) => [
     `,
 ]);
 
-const useBreakPointChange = () => {
-  const [matchesValue, setMatchesValue] = useState<string>("0%");
-
-  useEffect(() => {
-    const defaultMediaQuery = window.matchMedia(
-      "(min-width: 0px) and (max-width: 544px)"
-    );
-    const mobMdMediaQuery = window.matchMedia(
-      "(min-width: 545px) and (max-width: 767px)"
-    );
-    const mdMediaQuery = window.matchMedia("(min-width: 768px)");
-    if (mdMediaQuery.matches) {
-      setMatchesValue("35%");
-    } else if (mobMdMediaQuery.matches) {
-      setMatchesValue("50%");
-    } else if (defaultMediaQuery.matches) {
-      setMatchesValue("75%");
-    }
-
-    const listener = (ev: any, value: string) => {
-      if (ev.matches) {
-        console.log(`MEDIA QUERY MATCH ON ${value}`);
-        setMatchesValue(value);
-      }
-    };
-    defaultMediaQuery.addEventListener("change", (ev) => listener(ev, "75%"));
-    mobMdMediaQuery.addEventListener("change", (ev) => listener(ev, "50%"));
-    mdMediaQuery.addEventListener("change", (ev) => listener(ev, "35%"));
-
-    return () => {
-      defaultMediaQuery.removeEventListener("change", (ev) =>
-        listener(ev, "75%")
-      );
-      mobMdMediaQuery.removeEventListener("change", (ev) =>
-        listener(ev, "50%")
-      );
-      mdMediaQuery.removeEventListener("change", (ev) => listener(ev, "35%"));
-    };
-  }, [setMatchesValue]);
-
-  return matchesValue;
-};
-
 const PlaceDetails = (): JSX.Element | null => {
   const { map, dispatchMap } = useMapContext();
-  const matchesValue = useBreakPointChange();
+  const matchesValue = useBreakPointChange({
+    initialValue: "0%",
+    defaultValue: "75%",
+    mobMdValue: "50%",
+    mdValue: "35%",
+    blogLgValue: "35%",
+  });
 
   const hideBttnSpring = useSpring({
     opacity: map.open ? "1" : "0",

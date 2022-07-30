@@ -14,7 +14,7 @@ const CallToAction = (): JSX.Element => (
         <Heading
           primary
           as="h1"
-          tw="text-[2.75rem] xl:text-[3.5rem] md:max-w-[20ch]"
+          tw="text-[2.75rem] md:text-[3.2rem] xl:text-[3.5rem] md:max-w-[20ch]"
         >
           Tu salud en las mejores manos.
         </Heading>

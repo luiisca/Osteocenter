@@ -74,7 +74,7 @@ const Category = ({
 
 const Post = ({ post, top, intro }: Post) => {
   return (
-    <LinkBox as="article">
+    <LinkBox as="div">
       <StyledPostContainer top={top} intro={intro}>
         <StyledPostImgContainer intro={intro}>
           {/*Image*/}

@@ -10,10 +10,10 @@ const Location = (): JSX.Element => {
   return (
     <LocationProvider>
       <BaseContainer tw="text-center">
-        <Heading as="span" subHeading tw="mb-4">
+        <Heading as="span" subHeading>
           Ubicación
         </Heading>
-        <Heading as="h2" secondary tw="text-4xl md:text-5xl">
+        <Heading as="h2" secondary>
           Dónde encontrarnos?
         </Heading>
 

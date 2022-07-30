@@ -19,6 +19,7 @@
     "@sanity/asset-utils": "^1.2.3",
     "@sanity/image-url": "^1.0.1",
     "@sanity/webhook": "^2.0.0",
+    "@tanstack/react-query": "^4.0.10",
     "@types/google.maps": "^3.49.2",
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.1",

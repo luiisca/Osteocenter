@@ -8,7 +8,7 @@ const Container = tw(BaseContainer)``;
 const Values = (): JSX.Element => {
   return (
     <Container>
-      <Heading as="h2" secondary tw="text-4xl md:text-5xl">
+      <Heading as="h2" secondary>
         Cirugía ortopédica y traumatología.
       </Heading>
       <p tw="text-xl text-accent-555 mx-auto mb-20 max-w-prose">

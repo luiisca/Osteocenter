@@ -13,7 +13,7 @@ const Hero = (): JSX.Element => {
   return (
     <Container tw="grid grid-cols-1 text-center blog-lg:text-left blog-lg:grid-cols-2 gap-16 blog-lg:gap-12">
       <div>
-        <Heading primary tw="text-5xl xl:text-6xl">
+        <Heading primary>
           {" "}
           Cirugía ortopédica y traumatología con las mejores garantías.
         </Heading>

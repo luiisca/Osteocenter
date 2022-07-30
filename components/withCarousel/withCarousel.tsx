@@ -48,15 +48,22 @@ export const BaseContainer = styled.div(() => [
  * @param Buttons - custom div wrapper for nav buttons
  */
 const withCarousel =
-  (Container: any, elementsData: any, Element: any, Buttons: any) =>
+  (
+    Container: any,
+    elementsData: any,
+    Element: any,
+    Buttons: any,
+    slides: number = 1,
+    spaceBetween: number = 30
+  ) =>
   /* eslint-disable react/display-name */
   ({ ...props }: any) => {
     return (
       <Container>
         <Swiper
           modules={[Pagination, Navigation]}
-          slidesPerView={1}
-          spaceBetween={30}
+          slidesPerView={slides}
+          spaceBetween={spaceBetween}
           speed={400}
           grabCursor
           loop

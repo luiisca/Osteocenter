@@ -15,7 +15,7 @@ const Text = styled.p(() => [tw`text-lg font-medium leading-6`]);
 const Card = ({ period, name, image, children }: Props): JSX.Element => {
   return (
     <div>
-      <div tw="w-[50px]">
+      <div tw="w-[50px] mb-4">
         <Image
           src={`/img/icons/${image}.svg`}
           alt={`${name} icon`}
@@ -25,7 +25,9 @@ const Card = ({ period, name, image, children }: Props): JSX.Element => {
           height="1"
         />
       </div>
-      <Heading subHeading>{period}</Heading>
+      <Heading subHeading as="span" tw="mb-2">
+        {period}
+      </Heading>
       <Text tw="mb-2">{name}</Text>
       <Text tw="text-sm text-accent-555">{children}</Text>
     </div>
