@@ -9,7 +9,6 @@ import withCarousel, {
 } from "../withCarousel";
 
 const Container = tw(BaseContainer)`flex text-center items-center flex-col`;
-// const StyledCarousel = tw.div`grid grid-cols-[1fr auto 1fr] gap-12`;
 const StyledCarousel = styled(BaseCarouselContainer)(() => [tw`w-full`]);
 const CarouselTestimonial = ({ data }: { data: any }) => (
   <Testimonial

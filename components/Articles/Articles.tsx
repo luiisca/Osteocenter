@@ -5,19 +5,14 @@ import NextLink from "next/link";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { LinkBox, LinkOverlay, Link } from "@chakra-ui/react";
 
-import { useReducer } from "react";
-import { v4 } from "uuid";
-
 import { urlForImage } from "@/utils/sanity/sanity";
 import { sanityClient } from "@/utils/sanity/sanity.server";
 import { featuredPostsQuery } from "@/utils/sanity/queries";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 import withCarousel from "@/components/withCarousel";
 import useBreakPointChange from "@/components/hooks/useBreakPointChange";
 import { BaseContainer, BaseLink } from "../BaseStyle";
 import { Button, Heading, PageLink } from "../Elements";
-import { ARTICLES_PER_PAGE } from "@/static/ts/constants";
 import { PostType } from "pages/blog";
 
 const Container = styled(BaseContainer)(() => [
@@ -49,10 +44,13 @@ const StyledCarousel = styled.div(() => [
 ]);
 const PlaceholderStyledButtons = tw.div`invisible pt-12 mb-2.5 blog-lg:mb-0 flex gap-2.5`;
 const StyledButtons = styled.div(() => [
-  tw`absolute bottom-2.5 left-8`,
-  tw`pt-12 mb-2.5 blog-lg:mb-0 flex gap-2.5`,
+  tw`absolute md:bottom-2.5 left-8`,
+  tw`md:pt-12 md:mb-2.5 blog-lg:mb-0 flex gap-2.5`,
 ]);
-const StyledArticle = styled.div(() => [tw`flex flex-col`, tw`md:h-full`]);
+const StyledArticle = styled.div(() => [
+  tw`flex flex-col`,
+  tw`mb-6 md:h-full md:mb-0`,
+]);
 const ImgWrap = styled.div(() => [
   tw`relative w-full h-full`,
   css`
@@ -74,7 +72,7 @@ const CarouselArticle = ({ data }: { data: any }) => {
             objectFit="cover"
           />
         </ImgWrap>
-        <Heading subHeading as="span" tw="text-xs mb-0.5">
+        <Heading subHeading as="span" tw="text-xs mb-2">
           <NextLink href={`/blog/categorias/${data.categorySlug}`} passHref>
             <Link
               _hover={{
@@ -86,7 +84,7 @@ const CarouselArticle = ({ data }: { data: any }) => {
             </Link>
           </NextLink>
         </Heading>
-        <Heading secondary as="h2" tw="text-3xl md:text-4xl mb-1.5">
+        <Heading secondary as="h2" tw="text-3xl md:text-4xl mb-0 md:mb-1.5">
           <NextLink href={`/blog/${data.slug}`} passHref>
             <LinkOverlay>{data.title}</LinkOverlay>
           </NextLink>
@@ -144,7 +142,7 @@ const Articles = (): JSX.Element => {
         <PageLink nextLink custom destination="/blog">
           <WrapLink tw="mb-0">Ver todos</WrapLink>
         </PageLink>
-        <PlaceholderStyledButtons>
+        <PlaceholderStyledButtons tw="hidden md:block">
           <Button elType="icon" top prev />
         </PlaceholderStyledButtons>
       </div>
