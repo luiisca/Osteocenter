@@ -40,7 +40,6 @@ export const Container = styled.div(
   ]
 );
 
-
 export const GoogleMapContainer = styled(animated.div)(() => [
   tw`w-full h-full`,
   tw`absolute top-0 left-0`,
@@ -90,6 +89,7 @@ const Map = (): JSX.Element => {
               clickableIcons={false}
               options={{
                 fullscreenControl: false,
+                gestureHandling: "greedy",
               }}
               mapContainerStyle={{
                 height: "100%",
