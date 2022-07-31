@@ -57,7 +57,7 @@ const withCarousel =
     spaceBetween: number = 30
   ) =>
   /* eslint-disable react/display-name */
-  ({ ...props }: any) => {
+  () => {
     return (
       <Container>
         <Swiper

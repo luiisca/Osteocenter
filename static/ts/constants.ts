@@ -7,6 +7,14 @@ type Libraries = (
 )[];
 
 export const SITE_TITLE: string = "Osteocenter";
+export const FACEBOOK_PAGE: string =
+  "https://www.facebook.com/Osteocenter-110031325020842";
+export const getWhatsappLink: (mobile: boolean) => string = (mobile) =>
+  `https://${
+    mobile ? "api" : "web"
+  }.whatsapp.com/send?phone=+51969780055&text=${encodeURIComponent(
+    "Hola. Me gustaría que me contactaran para poder resolver unas dudas."
+  )}`;
 export const WEB_LINK = "https://osteocenter.vercel.app";
 
 // CMS

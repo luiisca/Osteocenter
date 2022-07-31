@@ -10,9 +10,7 @@ const useFullscreenStatus: (
 
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      console.log("NOT FULLSCREEN");
     } else {
-      console.log("FULLSCREEN");
       elRef.current
         .requestFullscreen()
         .then(() => {

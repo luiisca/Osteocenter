@@ -36,8 +36,6 @@ const Biography = (): JSX.Element => {
   useEffect(() => {
     const onResize = () => {
       setImgHeight(imgRef?.current?.clientHeight || 320);
-      console.log(imgRef?.current?.clientHeight);
-      console.log("resizing");
     };
 
     window.onresize = onResize;

@@ -1,6 +1,6 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from "@sanity/webhook";
 import { createClient } from "next-sanity";
-import { sanityConfig } from "../../utils/config";
+import { sanityConfig } from "../../utils/sanity/config";
 
 const secret = process.env.SANITY_STUDIO_REVALIDATE_SECRET;
 export const config = {

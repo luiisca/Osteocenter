@@ -28,7 +28,7 @@ import { WEB_LINK } from "@/static/ts/constants";
 const Loading = tw.div`text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left
  `;
 const Container = tw(BaseContainer)``;
-const IconWrap = tw.div`text-[#AFAFAE] hover:text-[#9e9e9d] text-2xl md:text-[1.35rem]`;
+export const IconWrap = tw.div`text-[#AFAFAE] hover:text-[#9e9e9d] text-2xl md:text-[1.35rem]`;
 
 interface PostData extends PostType {
   body: any;

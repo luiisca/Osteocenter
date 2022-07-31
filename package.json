@@ -45,6 +45,7 @@
     "sanity-algolia": "^1.0.2",
     "styled-components": "^5.3.5",
     "swiper": "8.0.7",
+    "user-agent-data-types": "^0.3.0",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {

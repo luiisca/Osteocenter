@@ -1,4 +1,4 @@
-import tw, { styled} from "twin.macro";
+import tw, { styled } from "twin.macro";
 import { v4 } from "uuid";
 
 import { Heading } from "../Elements";

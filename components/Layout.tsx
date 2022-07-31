@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Header from "./Sections/header";
-import tw, { styled, css } from "twin.macro";
+import Footer from "@/components/Sections/Footer";
+import tw from "twin.macro";
 
 import Alert from "./Alert";
 import { SITE_TITLE } from "@/static/ts/constants";
-import { MdArrowLeft, MdArrowRight, MdClose } from "react-icons/md";
 
-import { Button } from "@/components/Elements";
+import { Divider } from "@/components/Blog/layout";
 
 interface Props {
   children: React.ReactNode;
@@ -26,6 +26,8 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
         {preview && <Alert preview={preview} />}
         <Header />
         {children}
+        <Divider />
+        <Footer />
       </Main>
     </div>
   );

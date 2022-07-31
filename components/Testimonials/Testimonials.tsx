@@ -1,5 +1,5 @@
 import React from "react";
-import tw, { styled, css } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 import { Heading } from "../Elements";
 import { BaseContainer } from "../BaseStyle";

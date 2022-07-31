@@ -6,7 +6,6 @@ import { useSpring, config } from "react-spring";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 // icons
-import { MdClose } from "react-icons/md";
 import { RiFullscreenExitFill, RiFullscreenFill } from "react-icons/ri";
 
 // helpers
@@ -14,10 +13,9 @@ import { useMapContext } from "../MapProvider";
 import { BUSINESS_LOCATION, LIBRARIES } from "@/static/ts/constants";
 import { DetailsGetter, ResizeStreetView } from "./helpers";
 import useFullscreenStatus from "./useFullscreenStatus";
-import useIsMobile from "./useIsMobile";
+import useIsMobile from "@/components/hooks/useIsMobile";
 
 // components
-import { Button } from "../../Elements";
 import MapButton from "./MapButton";
 import MarkerContainer from "./MarkerContainer";
 import Route from "./Route";

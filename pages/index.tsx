@@ -15,9 +15,6 @@ const Home: NextPage = (): JSX.Element => {
         <title>{SITE_TITLE}</title>
       </Head>
       <Main />
-      {/*
-            <Footer />
-        */}
     </>
   );
 };

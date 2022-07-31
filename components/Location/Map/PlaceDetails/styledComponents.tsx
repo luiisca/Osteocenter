@@ -1,5 +1,5 @@
 import tw, {css, styled} from 'twin.macro';
-import {Button} from '../../Elements';
+import {Button} from '@/components/Elements';
 import {animated} from 'react-spring';
 
 export const Container = styled(animated.div)(() => [

@@ -1,6 +1,6 @@
 // libraries
 import Image from "next/image";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import tw, { css, styled } from "twin.macro";
 import { animated, useSpring, config } from "react-spring";
 
@@ -21,7 +21,7 @@ import { Button } from "../../../Elements";
 import { Title, Rating, Separator } from "./Elements";
 
 const Container = styled(animated.div)(() => [
-  tw`w-[75%] mob-md:w-[50%] md:w-[35%]! h-full`,
+  tw`w-[75%] mob-me:w-[50%] md:w-[35%]! h-full`,
   tw`relative z-[1] inline-block opacity-100`,
   tw`overflow-x-hidden`,
 
@@ -37,7 +37,7 @@ export const HideBttn = styled(Button)(() => [
 const OpenBttnContainer = styled(animated.div)(() => [
   tw`w-[40px] h-[80px]`,
   tw`flex items-center justify-items-start`,
-  tw`absolute top-1/2 left-[75%] mob-md:left-1/2 md:left-[35%] z-20`,
+  tw`absolute top-1/2 left-[75%] mob-me:left-1/2 md:left-[35%] z-20`,
   tw`hover:cursor-pointer`,
 
   css`

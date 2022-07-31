@@ -63,7 +63,6 @@ const Dropdown = ({
   if (categoryPage) {
     slicedCategories = allCategories.slice(1);
   }
-  console.log(slicedCategories, allCategories, tabIndex);
 
   return (
     <div tw="inline-block blog-lg:hidden">

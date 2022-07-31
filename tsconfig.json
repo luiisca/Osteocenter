@@ -33,7 +33,10 @@
       "@/components/*": ["components/*"],
       "@/static/*": ["static/*"],
       "@/utils/*": ["utils/*"]
-    }
+    },
+    "types": [
+      "./node_modules/user-agent-data-types"
+    ]
   },
   "exclude": [
     "node_modules"

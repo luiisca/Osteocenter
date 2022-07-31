@@ -34,7 +34,6 @@ const useBreakPointChange = (options: {
 
     const listener = (ev: any, value: string | number) => {
       if (ev.matches) {
-        console.log(`MEDIA QUERY MATCH ON ${value}`);
         setMatchesValue(value);
       }
     };

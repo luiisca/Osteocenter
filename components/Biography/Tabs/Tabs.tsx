@@ -1,4 +1,4 @@
-import tw, { css, styled } from "twin.macro";
+import tw, {styled } from "twin.macro";
 import { useState } from "react";
 
 import Card from "./Card";

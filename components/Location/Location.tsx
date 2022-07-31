@@ -6,10 +6,12 @@ import { Heading } from "../Elements";
 import MapProvider from "./MapProvider";
 import LocationProvider from "./LocationProvider";
 
+const Container = tw(BaseContainer)`text-center`;
+
 const Location = (): JSX.Element => {
   return (
     <LocationProvider>
-      <BaseContainer tw="text-center">
+      <Container>
         <Heading as="span" subHeading>
           Ubicación
         </Heading>
@@ -20,7 +22,7 @@ const Location = (): JSX.Element => {
         <MapProvider>
           <Map />
         </MapProvider>
-      </BaseContainer>
+      </Container>
     </LocationProvider>
   );
 };

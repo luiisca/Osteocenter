@@ -42,9 +42,9 @@ const StyledCarousel = styled.div(() => [
     }
   `,
 ]);
-const PlaceholderStyledButtons = tw.div`invisible pt-12 mb-2.5 blog-lg:mb-0 flex gap-2.5`;
+const PlaceholderStyledButtons = tw.div`invisible md:pt-12 md:mb-2.5 blog-lg:mb-0 flex gap-2.5`;
 const StyledButtons = styled.div(() => [
-  tw`absolute md:bottom-2.5 left-8`,
+  tw`absolute md:bottom-0 left-8`,
   tw`md:pt-12 md:mb-2.5 blog-lg:mb-0 flex gap-2.5`,
 ]);
 const StyledArticle = styled.div(() => [
@@ -147,6 +147,9 @@ const Articles = (): JSX.Element => {
         </PlaceholderStyledButtons>
       </div>
       <Carousel />
+      <PlaceholderStyledButtons tw="md:hidden">
+        <Button elType="icon" top prev />
+      </PlaceholderStyledButtons>
     </Container>
   );
 };
