@@ -9,6 +9,7 @@ import { getUserLocation } from "./helpers";
 import { useLocationContext } from "../LocationProvider";
 
 const StyledButton = styled(Button)((props: any) => [
+  tw`mx-auto mt-6`,
   props.fullscreen &&
     tw`fixed bottom-0 z-50 mx-auto mb-6 translate-x-[-50%] left-1/2`,
   props.loadingRoute && tw`cursor-wait`,
@@ -53,7 +54,6 @@ const MapButton = ({
       }
       fullscreen={fullscreen}
       loadingRoute={loadingRoute}
-      tw="mt-6 mx-auto"
     >
       {loadingRoute ? (
         <Spinner

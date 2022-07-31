@@ -14,6 +14,7 @@ import { BUSINESS_LOCATION, LIBRARIES } from "@/static/ts/constants";
 import { DetailsGetter, ResizeStreetView } from "./helpers";
 import useFullscreenStatus from "./useFullscreenStatus";
 import useIsMobile from "@/components/hooks/useIsMobile";
+import useBreakPointChange from "@/components/hooks/useBreakPointChange";
 
 // components
 import MapButton from "./MapButton";
@@ -66,11 +67,18 @@ const Map = (): JSX.Element => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setFullscreen] = useFullscreenStatus(containerRef);
+  const matchesValue = useBreakPointChange<string>({
+    initialValue: "100%",
+    defaultValue: "25%",
+    mobMdValue: "50%",
+    mdValue: "65%",
+    blogLgValue: "65%",
+  });
 
   // animations
   const mapSpring = useSpring({
-    left: map.open ? "35%" : "0%",
-    width: map.open ? "65%" : "100%",
+    left: map.open ? `${100 - Number(matchesValue.slice(0, -1))}%` : "0%",
+    width: map.open ? matchesValue : "100%",
     overflow: "hidden",
 
     config: config.default,

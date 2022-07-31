@@ -5,7 +5,7 @@ import { BUSINESS_LOCATION } from "@/static/ts/constants";
 import { useLocationContext } from "../LocationProvider";
 import MarkerContainer from "./MarkerContainer";
 
-const Route = (): JSX.Element => {
+const Route = () => {
   const { location } = useLocationContext();
 
   const map = useGoogleMap() as google.maps.Map;
@@ -59,7 +59,8 @@ const Route = (): JSX.Element => {
     removeDirections();
     centerBusiness();
 
-    return <MarkerContainer position={BUSINESS_LOCATION} />;
+    return <></>;
+    // return <MarkerContainer position={BUSINESS_LOCATION} />;
   }
 };
 

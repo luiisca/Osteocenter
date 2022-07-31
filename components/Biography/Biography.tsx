@@ -6,6 +6,8 @@ import { BaseContainer } from "../BaseStyle";
 import { Heading } from "../Elements";
 import Tabs from "./Tabs";
 
+const imgSize: number = 368;
+
 const BackColor = tw(
   BaseContainer
 )`max-w-none bg-primary-tint-2 rounded-[11px] p-8 pb-0 my-16`;
@@ -30,18 +32,19 @@ const ImgWrap = styled.span(() => [
 const Biography = (): JSX.Element => {
   const imgRef = useRef<HTMLDivElement>(null);
   const [imgHeight, setImgHeight] = useState<number>(
-    imgRef?.current?.clientHeight || 320
+    imgRef?.current?.clientHeight || imgSize
   );
 
   useEffect(() => {
+    setImgHeight(imgRef?.current?.clientHeight || imgSize);
     const onResize = () => {
-      setImgHeight(imgRef?.current?.clientHeight || 320);
+      setImgHeight(imgRef?.current?.clientHeight || imgSize);
     };
 
     window.onresize = onResize;
 
     return window.removeEventListener("resize", onResize);
-  }, []);
+  }, [imgHeight]);
 
   return (
     <BackColor>
@@ -59,11 +62,7 @@ const Biography = (): JSX.Element => {
         </ImgWrap>
         <div tw="w-full blog-lg:grid blog-lg:grid-rows-[30% 70%] blog-lg:h-full">
           <div tw="mb-12 blog-lg:mb-0">
-            <Heading
-              as="h2"
-              secondary
-              tw="mb-4 text-center md:text-left"
-            >
+            <Heading as="h2" secondary tw="mb-4 text-center md:text-left">
               Dr. Ronal Cadillo Medina.
             </Heading>
             <p tw="text-lg mb-8 text-accent-555 text-center md:text-left">

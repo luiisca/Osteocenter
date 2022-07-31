@@ -116,6 +116,7 @@ const Footer = () => {
           </p>
           <p>
             <Link href="tel:+51992569407">992-569-407</Link>
+            {" / "}
             <Link href="tel:+51969780055">969-780-055</Link>
             <Link href="mailto:osteocenter.admi@gmail.com">
               osteocenter.admi@gmail.com

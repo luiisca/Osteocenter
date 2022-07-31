@@ -67,7 +67,7 @@ const Flex = styled.div((props: { icon: boolean }) => [
 
 const PlaceDetails = (): JSX.Element | null => {
   const { map, dispatchMap } = useMapContext();
-  const matchesValue = useBreakPointChange({
+  const matchesValue = useBreakPointChange<string>({
     initialValue: "0%",
     defaultValue: "75%",
     mobMdValue: "50%",

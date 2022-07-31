@@ -1,9 +1,13 @@
-import tw, {styled } from "twin.macro";
-import { useState } from "react";
+import tw, { styled } from "twin.macro";
+import { useState, useRef, useEffect } from "react";
 
 import Card from "./Card";
 
 const Grid = tw.div`grid justify-center md:justify-start grid-cols-[repeat(2, minmax(0, 30ch))] gap-x-12 gap-y-16`;
+const Tab = styled.div((props: { overflow: boolean }) => [
+  tw`pb-4 overflow-hidden`,
+  props.overflow && tw`overflow-y-scroll`,
+]);
 
 const Education = (): JSX.Element => {
   return (
@@ -59,7 +63,23 @@ const TabButton = styled.button(({ active }: { active: boolean }) => [
 
 const Tabs = (): JSX.Element => {
   const [activeBttn, setActiveBttn] = useState<number>(1);
+  const [isOverflow, setIsOverflow] = useState<boolean>(false);
   const handleToggle = (bttn: number): void => setActiveBttn(bttn);
+  const tabRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const { current } = tabRef;
+
+    if (current) {
+      const trigger = () => {
+        setIsOverflow(current.scrollHeight > current.clientHeight);
+      };
+
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(trigger).observe(current);
+      }
+    }
+  }, [tabRef]);
 
   return (
     <div tw="flex gap-8 md:gap-24 flex-col md:flex-row">
@@ -72,10 +92,10 @@ const Tabs = (): JSX.Element => {
         </TabButton>
       </div>
 
-      <div tw="overflow-scroll pb-4">
+      <Tab overflow={isOverflow} ref={tabRef}>
         {activeBttn === 1 && <Education />}
         {activeBttn === 2 && <Experience />}
-      </div>
+      </Tab>
     </div>
   );
 };

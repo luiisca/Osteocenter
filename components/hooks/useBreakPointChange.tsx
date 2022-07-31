@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 
-const useBreakPointChange = (options: {
-  initialValue: string | number;
-  defaultValue: string | number;
-  mobMdValue: string | number;
-  mdValue: string | number;
-  blogLgValue: string | number;
+const useBreakPointChange = <T extends number | string>(options: {
+  initialValue: T;
+  defaultValue: T;
+  mobMdValue: T;
+  mdValue: T;
+  blogLgValue: T;
 }) => {
-  const [matchesValue, setMatchesValue] = useState<string | number>(
-    options.initialValue
-  );
+  const [matchesValue, setMatchesValue] = useState<T>(options.initialValue);
 
   useEffect(() => {
     const defaultMediaQuery = window.matchMedia(
@@ -32,7 +30,7 @@ const useBreakPointChange = (options: {
       setMatchesValue(options.defaultValue);
     }
 
-    const listener = (ev: any, value: string | number) => {
+    const listener = (ev: any, value: T) => {
       if (ev.matches) {
         setMatchesValue(value);
       }

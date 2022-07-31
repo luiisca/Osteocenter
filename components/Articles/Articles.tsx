@@ -101,18 +101,17 @@ const Articles = (): JSX.Element => {
     queryFn: (): Promise<PostType[]> => sanityClient.fetch(featuredPostsQuery),
   });
 
-  const matchesValue: number = useBreakPointChange({
+  const matchesValue = useBreakPointChange<number>({
     initialValue: 1,
     defaultValue: 1,
     mobMdValue: 1,
     mdValue: 1,
     blogLgValue: 2,
-  }) as number;
+  });
 
   if (isLoading) {
     return <span>Cargando articulos destacados</span>;
   }
-
   if (isError) {
     return (
       <p>

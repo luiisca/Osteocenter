@@ -25,20 +25,17 @@ const Img = styled.div(() => [
   tw`justify-self-center w-[clamp(200px, 80%, 400px)]`,
   tw`rounded-[9px] overflow-hidden`,
 ]);
-const Text = styled.div(() => [
-  tw`mob-me:w-4/5`,
-  tw`md:w-1/2`,
-]);
+const Text = styled.div(() => [tw`mob-me:w-4/5`, tw`md:w-1/2`]);
 const Step = ({ src, name, num, children }: Props): JSX.Element => {
   return (
     <Container position={+num}>
-      <ImgWrap >
+      <ImgWrap>
         <Img>
           <Image
             src={`/img/steps/${src}`}
             alt={`${name} ilustración`}
             layout="responsive"
-            sizes="20vw"
+            sizes="90vw"
             width="1"
             height="1"
           />
