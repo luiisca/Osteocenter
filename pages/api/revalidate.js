@@ -14,6 +14,7 @@ const sanityClient = createClient({
   useCdn: false,
 });
 
+// custom body parser 
 async function readBody(readable) {
   const chunks = [];
   for await (const chunk of readable) {
@@ -65,7 +66,7 @@ export default async function revalidate(req, res) {
   const slugs = (Array.isArray(slug) ? slug : [slug]).map(
     (_slug) => `/blog/${_slug}`
   );
-  const staleRoutes = ["/", ...slugs];
+  const staleRoutes = ["/", "/blog", ...slugs];
 
   try {
     console.log("API/REVALIDATE", jsonBody);

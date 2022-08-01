@@ -4,7 +4,6 @@ import tw, { styled, css } from "twin.macro";
 
 // helpers
 import {
-  overlayDrafts,
   getClient,
   sanityClient,
 } from "../../utils/sanity/sanity.server";
@@ -80,9 +79,7 @@ const Blog = ({
     >
       {/*Carousel */}
       <div className="mb-20">
-        <Heading subHeading>
-         Lo ultimo
-        </Heading>
+        <Heading subHeading>Lo ultimo</Heading>
         <Carousel />
       </div>
     </IndexLayout>
@@ -95,7 +92,7 @@ export const getStaticProps: GetStaticProps<{
   allCategories: Array<Record<string, string>>;
   allPostsByCategory: Record<string, PostType[]>;
 }> = async ({ preview = false }) => {
-  const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery));
+  const allPosts = await getClient(preview).fetch(indexQuery);
   const allCategories = await getClient(preview).fetch(categoriesQuery);
 
   // https://stackoverflow.com/questions/4215737/convert-array-to-object?page=1&tab=scoredesc#tab-top

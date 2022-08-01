@@ -12,17 +12,27 @@ interface Props {
   nextLink?: boolean;
   destination?: string;
   children: React.ReactNode;
+  toggle: any;
 }
 
-const NavLink = ({ nextLink, destination, children }: Props): JSX.Element => {
+const NavLink = ({
+  nextLink,
+  destination,
+  children,
+  toggle,
+}: Props): JSX.Element => {
   if (!destination?.includes("/")) {
-    return <StyledNavLink href={destination}>{children}</StyledNavLink>;
+    return (
+      <StyledNavLink href={destination} onClick={() => toggle(false)}>
+        {children}
+      </StyledNavLink>
+    );
   }
 
   return (
     <li>
       <PageLink nextLink={nextLink} destination={destination} custom>
-        <StyledNavLink>{children}</StyledNavLink>
+        <StyledNavLink onClick={() => toggle(false)}>{children}</StyledNavLink>
       </PageLink>
     </li>
   );

@@ -2,7 +2,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import tw from "twin.macro";
 import {
   sanityClient,
-  overlayDrafts,
 } from "../../../utils/sanity/sanity.server";
 import {
   categoriesQuery,
@@ -47,7 +46,7 @@ const Category = ({
 export const getStaticProps: GetStaticProps<CategoryProps> = async ({
   params,
 }) => {
-  const allPosts = overlayDrafts(await sanityClient.fetch(indexQuery));
+  const allPosts = await sanityClient.fetch(indexQuery);
   const allCategories = await sanityClient.fetch(categoriesQuery);
 
   const allPostsByCategory = await allCategories.reduce(

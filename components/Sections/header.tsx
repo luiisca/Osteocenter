@@ -5,14 +5,21 @@ import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
 import { useScroll } from "framer-motion";
 
-import tw, { styled, theme } from "twin.macro";
+import tw, { styled, css, theme } from "twin.macro";
 import Nav from "../Nav";
 
 const Container = styled(animated.header)(() => [
   tw`sticky top-0 z-30 flex items-center justify-between h-24 px-8 bg-primary-tint-3 shadow-sm`,
 ]);
 
-const Logo = tw.a`block relative min-w-[200px] h-full`;
+const Logo = styled.a(() => [
+  tw`block relative min-w-[200px] h-full flex items-center`,
+  css`
+    & > span {
+      ${tw`min-w-[200px]`}
+    }
+  `,
+]);
 
 const Overlay = styled.div(({ isOpen }: { isOpen: boolean }) => [
   tw`left-0 absolute z-[-1] w-screen h-screen top-full bg-transparent`,
@@ -24,8 +31,10 @@ const LogoWrap = () => (
     <Logo>
       <Image
         priority={true}
-        layout="fill"
-        objectFit="contain"
+        layout="responsive"
+        width="360"
+        height="77"
+        sizes="80vw"
         alt="osteocenter logo"
         src="/img/osteocenter-logo.png"
       />
@@ -91,8 +100,8 @@ const Header = (): JSX.Element => {
         </div>
         <>
           <Overlay isOpen={isOpen} onClick={() => setOpen(false)} />
-          <Nav style={navSpring} setHeight={setNavHeight} device="mobile" />
-          <Nav device="desktop" />
+          <Nav style={navSpring} setHeight={setNavHeight} device="mobile" toggle={setOpen}/>
+          <Nav device="desktop" toggle={setOpen}/>
         </>
       </>
     </Container>

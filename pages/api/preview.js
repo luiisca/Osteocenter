@@ -18,7 +18,7 @@ export default async function preview(req, res) {
 
   // If the slug doesn't exist prevent preview mode from being enabled
   if (!post) {
-    return res.status(401).json({ message: "Invalid slug" });
+    return res.status(401).json({ message: "Url invalida o no existente" });
   }
 
   // Enable Preview Mode by setting the cookies
