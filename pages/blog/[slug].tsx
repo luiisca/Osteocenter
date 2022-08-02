@@ -78,22 +78,22 @@ const Article = ({
               Compartir
             </Heading>
             <Flex tw="gap-5">
-                <FacebookShareButton
-                  quote={post.title}
-                  url={`${WEB_LINK}/blog/${slug}`}
-                >
-                  <IconWrap>
-                    <BsFacebook />
-                  </IconWrap>
-                </FacebookShareButton>
-                <WhatsappShareButton
-                  title={post.title}
-                  url={`${WEB_LINK}/blog/${slug}`}
-                >
-                  <IconWrap>
-                    <BsWhatsapp />
-                  </IconWrap>
-                </WhatsappShareButton>
+              <FacebookShareButton
+                quote={post.title}
+                url={`${WEB_LINK}/blog/${slug}`}
+              >
+                <IconWrap>
+                  <BsFacebook />
+                </IconWrap>
+              </FacebookShareButton>
+              <WhatsappShareButton
+                title={post.title}
+                url={`${WEB_LINK}/blog/${slug}`}
+              >
+                <IconWrap>
+                  <BsWhatsapp />
+                </IconWrap>
+              </WhatsappShareButton>
             </Flex>
           </Flex>
           <PortableText value={post?.body} components={components} />
@@ -114,12 +114,7 @@ const Article = ({
           Artículos Relacionados
         </Heading>
         <div tw="grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-7 blog-lg:grid-cols-3 blog-lg:gap-x-14 blog-lg:gap-y-4">
-          {[
-            ...relatedPosts,
-            ...featuredPosts,
-            ...relatedPosts,
-            ...featuredPosts,
-          ].map((related: any) => {
+          {relatedPosts.map((related: any) => {
             if (related._id === post._id) return;
             return <Post post={related} key={v4()} />;
           })}

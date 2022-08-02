@@ -1,82 +1,87 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import tw from "twin.macro";
-import {
-  sanityClient,
-} from "../../../utils/sanity/sanity.server";
+import { sanityClient } from "../../../utils/sanity/sanity.server";
 import {
   categoriesQuery,
-  categoryBySlugQuery,
-  postsByCategoryQuery,
-  indexQuery,
+  allPosts,
+  allCategories,
+  allPostsByCategory,
+  categoryTitle,
 } from "../../../utils/sanity/queries";
+import { QueryClient, dehydrate, useQuery } from "react-query";
 
-import type { PostType, BlogProps } from "../index";
+import type { PostType} from "pages/blog";
 
 import IndexLayout from "../../../components/Blog/IndexLayout";
 import { Heading } from "../../../components/Elements";
 
 const StyledHeading = tw(
   Heading
-)`w-full text-center mb-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:mb-20 md:text-4xl md:leading-[2.875rem]`;
+)`w-full text-center my-12 text-[1.625rem] leading-[2.125rem] text-primary-shade-3 md:my-20 md:text-4xl md:leading-[2.875rem]`;
 
-interface CategoryProps extends BlogProps {
-  categoryTitle: string;
-}
+const Category = () => {
+  const router = useRouter();
 
-const Category = ({
-  categoryTitle,
-  allPosts,
-  allCategories,
-  allPostsByCategory,
-}: CategoryProps) => {
+  const posts = useQuery<PostType[]>(["allPosts"], allPosts);
+  const categories = useQuery(["allCategories"], allCategories);
+  const postsByCategory = useQuery(["allPostsByCategory"], () =>
+    allPostsByCategory(categories.data)
+  );
+  const title = useQuery(["categoryTitle"], () =>
+    categoryTitle(router.query.slug)
+  );
+  const isLoading =
+    posts.isLoading ||
+    categories.isLoading ||
+    postsByCategory.isLoading ||
+    title.isLoading;
+  const isError =
+    posts.isError ||
+    categories.isError ||
+    postsByCategory.isError ||
+    title.isError;
+
+  if (isLoading) {
+    return <p>Cargando...</p>;
+  }
+  if (isError) {
+    return <p>Oh oh algo salio mal :c</p>;
+  }
+
   return (
     <IndexLayout
-      allPosts={allPosts}
-      allCategories={allCategories}
-      allPostsByCategory={allPostsByCategory}
+      allPosts={posts.data || []}
+      allCategories={categories.data}
+      allPostsByCategory={postsByCategory.data}
       categoryPage
     >
       <StyledHeading as="h1" primary>
-        {categoryTitle}
+        {title.data}
       </StyledHeading>
     </IndexLayout>
   );
 };
 
-export const getStaticProps: GetStaticProps<CategoryProps> = async ({
-  params,
-}) => {
-  const allPosts = await sanityClient.fetch(indexQuery);
-  const allCategories = await sanityClient.fetch(categoriesQuery);
+export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+  const queryClient = new QueryClient();
 
-  const allPostsByCategory = await allCategories.reduce(
-    async (
-      promisedPost: Promise<Record<string, PostType[]>>,
-      category: Record<string, string>
-    ) => {
-      const posts = await sanityClient.fetch(postsByCategoryQuery, {
-        categoryTitle: category.title,
-      });
-      const prevPosts = await promisedPost;
+  await queryClient.prefetchQuery(["allPosts"], allPosts);
 
-      return {
-        ...prevPosts,
-        [category.title]: posts,
-      };
-    },
-    {}
+  const categories = await allCategories();
+  await queryClient.setQueryData(["allCategories"], categories);
+
+  await queryClient.prefetchQuery(["allPostsByCategory"], () =>
+    allPostsByCategory(categories)
   );
-  const category = await sanityClient.fetch(categoryBySlugQuery, {
-    slug: params?.slug,
-  });
-  const categoryTitle = category[0];
+
+  await queryClient.prefetchQuery(["categoryTitle"], () =>
+    categoryTitle(params?.slug)
+  );
 
   return {
     props: {
-      allPosts,
-      allCategories,
-      allPostsByCategory,
-      categoryTitle,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };

@@ -1,4 +1,4 @@
-import tw from "twin.macro";
+import tw, { styled } from "twin.macro";
 import type { BlogProps } from "../../pages/blog/index";
 
 import { BaseContainer } from "../../components/BaseStyle";
@@ -6,11 +6,13 @@ import Filter from "../../components/Blog/Filter";
 import Aside from "../../components/Blog/Aside";
 import { ContentGrid, Divider } from "../../components/Blog/layout";
 
-const Container = tw(BaseContainer)``;
+const Container = styled(BaseContainer)((props: { categoryPage: boolean }) => [
+  props.categoryPage ? tw`mt-0` : tw`mt-12`,
+]);
 
 interface IndexLayoutProps extends BlogProps {
   children: React.ReactNode;
-  categoryPage?: boolean
+  categoryPage?: boolean;
 }
 
 const IndexLayout = ({
@@ -21,7 +23,7 @@ const IndexLayout = ({
   categoryPage,
 }: IndexLayoutProps): JSX.Element => {
   return (
-    <Container tw="mt-12 ">
+    <Container categoryPage={categoryPage || false}>
       <>
         {children}
 

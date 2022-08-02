@@ -1,16 +1,13 @@
 // libraries
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
+import { QueryClient, dehydrate, useQuery } from "react-query";
 
 // helpers
 import {
-  getClient,
-  sanityClient,
-} from "../../utils/sanity/sanity.server";
-import {
-  indexQuery,
-  categoriesQuery,
-  postsByCategoryQuery,
+  allPosts,
+  allCategories,
+  allPostsByCategory,
 } from "../../utils/sanity/queries";
 
 // components
@@ -47,7 +44,7 @@ export interface PostType {
 }
 
 export interface BlogProps {
-  allPosts: PostType[];
+  allPosts: PostType[] | [];
   allCategories: Array<Record<string, string>>;
   allPostsByCategory: any;
 }
@@ -59,23 +56,35 @@ const StyledButtons = ({ children }: { children: React.ReactNode }) => (
 );
 const CarouselPost = ({ data }: { data: any }) => <Post top post={data} />;
 
-const Blog = ({
-  allPosts,
-  allCategories,
-  allPostsByCategory,
-}: BlogProps): JSX.Element => {
+const Blog = (): JSX.Element => {
+  const posts = useQuery<PostType[]>(["allPosts"], allPosts);
+  const categories = useQuery(["allCategories"], allCategories);
+  const postsByCategory = useQuery(["allPostsByCategory"], () =>
+    allPostsByCategory(categories.data)
+  );
+  const isLoading =
+    posts.isLoading || categories.isLoading || postsByCategory.isLoading;
+  const isError =
+    posts.isError || categories.isError || postsByCategory.isError;
+
+  if (isLoading) {
+    return <p>Cargando...</p>;
+  }
+  if (isError) {
+    return <p>Oh oh algo salio mal :c</p>;
+  }
   const Carousel = withCarousel(
     StyledCarousel,
-    allPosts.filter((post) => post.featured),
+    posts?.data?.filter((post) => post.featured),
     CarouselPost,
     StyledButtons
   );
 
   return (
     <IndexLayout
-      allPosts={allPosts}
-      allCategories={allCategories}
-      allPostsByCategory={allPostsByCategory}
+      allPosts={posts.data || []}
+      allCategories={categories.data}
+      allPostsByCategory={postsByCategory.data}
     >
       {/*Carousel */}
       <div className="mb-20">
@@ -86,33 +95,16 @@ const Blog = ({
   );
 };
 
-export const getStaticProps: GetStaticProps<{
-  allPosts: PostType[];
-  preview: boolean;
-  allCategories: Array<Record<string, string>>;
-  allPostsByCategory: Record<string, PostType[]>;
-}> = async ({ preview = false }) => {
-  const allPosts = await getClient(preview).fetch(indexQuery);
-  const allCategories = await getClient(preview).fetch(categoriesQuery);
+export const getStaticProps: GetStaticProps<any> = async () => {
+  const queryClient = new QueryClient();
 
-  // https://stackoverflow.com/questions/4215737/convert-array-to-object?page=1&tab=scoredesc#tab-top
-  // https://zellwk.com/blog/async-await-in-loops/
-  const allPostsByCategory = await allCategories.reduce(
-    async (
-      promisedPost: Promise<Record<string, PostType[]>>,
-      category: Record<string, string>
-    ) => {
-      const posts = await sanityClient.fetch(postsByCategoryQuery, {
-        categoryTitle: category.title,
-      });
-      const prevPosts = await promisedPost;
+  await queryClient.prefetchQuery(["allPosts"], allPosts);
 
-      return {
-        ...prevPosts,
-        [category.title]: posts,
-      };
-    },
-    {}
+  const categories = await allCategories();
+  await queryClient.setQueryData(["allCategories"], categories);
+
+  await queryClient.prefetchQuery(["allPostsByCategory"], () =>
+    allPostsByCategory(categories)
   );
 
   console.log("getStaticProps index");
@@ -120,10 +112,7 @@ export const getStaticProps: GetStaticProps<{
 
   return {
     props: {
-      allPosts,
-      allCategories,
-      allPostsByCategory,
-      preview,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
