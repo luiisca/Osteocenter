@@ -12,7 +12,15 @@ const Home: NextPage = (): JSX.Element => {
   return (
     <>
       <Head>
-        <title>{SITE_TITLE}</title>
+        <title>
+          Clínica ortopédica en Chimbote - Reserva tu cita en linea |{" "}
+          {SITE_TITLE}
+        </title>
+        <meta
+          name="description"
+          content="Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu medico todo desde nuestra plataforma en linea."
+          key="desc"
+        />
       </Head>
       <Main />
     </>

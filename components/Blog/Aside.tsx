@@ -21,7 +21,7 @@ const Aside = ({ recommendedPosts }: { recommendedPosts: any }) => {
             <LinkBox as="div" tw="relative first:pt-0">
               <Heading
                 secondary
-                as="h4"
+                as="h2"
                 tw="py-6 m-0 text-xl cursor-pointer  text-primary-shade-3 hover:text-primary"
               >
                 <NextLink href={`/blog/${post.slug}`} passHref key={v4()}>

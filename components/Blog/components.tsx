@@ -44,16 +44,17 @@ const components = {
     image: getImgComponent,
   },
   block: {
-    h2: ({ children }: any) => (
+    h1: ({ children }: any) => (
       <Heading
+        as="h1"
         secondary
         tw="mb-5 text-3xl text-primary-shade-3 md:mb-7 md:text-4xl"
       >
         {children}
       </Heading>
     ),
-    h3: ({ children }: any) => (
-      <Heading tertiary tw="mb-5 text-2xl text-primary-shade-3 md:mb-7">
+    h2: ({ children }: any) => (
+      <Heading as="h2" tertiary tw="mb-5 text-2xl text-primary-shade-3 md:mb-7">
         {children}
       </Heading>
     ),
