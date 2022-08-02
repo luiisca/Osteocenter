@@ -9,20 +9,24 @@ import { v4 } from "uuid";
 
 import { Button } from "../../components/Elements";
 
-const SlidePrevButton = () => {
+const SlidePrevButton = (props: { Custom?: any }) => {
   const swiper = useSwiper();
 
   const handlePrev = () => {
     swiper?.slidePrev();
   };
+  if (props.Custom)
+    return <props.Custom elType="icon" onClick={handlePrev} top prev />;
   return <Button elType="icon" onClick={handlePrev} top prev />;
 };
-const SlideNextButton = () => {
+const SlideNextButton = (props: { Custom?: any }) => {
   const swiper = useSwiper();
 
   const handleNext = () => {
     swiper?.slideNext();
   };
+  if (props.Custom)
+    return <props.Custom elType="icon" onClick={handleNext} top next />;
   return <Button elType="icon" onClick={handleNext} top next />;
 };
 
@@ -45,16 +49,18 @@ export const BaseContainer = styled.div(() => [
  * @param Container - custom div wrapper for whole carousel
  * @param elementsData - data for the displayed elements
  * @param Element - custom node genereated for each data element
- * @param Buttons - custom div wrapper for nav buttons
+ * @param ButtonsContainer - custom div wrapper for nav buttons
  */
 const withCarousel =
   (
     Container: any,
     elementsData: any,
     Element: any,
-    Buttons: any,
+    ButtonsContainer: any = null,
     slides: number = 1,
-    spaceBetween: number = 30
+    spaceBetween: number = 30,
+    CustomButton: any = null,
+    map: boolean = false
   ) =>
   /* eslint-disable react/display-name */
   () => {
@@ -73,10 +79,17 @@ const withCarousel =
               <Element data={elData} />
             </SwiperSlide>
           ))}
-          <Buttons>
-            <SlidePrevButton />
-            <SlideNextButton />
-          </Buttons>
+          {map ? (
+            <>
+              <SlidePrevButton Custom={CustomButton} />
+              <SlideNextButton Custom={CustomButton} />
+            </>
+          ) : (
+            <ButtonsContainer>
+              <SlidePrevButton Custom={CustomButton} />
+              <SlideNextButton Custom={CustomButton} />
+            </ButtonsContainer>
+          )}
         </Swiper>
       </Container>
     );

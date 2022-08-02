@@ -49,6 +49,7 @@ const Route = () => {
         ref.current.directionsRenderer?.setDirections(result);
       }
     });
+
     return (
       <>
         <MarkerContainer position={location.user} userLocation />
@@ -59,8 +60,7 @@ const Route = () => {
     removeDirections();
     centerBusiness();
 
-    return <></>;
-    // return <MarkerContainer position={BUSINESS_LOCATION} />;
+    return <MarkerContainer position={BUSINESS_LOCATION} />;
   }
 };
 

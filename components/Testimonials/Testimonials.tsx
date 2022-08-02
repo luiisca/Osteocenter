@@ -1,5 +1,5 @@
 import React from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, css } from "twin.macro";
 
 import { Heading } from "../Elements";
 import { BaseContainer } from "../BaseStyle";
@@ -9,7 +9,14 @@ import withCarousel, {
 } from "../withCarousel";
 
 const Container = tw(BaseContainer)`flex text-center items-center flex-col`;
-const StyledCarousel = styled(BaseCarouselContainer)(() => [tw`w-full`]);
+const StyledCarousel = styled(BaseCarouselContainer)(() => [
+  tw`w-full`,
+  css`
+    .swiper {
+      ${tw`flex flex-col justify-center`}
+    }
+  `,
+]);
 const CarouselTestimonial = ({ data }: { data: any }) => (
   <Testimonial
     name={data.author.name}
@@ -17,8 +24,10 @@ const CarouselTestimonial = ({ data }: { data: any }) => (
     img={data.author.picture}
   />
 );
-const CarouselButtons = tw.div`flex justify-center gap-6 md:gap-8`;
-
+const CarouselButtons = styled.div(() => [
+  tw`flex justify-center gap-6`,
+  tw`md:z-10 md:absolute md:max-w-[1000px] md:top-0 md:items-center md:justify-between md:w-full`,
+]);
 const testimonials: TestimonialType[] = [
   {
     message:

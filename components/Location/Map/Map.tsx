@@ -18,7 +18,6 @@ import useBreakPointChange from "@/components/hooks/useBreakPointChange";
 
 // components
 import MapButton from "./MapButton";
-import MarkerContainer from "./MarkerContainer";
 import Route from "./Route";
 import PlaceDetails from "./PlaceDetails";
 
@@ -105,7 +104,6 @@ const Map = (): JSX.Element => {
               }}
             >
               <ResizeStreetView />
-              <MarkerContainer />
               <Route />
               <DetailsGetter />
             </GoogleMap>

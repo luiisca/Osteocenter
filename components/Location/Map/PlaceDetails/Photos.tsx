@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import tw, { css, styled } from "twin.macro";
 import { v4 } from "uuid";
-
-import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
 import { loader } from "./helpers";
 import withCarousel from "@/components/withCarousel";
@@ -24,13 +22,32 @@ const StyledCarousel = styled.div(({ showBttns }: { showBttns: boolean }) => [
     button {
       display: ${showBttns ? "flex" : "none"};
     }
+    .swiper {
+      position: static;
+    }
   `,
 ]);
+
+const CarouselWrap = (props: {
+  children: React.ReactNode;
+  showCarBttns: boolean;
+  setShowCarBttns: any;
+}) => {
+  return (
+    <StyledCarousel
+      onMouseEnter={() => props.setShowCarBttns(true)}
+      onMouseLeave={() => props.setShowCarBttns(false)}
+      showBttns={props.showCarBttns}
+    >
+      {props.children}
+    </StyledCarousel>
+  );
+};
 const CarouselImg = (props: { data: any }) => (
   <ImgWrap key={v4()}>
     <Image
       loader={loader}
-      src={data.getUrl()}
+      src={props.data.getUrl()}
       alt="Zona cercana al 'Faro La Marina'"
       layout="responsive"
       objectFit="cover"
@@ -39,18 +56,13 @@ const CarouselImg = (props: { data: any }) => (
     />
   </ImgWrap>
 );
-// const Carousel = styled.div(({ crrPage }: { crrPage: number }) => [
-//   tw`flex w-full gap-4 transition-all`,
-//   css`
-//     transform: translate(calc(${-crrPage}*(100% + 16px)));
-//   `,
-// ]);
+
 const ArrowButton = styled(Button)(
-  ({ left, right }: { left?: boolean; right?: boolean }) => [
+  ({ prev, next }: { prev?: boolean; next?: boolean }) => [
     tw`w-[40px] h-[40px] text-xl`,
     tw`absolute z-[1] top-1/2 translate-y-[-50%]`,
-    left && tw`left-0 translate-x-[-25%]`,
-    right && tw`right-0 translate-x-[25%]`,
+    prev && tw`left-0 translate-x-[-25%]`,
+    next && tw`right-0 translate-x-[25%]`,
   ]
 );
 
@@ -61,12 +73,21 @@ const Photos = ({
 }): JSX.Element => {
   const [showCarBttns, setShowCarBttns] = useState(false);
   const Carousel = withCarousel(
-    StyledCarousel,
+    ({ children }: { children: React.ReactNode }) => (
+      <CarouselWrap
+        showCarBttns={showCarBttns}
+        setShowCarBttns={setShowCarBttns}
+      >
+        {children}
+      </CarouselWrap>
+    ),
     imgs,
     CarouselImg,
-    StyledButtons,
+    null,
     1,
-    10
+    10,
+    ArrowButton,
+    true
   );
 
   return (
@@ -79,42 +100,3 @@ const Photos = ({
 
 export default Photos;
 
-// <CarContainer
-//   onMouseEnter={() => setShowCarBttns(true)}
-//   onMouseLeave={() => setShowCarBttns(false)}
-//   showBttns={showCarBttns}
-// >
-//   {page != 0 && (
-//     <ArrowButton
-//       elType="icon"
-//       left
-//       onClick={() => dispatch({ type: "PREVIOUS_PAGE" })}
-//     >
-//       <BsArrowLeft />
-//     </ArrowButton>
-//   )}
-//   <Carousel crrPage={page}>
-//     {imgs.map((img) => (
-//       <ImgWrap key={v4()}>
-//         <Image
-//           loader={loader}
-//           src={img.getUrl()}
-//           alt="Zona cercana al 'Faro La Marina'"
-//           layout="responsive"
-//           objectFit="cover"
-//           width="1"
-//           height="1"
-//         />
-//       </ImgWrap>
-//     ))}
-//   </Carousel>
-//   {page != imgs.length - 1 && (
-//     <ArrowButton
-//       elType="icon"
-//       right
-//       onClick={() => dispatch({ type: "NEXT_PAGE" })}
-//     >
-//       <BsArrowRight />
-//     </ArrowButton>
-//   )}
-// </CarContainer>

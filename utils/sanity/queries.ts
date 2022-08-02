@@ -3,7 +3,7 @@ import {
   getClient,
   sanityClient,
 } from "@/utils/sanity/sanity.server";
-import type { PostType, BlogProps } from "pages/blog";
+import type { PostType } from "pages/blog";
 
 const postFields = `
   _id,
