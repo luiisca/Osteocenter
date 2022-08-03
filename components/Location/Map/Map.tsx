@@ -1,8 +1,7 @@
 // libraries
 import tw, { css, styled } from "twin.macro";
-import { animated } from "react-spring";
 import { useRef } from "react";
-import { useSpring, config } from "react-spring";
+import { useSpring, config, animated } from "react-spring";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 // icons

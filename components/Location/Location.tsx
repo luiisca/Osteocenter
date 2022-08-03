@@ -1,10 +1,15 @@
-import Map from "./Map";
 import tw from "twin.macro";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { BaseContainer } from "../BaseStyle";
 import { Heading } from "../Elements";
 
 import MapProvider from "./MapProvider";
 import LocationProvider from "./LocationProvider";
+
+const DynamicMap = dynamic(() => import("./Map"), {
+  suspense: true,
+});
 
 const Container = tw(BaseContainer)`text-center`;
 
@@ -20,7 +25,9 @@ const Location = (): JSX.Element => {
         </Heading>
 
         <MapProvider>
-          <Map />
+          <Suspense fallback={`Cargando mapa...`}>
+            <DynamicMap />
+          </Suspense>
         </MapProvider>
       </Container>
     </LocationProvider>

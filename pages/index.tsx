@@ -1,11 +1,9 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import type { NextPage } from "next";
-import { QueryClient, dehydrate } from "react-query";
 
 import Main from "../components/Sections/main";
 import { SITE_TITLE } from "@/static/ts/constants";
-import { sanityClient } from "@/utils/sanity/sanity.server";
 import { featuredPostsQuery } from "@/utils/sanity/queries";
 
 const Home: NextPage = (): JSX.Element => {
@@ -13,8 +11,8 @@ const Home: NextPage = (): JSX.Element => {
     <>
       <Head>
         <title>
-          Clínica ortopédica en Chimbote - Reserva tu cita en linea |{" "}
-          {SITE_TITLE}
+          {SITE_TITLE} | Clínica ortopédica en Chimbote - Reserva tu cita en
+          linea
         </title>
         <meta
           name="description"
@@ -28,6 +26,9 @@ const Home: NextPage = (): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps<any> = async () => {
+  const { QueryClient, dehydrate } = await import("react-query");
+  const { sanityClient } = await import("@/utils/sanity/sanity.server");
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(["featuredPosts"], () =>

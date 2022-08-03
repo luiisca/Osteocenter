@@ -7,7 +7,6 @@ import { v4 } from "uuid";
 import { Flex } from "@chakra-ui/react";
 import { BsWhatsapp, BsFacebook } from "react-icons/bs";
 import { usePreviewSubscription } from "../../utils/sanity/sanity";
-import { sanityClient, getClient } from "../../utils/sanity/sanity.server";
 import {
   postSlugsQuery,
   postQuery,
@@ -62,7 +61,7 @@ const Article = ({
     return <Loading>Loading…</Loading>;
   }
   return (
-    <Container tw="mt-12 md:mt-20">
+    <Container tw="mt-24 md:mt-40 blog-lg:mt-20">
       {/*Intro*/}
       <Post post={post} top intro />
       <Divider tw="my-9 md:mt-14 md:mb-24 blog-lg:mt-16 blog-lg:mb-14" />
@@ -135,6 +134,7 @@ export const getStaticProps: GetStaticProps<{
   relatedPosts: PostType[];
   featuredPosts: PostType[];
 }> = async ({ params, preview = false }) => {
+  const { getClient } = await import("../../utils/sanity/sanity.server");
   const postData = await getClient(preview).fetch(postQuery, {
     slug: params?.slug,
   });
@@ -154,6 +154,7 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { sanityClient } = await import("../../utils/sanity/sanity.server");
   const paths = await sanityClient.fetch(postSlugsQuery);
 
   return {

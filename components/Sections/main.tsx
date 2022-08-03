@@ -1,5 +1,7 @@
 import tw, { styled } from "twin.macro";
-import { Fragment } from "react";
+import dynamic from "next/dynamic";
+import { Fragment, Suspense } from "react";
+
 import Hero from "../Hero";
 import Values from "../Values";
 import Biography from "../Biography";
@@ -7,7 +9,10 @@ import Steps from "../Steps";
 import Testimonials from "../Testimonials";
 import Location from "../Location";
 import CallToAction from "../CallToAction";
-import Articles from "../Articles";
+
+const DynamicArticles = dynamic(() => import("../Articles"), {
+  suspense: true,
+});
 
 interface SectionProps {
   hero?: boolean;
@@ -48,7 +53,9 @@ const Main = (): JSX.Element => {
         <CallToAction />
       </Section>
       <Section>
-        <Articles />
+        <Suspense fallback={`Cargando articulos...`}>
+          <DynamicArticles />
+        </Suspense>
       </Section>
     </Fragment>
   );

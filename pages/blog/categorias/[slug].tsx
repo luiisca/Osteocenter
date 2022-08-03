@@ -9,7 +9,7 @@ import {
   allPostsByCategory,
   categoryTitle,
 } from "../../../utils/sanity/queries";
-import { QueryClient, dehydrate, useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 import type { PostType } from "pages/blog";
 
@@ -69,6 +69,7 @@ const Category = () => {
 };
 
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+  const { QueryClient, dehydrate } = await import("react-query");
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(["allPosts"], allPosts);

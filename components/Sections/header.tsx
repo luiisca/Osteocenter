@@ -22,7 +22,7 @@ const Logo = styled.a(() => [
 ]);
 
 const Overlay = styled.div(({ isOpen }: { isOpen: boolean }) => [
-  tw`left-0 absolute z-[-1] w-screen h-screen top-full bg-transparent`,
+  tw`left-0 absolute z-[-1] w-full h-screen top-full bg-transparent`,
   !isOpen && tw`hidden`,
 ]);
 
@@ -100,8 +100,13 @@ const Header = (): JSX.Element => {
         </div>
         <>
           <Overlay isOpen={isOpen} onClick={() => setOpen(false)} />
-          <Nav style={navSpring} setHeight={setNavHeight} device="mobile" toggle={setOpen}/>
-          <Nav device="desktop" toggle={setOpen}/>
+          <Nav
+            style={navSpring}
+            setHeight={setNavHeight}
+            device="mobile"
+            toggle={setOpen}
+          />
+          <Nav device="desktop" toggle={setOpen} />
         </>
       </>
     </Container>

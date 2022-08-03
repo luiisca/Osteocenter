@@ -1,7 +1,7 @@
 // libraries
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
-import { QueryClient, dehydrate, useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 // helpers
 import {
@@ -56,7 +56,7 @@ const StyledButtons = ({ children }: { children: React.ReactNode }) => (
 );
 const CarouselPost = ({ data }: { data: any }) => <Post top post={data} />;
 
-const Blog = (): JSX.Element => {
+const Blog = () => {
   const posts = useQuery<PostType[]>(["allPosts"], allPosts);
   const categories = useQuery(["allCategories"], allCategories);
   const postsByCategory = useQuery(["allPostsByCategory"], () =>
@@ -88,7 +88,9 @@ const Blog = (): JSX.Element => {
     >
       {/*Carousel */}
       <div className="mb-20">
-        <Heading as='div' subHeading>Lo ultimo</Heading>
+        <Heading as="div" subHeading>
+          Lo ultimo
+        </Heading>
         <Carousel />
       </div>
     </IndexLayout>
@@ -96,6 +98,7 @@ const Blog = (): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps<any> = async () => {
+  const { QueryClient, dehydrate } = await import("react-query");
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(["allPosts"], allPosts);
