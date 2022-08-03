@@ -61,7 +61,7 @@ const Article = ({
     return <Loading>Loading…</Loading>;
   }
   return (
-    <Container tw="mt-24 md:mt-40 blog-lg:mt-20">
+    <Container tw="mt-12 md:mt-20">
       {/*Intro*/}
       <Post post={post} top intro />
       <Divider tw="my-9 md:mt-14 md:mb-24 blog-lg:mt-16 blog-lg:mb-14" />

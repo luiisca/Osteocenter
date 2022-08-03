@@ -82,9 +82,9 @@ const Header = (): JSX.Element => {
   return (
     <Container ref={headerRef} style={headerSpring}>
       <>
-        <div className="flex items-center justify-between w-full h-full bg-primary-tint-3 lg:w-auto">
+        <div tw="flex items-center justify-between w-full h-full bg-primary-tint-3 lg:w-auto">
           <LogoWrap />
-          <div className="lg:hidden">
+          <div tw="lg:hidden">
             <Hamburger
               toggled={isOpen}
               toggle={setOpen}

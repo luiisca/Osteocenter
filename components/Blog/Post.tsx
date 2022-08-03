@@ -16,19 +16,23 @@ const StyledPostContainer = styled.div(
     top &&
       tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center hover:translate-y-0`,
     intro &&
-      tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px] hover:translate-y-0`,
+      tw`flex flex-col items-start blog-lg:items-center blog-lg:flex-row-reverse`,
+    // tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px] hover:translate-y-0`,
   ]
 );
 const StyledPostImgContainer = styled.div(({ intro }: { intro?: boolean }) => [
   tw`blog-lg:h-full`,
-  intro && tw`mb-7 blog-lg:mb-0`,
+  intro && tw`w-full mb-7 blog-lg:mb-0 blog-lg:w-1/2`,
+  // intro && tw`mb-7 blog-lg:mb-0`,
 ]);
 const StyledPostDetails = styled.div(
   ({ top, intro }: { top?: boolean; intro?: boolean }) => [
     tw`pt-5`,
     top && tw`py-5 blog-lg:pl-24 blog-lg:pb-20 md:pt-14 md:pb-7`,
     intro &&
-      tw`p-0 md:p-0 blog-lg:p-0 blog-lg:col-start-1 blog-lg:row-start-1 blog-lg:pl-0 blog-lg:mr-32`,
+      tw`p-0 md:p-0 blog-lg:p-0 blog-lg:w-1/2 blog-lg:pl-0 blog-lg:pr-32`,
+    // intro &&
+    //   tw`p-0 md:p-0 blog-lg:p-0 blog-lg:col-start-1 blog-lg:row-start-1 blog-lg:pl-0 blog-lg:mr-32`,
   ]
 );
 const StyledPostCategory = styled.div(
@@ -64,7 +68,7 @@ const Category = ({
         _hover={{
           textDecoration: "none",
         }}
-        className="relative z-10 hover:text-primary-shade-1"
+        tw="relative z-10 hover:text-primary-shade-1"
       >
         {post.category}
       </Link>
@@ -92,10 +96,10 @@ const Post = ({ post, top, intro }: Post) => {
             <Breadcrumb
               spacing="10px"
               separator={
-                <IoIosArrowForward className="text-[#757575] text-sm leading-6" />
+                <IoIosArrowForward tw="text-[#757575] text-sm leading-6" />
               }
             >
-              <BreadcrumbItem className="text-accent-555 hover:text-accent-333">
+              <BreadcrumbItem tw="text-accent-555 hover:text-accent-333">
                 <NextLink href="/blog" passHref>
                   <BreadcrumbLink
                     _hover={{
@@ -138,16 +142,16 @@ const Post = ({ post, top, intro }: Post) => {
           {/*Excerpt*/}
           {intro ? (
             <div>
-              <div className="text-sm text-[rgb(117, 117, 117)] mb-[10px] md:mb-[5px]">
+              <div tw="text-sm text-[rgb(117, 117, 117)] mb-[10px] md:mb-[5px]">
                 Actualizado el <Date dateString={post._updatedAt} />
               </div>
-              <Flex className="text-sm text-[rgb(195, 195, 194)]">
-                <AiOutlineClockCircle className="text-lg" />
-                <span className="ml-[10px]">5 min</span>
+              <Flex tw="text-sm text-[rgb(195, 195, 194)]">
+                <AiOutlineClockCircle tw="text-lg" />
+                <span tw="ml-[10px]">5 min</span>
               </Flex>
             </div>
           ) : (
-            <Text className="text-sm leading-6 blog-lg:mb-7 text-accent-555">
+            <Text tw="text-sm leading-6 blog-lg:mb-7 text-accent-555">
               {post.excerpt}
             </Text>
           )}

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Header from "./Sections/header";
 import Footer from "@/components/Sections/Footer";
 import tw from "twin.macro";
 
@@ -18,13 +17,12 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
   return (
     <div>
       <Head>
-        <link rel="icon" href="/favicon.svg" />
         <meta name="og:title" content={SITE_TITLE} />
         <meta name="description" content="Osteocenter" />
       </Head>
       <Main>
         {preview && <Alert preview={preview} />}
-        <Header />
+        {/*<Header />*/}
         {children}
         <Divider />
         <Footer />

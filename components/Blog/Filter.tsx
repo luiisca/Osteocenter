@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import tw, { styled} from "twin.macro";
+import tw, { styled } from "twin.macro";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { v4 } from "uuid";
 import type { PostType, BlogProps } from "../../pages/blog/index";
@@ -124,7 +124,7 @@ const Filter = ({
     <div tw="mb-24 md:mb-0">
       <Tabs index={tabIndex} onChange={setTabIndex} variant="unstyled">
         <TabList mb={7}>
-          <div className="flex flex-wrap justify-between w-full blog-lg:justify-start">
+          <div tw="flex flex-wrap justify-between w-full blog-lg:justify-start">
             {/*tabs DESKTOP*/}
             {categoryPage ? (
               <Title />
@@ -133,7 +133,7 @@ const Filter = ({
                 <Title />
               </Tab>
             )}
-            <div className="hidden blog-lg:flex">
+            <div tw="hidden blog-lg:flex">
               {allCategories.slice(1).map((cat, i) => (
                 <CategoryTitle
                   categoryPage={categoryPage}
@@ -160,10 +160,7 @@ const Filter = ({
         </TabList>
         {/*filtered articles*/}
         <TabPanels>
-          <TabPanel
-            p={0}
-            className="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
-          >
+          <TabPanel p={0} tw="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0">
             {allPosts.map((post) => (
               <Post key={v4()} post={post} />
             ))}
@@ -172,7 +169,7 @@ const Filter = ({
             <TabPanel
               p={0}
               key={v4()}
-              className="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
+              tw="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
             >
               {allPostsByCategory[cat.title].map((post: PostType) => (
                 <Post post={post} key={v4()} />

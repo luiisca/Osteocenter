@@ -50,7 +50,7 @@ export interface BlogProps {
 }
 
 const StyledButtons = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
+  <div tw="flex gap-3 blog-lg:absolute blog-lg:left-[55%] blog-lg:bottom-0 blog-lg:pl-24 blog-lg:mb-5 blog-lg:z-10">
     {children}
   </div>
 );
@@ -87,7 +87,7 @@ const Blog = () => {
       allPostsByCategory={postsByCategory.data}
     >
       {/*Carousel */}
-      <div className="mb-20">
+      <div tw="mb-20">
         <Heading as="div" subHeading>
           Lo ultimo
         </Heading>

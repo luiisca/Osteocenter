@@ -18,8 +18,8 @@ const HeroImage = () => {
         <Image
           priority={true}
           sizes="50vw"
-          width="400"
-          height="600"
+          width="384"
+          height="588"
           src="/img/hero.png"
           alt="Doctor cirujano Ronal Cadillo"
         />

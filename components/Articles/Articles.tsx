@@ -78,7 +78,7 @@ const CarouselArticle = ({ data }: { data: any }) => {
               _hover={{
                 textDecoration: "none",
               }}
-              className="relative z-10 hover:text-primary-shade-1"
+              tw="relative z-10 hover:text-primary-shade-1"
             >
               {data.category}
             </Link>

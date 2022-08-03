@@ -6,8 +6,6 @@ import { BaseContainer } from "../BaseStyle";
 import { Heading } from "../Elements";
 import Tabs from "./Tabs";
 
-import withScrollMotion from "@/components/HOCS/withScrollMotion";
-
 const imgSize: number = 368;
 
 const BackColor = tw(
@@ -78,4 +76,4 @@ const Biography = (): JSX.Element => {
   );
 };
 
-export default withScrollMotion({Element: Biography});
+export default Biography;

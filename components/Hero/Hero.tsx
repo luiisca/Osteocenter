@@ -4,15 +4,14 @@ import { BaseContainer } from "../BaseStyle";
 import { Button, Heading } from "../Elements";
 import CustomerPictures from "./CustomerPictures";
 import HeroImage from "./HeroImage";
-import withScrollMotion from "@/components/HOCS/withScrollMotion";
 
 const Container = tw(
   BaseContainer
-)`max-w-screen-2xl grid grid-cols-2 gap-2.5 items-center justify-items-end`;
+)`max-w-screen-2xl grid grid-cols-2 gap-2.5 items-center justify-items-end grid grid-cols-1 text-center blog-lg:text-left blog-lg:grid-cols-2 gap-16 blog-lg:gap-12`;
 
 const Hero = (): JSX.Element => {
   return (
-    <Container tw="grid grid-cols-1 text-center blog-lg:text-left blog-lg:grid-cols-2 gap-16 blog-lg:gap-12">
+    <Container>
       <div>
         <Heading primary>
           {" "}
@@ -36,4 +35,4 @@ const Hero = (): JSX.Element => {
   );
 };
 
-export default withScrollMotion({ Element: Hero });
+export default Hero;
