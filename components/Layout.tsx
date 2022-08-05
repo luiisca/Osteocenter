@@ -6,6 +6,7 @@ import Alert from "./Alert";
 import { SITE_TITLE } from "@/static/ts/constants";
 
 import { Divider } from "@/components/Blog/layout";
+import Header from '@/components/Sections/header'
 
 interface Props {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
       </Head>
       <Main>
         {preview && <Alert preview={preview} />}
-        {/*<Header />*/}
+        <Header />
         {children}
         <Divider />
         <Footer />
