@@ -1,15 +1,9 @@
 /** @type {import('next').NextConfig} */
 const path = require("path");
 
-const STUDIO_REWRITE = {
-  source: "/admin/:path*",
-  destination: "https://osteocenter-admin.sanity.studio",
-};
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  rewrites: () => [STUDIO_REWRITE],
   experimental: {
     images: {
       allowFutureImage: true,
@@ -28,6 +22,11 @@ const nextConfig = {
       {
         source: "/blog/categorias",
         destination: "/blog/categorias/sintomas",
+        permanent: true,
+      },
+      {
+        source: "/admin/:path*",
+        destination: "https://osteocenter-admin.sanity.studio",
         permanent: true,
       },
     ];
