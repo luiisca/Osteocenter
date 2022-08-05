@@ -19,7 +19,6 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
     <div>
       <Head>
         <meta name="og:title" content={SITE_TITLE} />
-        <meta name="description" content="Osteocenter" />
       </Head>
       <Main>
         {preview && <Alert preview={preview} />}
