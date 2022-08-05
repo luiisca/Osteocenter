@@ -57,11 +57,16 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/favicons/favicon-16x16.png"
           />
-          <link rel="manifest" href="/site.webmanifest" />
+          <link rel="manifest" href="/favicons/site.webmanifest" />
           <meta name="apple-mobile-web-app-title" content="Osteocenter" />
           <meta name="application-name" content="Osteocenter" />
           <meta name="msapplication-TileColor" content="#f1f9ff" />
           <meta name="theme-color" content="#f1f9ff" />
+          <meta
+            name="keywords"
+            content="Traumatologia, Ortopedia, Cita medica online, Telemedicina, Chimbote, Peru, Artroscopia, Consulta medica presencial, atencion a domicilio, terapia con ondas de choque, cirugia, tratamiento de secuelas y deformidades, ortopedia infantil, lesiones deportivas"
+          />
+          <meta name="author" content="Dr. Ronal Cadillo Medina" />
         </Head>
         <body>
           <Main />

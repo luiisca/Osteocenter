@@ -1,7 +1,10 @@
-# Block all crawlers for /admin
-User-agent: *
-Disallow: /admin
-
-# Allow all crawlers
+# *
 User-agent: *
 Allow: /
+
+# Host
+Host: https://osteocenter.vercel.app/
+
+# Sitemaps
+Sitemap: https://osteocenter.vercel.app/sitemap.xml
+Sitemap: https://osteocenter.vercel.app/server-sitemap.xml

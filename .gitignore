@@ -32,3 +32,6 @@ example-tailwind.config.js
 
 # vercel
 .vercel
+
+/public/robots.txt
+/public/sitemap.xml

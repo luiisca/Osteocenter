@@ -59,6 +59,16 @@ export const postBySlugQuery = `
   ${postFields}
 }
 `;
+export const sitemapPostsQuery = `
+  *[_type == "post"] {
+    title, _updatedAt
+  }
+`
+export const sitemapCategoriesQuery = `
+  *[_type == "category"] {
+    title, _updatedAt
+  }
+`
 
 export const allPosts = async () =>
   overlayDrafts(await sanityClient.fetch(indexQuery));
