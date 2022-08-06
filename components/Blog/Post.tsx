@@ -16,8 +16,7 @@ const StyledPostContainer = styled.div(
     top &&
       tw`blog-lg:grid-cols-[55% 45%] blog-lg:grid-rows-1 h-full items-center hover:translate-y-0`,
     intro &&
-      tw`flex flex-col items-start blog-lg:items-center blog-lg:flex-row-reverse`,
-    // tw`blog-lg:grid-cols-2 blog-lg:min-h-[350px] lg:min-h-[410px] hover:translate-y-0`,
+      tw`flex flex-col items-start blog-lg:items-center blog-lg:flex-row-reverse blog-lg:h-[350px] lg:h-[410px]! hover:translate-y-0`,
   ]
 );
 const StyledPostImgContainer = styled.div(({ intro }: { intro?: boolean }) => [

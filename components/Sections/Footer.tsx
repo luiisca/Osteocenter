@@ -12,7 +12,7 @@ import {
   PHONE1,
   PHONE2,
   MAIL,
-  ADRESS,
+  ADDRESS,
   getWhatsappLink,
 } from "@/static/ts/constants";
 
@@ -117,16 +117,12 @@ const Footer = () => {
       <ContactColumn>
         <Title>Contacto</Title>
         <address tw="text-base leading-[1.6] not-italic ">
-          <p tw="mb-6">
-            {ADDRESS}
-          </p>
+          <p tw="mb-6">{ADDRESS}</p>
           <p>
             <Link href={`tel:${PHONE1}`}>992-569-407</Link>
             {" / "}
             <Link href={`tel:${PHONE2}`}>969-780-055</Link>
-            <Link href={MAIL}>
-              osteocenter.admi@gmail.com
-            </Link>
+            <Link href={MAIL}>osteocenter.admi@gmail.com</Link>
           </p>
         </address>
       </ContactColumn>

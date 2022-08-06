@@ -23,13 +23,12 @@ const Text = styled.p(() => [
   tw`md:text-lg md:leading-[1.875rem] md:mb-7`,
 ]);
 
-export const getImgURL = (value) => {
+export const getImgURL = (value: any) => {
   const { width, height } = getImageDimensions(value);
-  return urlForImage(value).size(width, height).url()
-}
+  return urlForImage(value).size(width, height).url();
+};
 
 export const getImgComponent = ({ value, isInline, top, intro }: any) => {
-
   return (
     <ImgWrap isInline={isInline} top={top} intro={intro}>
       <Image

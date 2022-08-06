@@ -43,8 +43,8 @@ export default class MyDocument extends Document {
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Lora&display=swap"
-            media="print"
-            onLoad="this.media='all'"
+            // media="print"
+            // onLoad="this.media='all'"
             rel="stylesheet"
           />
         </Head>
