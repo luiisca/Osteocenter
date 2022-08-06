@@ -59,6 +59,8 @@ const Map = (): JSX.Element => {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
     libraries: LIBRARIES,
+    region: "PE",
+    language: "es",
   });
   const { map, dispatchMap } = useMapContext();
   const isMobile = useIsMobile();

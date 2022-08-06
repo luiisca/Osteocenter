@@ -21,7 +21,7 @@ const Reviews = ({
 }): JSX.Element => {
   return (
     <div>
-      <Title>Reviews</Title>
+      <Title>Críticas</Title>
       {reviews.map((review, i) => (
         <>
           <Review key={v4()}>

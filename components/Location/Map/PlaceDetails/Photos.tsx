@@ -92,7 +92,7 @@ const Photos = ({
 
   return (
     <Container>
-      <Title>Photos</Title>
+      <Title>Fotos</Title>
       <Carousel />
     </Container>
   );
