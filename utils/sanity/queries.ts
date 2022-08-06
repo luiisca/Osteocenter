@@ -7,6 +7,7 @@ import type { PostType } from "pages/blog";
 
 const postFields = `
   _id,
+  _updatedAt,
   title,
   excerpt,
   'category': category->title,

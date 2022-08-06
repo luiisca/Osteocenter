@@ -11,7 +11,9 @@ import {
 import { useQuery } from "react-query";
 
 import type { PostType } from "pages/blog";
+import { WEB_LINK } from "@/static/ts/constants";
 
+import SEO from "@/components/SEO";
 import IndexLayout from "../../../components/Blog/IndexLayout";
 import { Heading } from "../../../components/Elements";
 import withScrollMotion from "@/components/HOCS/withScrollMotion";
@@ -45,14 +47,20 @@ const Category = ({ title }: any) => {
   const AnimatedTitle = withScrollMotion({ Element: Title });
 
   return (
-    <IndexLayout
-      allPosts={posts.data || []}
-      allCategories={categories.data}
-      allPostsByCategory={postsByCategory.data}
-      categoryPage
+    <SEO
+      title={title}
+      image={`${WEB_LINK}/img/osteocenter-logo.png`}
+      date={"2022-08-06T15:41:12Z"}
     >
-      <AnimatedTitle>{title}</AnimatedTitle>
-    </IndexLayout>
+      <IndexLayout
+        allPosts={posts.data || []}
+        allCategories={categories.data}
+        allPostsByCategory={postsByCategory.data}
+        categoryPage
+      >
+        <AnimatedTitle>{title}</AnimatedTitle>
+      </IndexLayout>
+    </SEO>
   );
 };
 

@@ -14,9 +14,7 @@ const SEO = ({
   router,
   children,
 }: any) => {
-  const domain = "https://osteocenter.vercel.app";
   const url = router && router.asPath ? router.asPath : undefined;
-  const featuredImage = domain + image;
 
   return (
     <>
@@ -64,9 +62,9 @@ const SEO = ({
         <meta content={title} property="og:title" />
         <meta content={description} property="og:description" />
         <meta content={url} property="og:url" />
-        {featuredImage && (
+        {image && (
           <>
-            <meta content={featuredImage} property="og:image" />
+            <meta content={image} property="og:image" />
             <meta content={description} property="og:image:alt" />
           </>
         )}
@@ -90,7 +88,7 @@ const SEO = ({
           dateModified={formatDate(date)}
           datePublished={formatDate(date)}
           description={description}
-          images={[featuredImage]}
+          images={[image]}
           publisherLogo="https://osteocenter.vercel.app/favicons/android-chrome-192x192.png"
           publisherName="Clinica ortopédica en chimbote - Osteocenter"
           title={title}

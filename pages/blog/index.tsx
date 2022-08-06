@@ -2,6 +2,7 @@
 import { GetStaticProps } from "next";
 import tw, { styled, css } from "twin.macro";
 import { useQuery } from "react-query";
+import { ArticleJsonLd } from "next-seo";
 
 // helpers
 import {
@@ -9,8 +10,11 @@ import {
   allCategories,
   allPostsByCategory,
 } from "../../utils/sanity/queries";
+import { getImgURL } from "@/components/Blog/components";
+import { WEB_LINK, AUTHOR } from "@/static/ts/constants";
 
 // components
+import SEO from "@/components/SEO";
 import withCarousel from "@/components/HOCS/withCarousel";
 import { Heading } from "../../components/Elements";
 import Post from "../../components/Blog/Post";
@@ -41,6 +45,7 @@ export interface PostType {
   coverImage: any;
   featured: boolean;
   slug: string;
+  _updatedAt: string;
 }
 
 export interface BlogProps {
@@ -81,19 +86,40 @@ const Blog = () => {
   );
 
   return (
-    <IndexLayout
-      allPosts={posts.data || []}
-      allCategories={categories.data}
-      allPostsByCategory={postsByCategory.data}
-    >
-      {/*Carousel */}
-      <div tw="mb-20">
-        <Heading as="div" subHeading>
-          Lo ultimo
-        </Heading>
-        <Carousel />
-      </div>
-    </IndexLayout>
+    <>
+      <SEO
+        description={
+          "Mantente informado sobre tu salud con el blog de Osteocenter"
+        }
+        image={`${WEB_LINK}/img/osteocenter-logo.png`}
+        title={"Osteocenter blog"}
+        keywords={"Blog, medicina, Traumatologia, Ortopedia"}
+      >
+        <IndexLayout
+          allPosts={posts.data || []}
+          allCategories={categories.data}
+          allPostsByCategory={postsByCategory.data}
+        >
+          {/*Carousel */}
+          <div tw="mb-20">
+            <Heading as="div" subHeading>
+              Lo ultimo
+            </Heading>
+            <Carousel />
+          </div>
+        </IndexLayout>
+      </SEO>
+      <ArticleJsonLd
+        type="Blog"
+        url="https://osteocenter.vercel.app/blog"
+        title="Osteocenter blog"
+        images={posts?.data?.map((post) => getImgURL(post.coverImage)) || []}
+        datePublished={"2022-08-06T15:41:12Z"}
+        dateModified={"2022-08-06T15:41:12Z"}
+        authorName={AUTHOR}
+        description="Mantente informado sobre tu salud con el blog de Osteocenter"
+      />
+    </>
   );
 };
 
