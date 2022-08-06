@@ -60,7 +60,7 @@ const withCarousel =
     slides: number = 1,
     spaceBetween: number = 30,
     CustomButton: any = null,
-    map: boolean = false
+    custom: boolean = false
   ) =>
   /* eslint-disable react/display-name */
   () => {
@@ -79,7 +79,7 @@ const withCarousel =
               <Element data={elData} />
             </SwiperSlide>
           ))}
-          {map ? (
+          {custom ? (
             <>
               <SlidePrevButton Custom={CustomButton} />
               <SlideNextButton Custom={CustomButton} />

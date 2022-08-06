@@ -22,7 +22,7 @@ const Text = () => (
       atencion que mereces lo antes posible.
     </p>
     <Button elType="text" cta href="#">
-      Pide una cita
+      Reserva una cita
     </Button>
   </div>
 );

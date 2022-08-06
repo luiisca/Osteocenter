@@ -56,7 +56,7 @@ const Nav = ({
         <div tw="h-[1.2px] bg-[#e3e3e2] mt-5 mb-10 lg:hidden" />
         <li tw="pb-5 lg:pb-0" onClick={() => toggle(false)}>
           <Button elType="text" nav cta href="#">
-            Pide una cita
+            Reserva una cita
           </Button>
         </li>
         <NavLink toggle={toggle}>Entrar</NavLink>

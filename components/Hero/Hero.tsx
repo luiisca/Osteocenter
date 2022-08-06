@@ -23,7 +23,7 @@ const Hero = (): JSX.Element => {
           y músculo esquelético.
         </p>
         <Button elType="text" cta hero href="#" tw="mr-4 text-lg">
-          Pide una cita
+          Reserva una cita
         </Button>
         <Button elType="text" outline href="#biography">
           Más sobre mí &darr;

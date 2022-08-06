@@ -1,6 +1,7 @@
 import React from "react";
 import tw, { styled, css } from "twin.macro";
 
+import { Button } from "../Elements";
 import { Heading } from "../Elements";
 import { BaseContainer } from "../BaseStyle";
 import Testimonial, { TestimonialType } from "./Testimonial";
@@ -10,10 +11,10 @@ import withCarousel, {
 
 const Container = tw(BaseContainer)`flex text-center items-center flex-col`;
 const StyledCarousel = styled(BaseCarouselContainer)(() => [
-  tw`w-full`,
+  tw`relative w-full`,
   css`
     .swiper {
-      ${tw`flex flex-col justify-center`}
+      ${tw`flex flex-col justify-center md:max-w-[1000px] items-center`}
     }
   `,
 ]);
@@ -24,10 +25,15 @@ const CarouselTestimonial = ({ data }: { data: any }) => (
     img={data.author.picture}
   />
 );
-const CarouselButtons = styled.div(() => [
-  tw`flex justify-center gap-6`,
-  tw`md:z-10 md:absolute md:max-w-[1000px] md:top-0 md:items-center md:justify-between md:w-full`,
-]);
+
+const ArrowButton = styled(Button)(
+  ({ prev, next }: { prev?: boolean; next?: boolean }) => [
+    tw`md:absolute md:z-10 md:top-1/2 md:translate-y-[-70%]`,
+    prev && tw`translate-x-[-60%] md:left-[50px]`,
+    next && tw`absolute bottom-0 translate-x-[60%] md:right-[50px]`,
+  ]
+);
+
 const testimonials: TestimonialType[] = [
   {
     message:
@@ -60,7 +66,11 @@ const Testimonials = (): JSX.Element => {
     StyledCarousel,
     testimonials,
     CarouselTestimonial,
-    CarouselButtons
+    null,
+    1,
+    30,
+    ArrowButton,
+    true
   );
 
   return (
