@@ -16,9 +16,9 @@ import {
 import type { PostType } from "./index";
 import { FacebookShareButton, WhatsappShareButton } from "react-share";
 
-import {getImgURL} from '@/components/Blog/components'
+import { getImgURL } from "@/components/Blog/components";
 
-import SEO from '@/components/SEO'
+import SEO from "@/components/SEO";
 import components from "../../components/Blog/components";
 import { Heading } from "../../components/Elements";
 import { BaseContainer } from "../../components/BaseStyle";
@@ -65,13 +65,13 @@ const Article = ({
   }
   return (
     <>
-    <SEO
-      description={post?.excerpt}
-      title={post?.title}
-      image={getImgURL(post?.coverImage)}
-      keywords={`${post?.category}, Medicina, Traumatologia, Ortopedia`}
-      date={post?._updatedAt}
-    >
+      <SEO
+        description={post?.excerpt}
+        title={post?.title}
+        image={getImgURL(post?.coverImage)}
+        keywords={`${post?.category}, Medicina, Traumatologia, Ortopedia`}
+        date={post?._updatedAt}
+      >
         <Container tw="mt-12 md:mt-20">
           {/*Intro*/}
           <Post post={post} top intro />
@@ -115,21 +115,22 @@ const Article = ({
 
           <Divider tw="my-20 md:my-24 blog-lg:my-[7.5rem]" />
           {/*Related Posts*/}
-          <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
-            <Heading
-              tertiary
-              as="h3"
-              tw="text-primary-shade-3 text-2xl mb-12 md:leading-[2.125rem]"
-            >
-              Artículos Relacionados
-            </Heading>
-            <div tw="grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-7 blog-lg:grid-cols-3 blog-lg:gap-x-14 blog-lg:gap-y-4">
-              {relatedPosts.map((related: any) => {
-                if (related._id === post._id) return;
-                return <Post post={related} key={v4()} />;
-              })}
+          {relatedPosts.length > 0 && (
+            <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
+              <Heading
+                tertiary
+                as="h3"
+                tw="text-primary-shade-3 text-2xl mb-12 md:leading-[2.125rem]"
+              >
+                Artículos Relacionados
+              </Heading>
+              <div tw="grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-7 blog-lg:grid-cols-3 blog-lg:gap-x-14 blog-lg:gap-y-4">
+                {relatedPosts.map((related: any) => {
+                  return <Post post={related} key={v4()} />;
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
           {/*Recommended Posts*/}
           <div tw="md:hidden mb-20 ">
@@ -152,6 +153,7 @@ export const getStaticProps: GetStaticProps<{
     slug: params?.slug,
   });
   const relatedPosts = await getClient(preview).fetch(postsByCategoryQuery, {
+    postTitle: postData?.title,
     categoryTitle: postData?.category,
   });
   const featuredPosts = await getClient(preview).fetch(featuredPostsQuery);

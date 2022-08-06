@@ -44,8 +44,8 @@ const Home: NextPage = (): JSX.Element => {
           "Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu medico todo desde nuestra plataforma en linea."
         }
         image={`${WEB_LINK}/img/osteocenter-logo.png`}
-        title={`${SITE_TITLE} | Clínica ortopédica en Chimbote - Reserva tu cita en
-          linea`}
+        title={`Traumatología y ortopedia en Chimbote - Reserva tu cita en
+          linea | ${SITE_TITLE}`}
         keywords={
           "Medicina, Traumatologia, Ortopedia, Cita medica online, Telemedicina, Chimbote, Peru, Artroscopia, Consulta medica presencial, atencion a domicilio, terapia con ondas de choque, cirugia, tratamiento de secuelas y deformidades, ortopedia infantil, lesiones deportivas"
         }

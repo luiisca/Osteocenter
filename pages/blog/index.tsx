@@ -112,7 +112,7 @@ const Blog = () => {
       <ArticleJsonLd
         type="Blog"
         url="https://osteocenter.vercel.app/blog"
-        title="Osteocenter blog"
+        title="Blog | Osteocenter"
         images={posts?.data?.map((post) => getImgURL(post.coverImage)) || []}
         datePublished={"2022-08-06T15:41:12Z"}
         dateModified={"2022-08-06T15:41:12Z"}

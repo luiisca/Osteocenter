@@ -37,7 +37,7 @@ export const categoryBySlugQuery = `
   *[_type == 'category' && slug.current == $slug].title
 `;
 export const postsByCategoryQuery = `
-  *[_type == 'post' && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
+  *[_type == 'post' && title !== $postTitle && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
     ${postFields}
   }
 `;
@@ -64,12 +64,12 @@ export const sitemapPostsQuery = `
   *[_type == "post"] {
     title, _updatedAt
   }
-`
+`;
 export const sitemapCategoriesQuery = `
   *[_type == "category"] {
     title, _updatedAt
   }
-`
+`;
 
 export const allPosts = async () =>
   overlayDrafts(await sanityClient.fetch(indexQuery));
