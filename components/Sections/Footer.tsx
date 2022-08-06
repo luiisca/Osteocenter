@@ -7,7 +7,14 @@ import useIsMobile from "@/components/hooks/useIsMobile";
 
 import { BaseContainer, BaseLink } from "@/components/BaseStyle";
 import { IconWrap } from "pages/blog/[slug]";
-import { FACEBOOK_PAGE, getWhatsappLink } from "@/static/ts/constants";
+import {
+  FACEBOOK_PAGE,
+  PHONE1,
+  PHONE2,
+  MAIL,
+  ADRESS,
+  getWhatsappLink,
+} from "@/static/ts/constants";
 
 const LogoWrapper = tw.a`block relative w-full max-w-[250px]`;
 const Title = tw.p`text-lg mb-10 font-medium`;
@@ -111,14 +118,13 @@ const Footer = () => {
         <Title>Contacto</Title>
         <address tw="text-base leading-[1.6] not-italic ">
           <p tw="mb-6">
-            Clínica SantaMaría, Elías Aguirre #761- interior 1er piso, 2do
-            Pabellón 02711 Chimbote, Perú
+            {ADDRESS}
           </p>
           <p>
-            <Link href="tel:+51992569407">992-569-407</Link>
+            <Link href={`tel:${PHONE1}`}>992-569-407</Link>
             {" / "}
-            <Link href="tel:+51969780055">969-780-055</Link>
-            <Link href="mailto:osteocenter.admi@gmail.com">
+            <Link href={`tel:${PHONE2}`}>969-780-055</Link>
+            <Link href={MAIL}>
               osteocenter.admi@gmail.com
             </Link>
           </p>

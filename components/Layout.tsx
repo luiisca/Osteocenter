@@ -1,12 +1,9 @@
-import Head from "next/head";
-import Footer from "@/components/Sections/Footer";
 import tw from "twin.macro";
 
+import Header from "@/components/Sections/header";
+import Footer from "@/components/Sections/Footer";
 import Alert from "./Alert";
-import { SITE_TITLE } from "@/static/ts/constants";
-
 import { Divider } from "@/components/Blog/layout";
-import Header from '@/components/Sections/header'
 
 interface Props {
   children: React.ReactNode;
@@ -17,9 +14,6 @@ const Main = tw.main`before:bg-primary-tint-3 before:w-full before:h-24 before:z
 const Layout = ({ preview, children }: Props): JSX.Element => {
   return (
     <div>
-      <Head>
-        <meta name="og:title" content={SITE_TITLE} />
-      </Head>
       <Main>
         {preview && <Alert preview={preview} />}
         <Header />

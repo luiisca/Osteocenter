@@ -1,12 +1,27 @@
 import { format, parse, setGlobalDateI18n } from "fecha";
 
 setGlobalDateI18n({
-  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-})
+  monthNames: [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ],
+});
+
+export const formatDate = (dateString: any) => {
+  const date = parse(dateString, "isoDateTime")!;
+  return format(date, "DD [de] MMMM, YYYY");
+};
 
 export default function Date({ dateString }: { dateString: string }) {
-  const date = parse(dateString, "isoDateTime")!;
-  return (
-    <time dateTime={dateString}>{format(date, "DD [de] MMMM, YYYY")}</time>
-  );
+  return <time dateTime={dateString}>{formatDate(dateString)}</time>;
 }

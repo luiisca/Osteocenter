@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
 import { useScroll } from "framer-motion";
+import { LogoJsonLd } from "next-seo";
 
 import tw, { styled, css, theme } from "twin.macro";
 import Nav from "../Nav";
@@ -27,19 +28,25 @@ const Overlay = styled.div(({ isOpen }: { isOpen: boolean }) => [
 ]);
 
 const LogoWrap = () => (
-  <Link href="/" passHref>
-    <Logo>
-      <Image
-        priority={true}
-        layout="responsive"
-        width="360"
-        height="77"
-        sizes="80vw"
-        alt="osteocenter logo"
-        src="/img/osteocenter-logo.png"
-      />
-    </Logo>
-  </Link>
+  <>
+    <Link href="/" passHref>
+      <Logo>
+        <Image
+          priority={true}
+          layout="responsive"
+          width="360"
+          height="77"
+          sizes="80vw"
+          alt="osteocenter logo"
+          src="/img/osteocenter-logo.png"
+        />
+      </Logo>
+    </Link>
+    <LogoJsonLd
+      logo="http://osteocenter.vercel.app/img/osteocenter-logo.png"
+      url="http://osteocenter.vercel.app"
+    />
+  </>
 );
 const Header = (): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(undefined as unknown as boolean);

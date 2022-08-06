@@ -34,39 +34,19 @@ export default class MyDocument extends Document {
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
-            crossOrigin="true"
+            crossOrigin=""
+          />
+          <link
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Lora&display=swap"
+            rel="preload"
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Lora&display=swap"
+            media="print"
+            onLoad="this.media='all'"
             rel="stylesheet"
           />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/favicons/apple-touch-icon.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicons/favicon-32x32.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/favicons/favicon-16x16.png"
-          />
-          <link rel="manifest" href="/favicons/site.webmanifest" />
-          <meta name="apple-mobile-web-app-title" content="Osteocenter" />
-          <meta name="application-name" content="Osteocenter" />
-          <meta name="msapplication-TileColor" content="#f1f9ff" />
-          <meta name="theme-color" content="#f1f9ff" />
-          <meta
-            name="keywords"
-            content="Traumatologia, Ortopedia, Cita medica online, Telemedicina, Chimbote, Peru, Artroscopia, Consulta medica presencial, atencion a domicilio, terapia con ondas de choque, cirugia, tratamiento de secuelas y deformidades, ortopedia infantil, lesiones deportivas"
-          />
-          <meta name="author" content="Dr. Ronal Cadillo Medina" />
         </Head>
         <body>
           <Main />
