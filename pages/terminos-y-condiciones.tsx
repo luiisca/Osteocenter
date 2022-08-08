@@ -1,47 +1,23 @@
-import NextLink from "next/link";
-import BaseHeading from "@/components/Elements/Heading";
-import { BaseContainer } from "@/components/BaseStyle";
-import tw, { styled } from "twin.macro";
-
-const Heading = tw(BaseHeading)`font-sans text-xl`;
-const Text = styled.p(() => [
-  tw`text-[#525252] text-[.95rem] leading-[1.575rem] mb-5 tracking-[0.02px] font-normal max-w-[75ch]`,
-  tw`md:text-lg md:leading-[1.875rem] md:mb-7`,
-]);
-const Bold = (props: { children: React.ReactNode }) => (
-  <Text as="span" tw="text-accent-333">
-    {props.children}
-  </Text>
-);
-const Link = (props: { children: string }) => (
-  <Text
-    as="span"
-    tw="text-primary-shade-2 underline hover:text-primary blog-lg:no-underline"
-  >
-    <NextLink href={props.children}>{props.children}</NextLink>
-  </Text>
-);
-const Clause = (props: {
-  title: string;
-  content: string | React.ReactNode;
-}) => (
-  <div>
-    <Heading secondary as="h2">
-      {props.title}
-    </Heading>
-    <div>{props.content}</div>
-  </div>
-);
+import {
+  Container,
+  Heading,
+  List,
+  Text,
+  Bold,
+  Link,
+  Clause,
+} from "@/components/legal";
+import tw from "twin.macro";
+import { WEB_LINK } from "@/static/ts/constants";
+const StyledDate = tw(Text)`text-sm text-[rgb(195, 195, 194)]`;
 
 const TOS = () => (
-  <BaseContainer as="article" tw="mt-12 md:mt-20">
+  <Container as="article">
     <div>
       <Heading primary tw="text-3xl mb-4">
         Términos de servicio
       </Heading>
-      <Text tw="text-sm text-[rgb(195, 195, 194)]">
-        Última actualización 07 de agosto de 2022
-      </Text>
+      <StyledDate>Última actualización 07 de agosto de 2022</StyledDate>
     </div>
     <Clause
       title={"1. ACUERDO DE TÉRMINOS"}
@@ -50,15 +26,16 @@ const TOS = () => (
           <Text>
             Estos Términos de uso constituyen un acuerdo legalmente vinculante
             realizado entre usted, ya sea personalmente o en nombre de una
-            entidad (&quot;usted&quot;) y OSTEOCENTER (<Bold>&quot;Compañía&quot;</Bold>,{" "}
-            <Bold>&quot;nosotros&quot;</Bold>, <Bold>&quot;nos&quot;</Bold> o <Bold>&quot;nuestro&quot;</Bold>
+            entidad (&quot;usted&quot;) y OSTEOCENTER (
+            <Bold>&quot;Compañía&quot;</Bold>, <Bold>&quot;nosotros&quot;</Bold>
+            , <Bold>&quot;nos&quot;</Bold> o <Bold>&quot;nuestro&quot;</Bold>
             ), con respecto a su acceso y el uso del sitio web
-            <Link>https://osteocenter.vercel.app</Link>, así como cualquier otra
-            forma de medios, canal de medios, sitio web móvil o aplicación móvil
-            relacionada, vinculada o conectada de otro modo al mismo
-            (colectivamente, el &quot;Sitio&quot;). Estamos registrados en Perú y tenemos
-            nuestro oficina en Clínica SantaMaría, Elías Aguirre #761- interior
-            1er piso, 2do Pabellón, Chimbote, Perú, Chimbote, Santa 02711. Usted
+            <Link>{WEB_LINK}</Link>, así como cualquier otra forma de medios,
+            canal de medios, sitio web móvil o aplicación móvil relacionada,
+            vinculada o conectada de otro modo al mismo (colectivamente, el
+            &quot;Sitio&quot;). Estamos registrados en Perú y tenemos nuestro
+            oficina en Clínica SantaMaría, Elías Aguirre #761- interior 1er
+            piso, 2do Pabellón, Chimbote, Perú, Chimbote, Santa 02711. Usted
             acepta que al acceder al Sitio, ha leído, entendido y acordó estar
             sujeto a todos estos Términos de uso. SI NO ESTÁ DE ACUERDO CON
             TODOS ESTOS TÉRMINOS DE USO, ENTONCES SE LE PROHÍBE EXPRESAMENTE
@@ -71,10 +48,10 @@ const TOS = () => (
             nuestro exclusivo criterio, de realizar cambios o modificaciones a
             estos Términos de uso en cualquier momento y por cualquier motivo.
             Le avisaremos sobre cualquier cambio actualizando la fecha de
-            &quot;Última actualización&quot; de estos Términos de uso, y usted renuncia a
-            cualquier derecho a recibir un aviso específico de cada cambio.
-            Asegúrese de verificar los Términos aplicables cada vez que use
-            nuestro Sitio para que comprenda qué Términos se aplican. Usted
+            &quot;Última actualización&quot; de estos Términos de uso, y usted
+            renuncia a cualquier derecho a recibir un aviso específico de cada
+            cambio. Asegúrese de verificar los Términos aplicables cada vez que
+            use nuestro Sitio para que comprenda qué Términos se aplican. Usted
             estará sujeto a, y se considerará que ha sido informado y aceptado,
             los cambios en los Términos de uso revisados por su uso continuado
             del Sitio después de la fecha de publicación de dichos Términos de
@@ -107,21 +84,22 @@ const TOS = () => (
             nuestra propiedad y todo el código fuente, las bases de datos, la
             funcionalidad, el software, los diseños de sitios web, el audio, el
             video, el texto, las fotografías y los gráficos del Sitio
-            (colectivamente, el &quot;Contenido&quot;) y las marcas registradas, el
-            servicio las marcas y los logotipos que contiene (las &quot;Marcas&quot;) son
-            de nuestra propiedad o están controlados por nosotros o están
-            autorizados por nosotros, y están protegidos por las leyes de
-            derechos de autor y marcas registradas y varios otros derechos de
-            propiedad intelectual y leyes de competencia desleal del Perú, las
-            leyes internacionales de derechos de autor, y convenciones
+            (colectivamente, el &quot;Contenido&quot;) y las marcas registradas,
+            el servicio las marcas y los logotipos que contiene (las
+            &quot;Marcas&quot;) son de nuestra propiedad o están controlados por
+            nosotros o están autorizados por nosotros, y están protegidos por
+            las leyes de derechos de autor y marcas registradas y varios otros
+            derechos de propiedad intelectual y leyes de competencia desleal del
+            Perú, las leyes internacionales de derechos de autor, y convenciones
             internacionales. El Contenido y las Marcas se proporcionan en el
-            Sitio &quot;TAL CUAL&quot; solo para su información y uso personal. Salvo que
-            se indique expresamente en estos Términos de uso, ninguna parte del
-            Sitio y ningún Contenido o Marcas pueden copiarse, reproducirse,
-            agregarse, volver a publicarse, cargarse, publicarse, exhibirse
-            públicamente, codificarse, traducirse, transmitirse, distribuirse,
-            venderse, licenciarse o explotados de otro modo para cualquier
-            propósito comercial, sin nuestro permiso previo por escrito.
+            Sitio &quot;TAL CUAL&quot; solo para su información y uso personal.
+            Salvo que se indique expresamente en estos Términos de uso, ninguna
+            parte del Sitio y ningún Contenido o Marcas pueden copiarse,
+            reproducirse, agregarse, volver a publicarse, cargarse, publicarse,
+            exhibirse públicamente, codificarse, traducirse, transmitirse,
+            distribuirse, venderse, licenciarse o explotados de otro modo para
+            cualquier propósito comercial, sin nuestro permiso previo por
+            escrito.
           </Text>
           <Text>
             Siempre que sea elegible para usar el Sitio, se le otorga una
@@ -186,7 +164,7 @@ const TOS = () => (
             que estén respaldados o aprobados específicamente por nosotros.
           </Text>
           <Text>Como usuario del Sitio, usted acepta no:</Text>
-          <ul>
+          <List>
             <Text as="li">
               Recuperar sistemáticamente datos u otro contenido del Sitio para
               crear o compilar, directa o indirectamente, una colección,
@@ -252,9 +230,10 @@ const TOS = () => (
               Cargar o transmitir (o intentar cargar o transmitir) cualquier
               material que actúe como un mecanismo de transmisión o recopilación
               de información pasiva o activa, incluidos, entre otros, formatos
-              de intercambio de gráficos claros (&quot;gifs&quot;), 1 × 1 píxeles, web
-              bugs , cookies u otros dispositivos similares (a veces denominados
-              &quot;spyware&quot; o &quot;mecanismos de recopilación pasiva&quot; o &quot;pcms&quot;).
+              de intercambio de gráficos claros (&quot;gifs&quot;), 1 × 1
+              píxeles, web bugs , cookies u otros dispositivos similares (a
+              veces denominados &quot;spyware&quot; o &quot;mecanismos de
+              recopilación pasiva&quot; o &quot;pcms&quot;).
             </Text>
             <Text as="li">
               Interferir, interrumpir o crear una carga indebida en el Sitio o
@@ -302,7 +281,7 @@ const TOS = () => (
               nosotros o usar el Sitio y/o el Contenido para cualquier esfuerzo
               de generación de ingresos o empresa comercial.
             </Text>
-          </ul>
+          </List>
         </>
       }
     />
@@ -318,13 +297,13 @@ const TOS = () => (
             materiales a nosotros o en el Sitio, incluidos, entre otros, texto,
             escritos, video, audio, fotografías, gráficos, comentarios,
             sugerencias o información personal u otro material (colectivamente,
-            &quot;Contribuciones&quot;). Las contribuciones pueden ser visibles para otros
-            usuarios del Sitio y a través de sitios web de terceros. Como tal,
-            cualquier Contribución que transmita puede ser tratada como no
-            confidencial y no propietaria. Cuando crea o pone a disposición
-            cualquier Contribución, declara y garantiza que:
+            &quot;Contribuciones&quot;). Las contribuciones pueden ser visibles
+            para otros usuarios del Sitio y a través de sitios web de terceros.
+            Como tal, cualquier Contribución que transmita puede ser tratada
+            como no confidencial y no propietaria. Cuando crea o pone a
+            disposición cualquier Contribución, declara y garantiza que:
           </Text>
-          <ul>
+          <List>
             <Text as="li">
               La creación, distribución, transmisión, exhibición pública o
               ejecución, y el acceso, la descarga o la copia de sus
@@ -394,7 +373,7 @@ const TOS = () => (
               material que viola, ninguna disposición de estos Términos de uso,
               o cualquier ley o regulación aplicable.
             </Text>
-          </ul>
+          </List>
           <Text>
             Cualquier uso del Sitio que infrinja lo anterior viola estos
             Términos de uso y puede resultar, entre otras cosas, en la rescisión
@@ -464,18 +443,18 @@ const TOS = () => (
           <Text>
             Usted reconoce y acepta que cualquier pregunta, comentario,
             sugerencia, idea, retroalimentación u otra información relacionada
-            con el Sitio (&quot;Envíos&quot;) que nos proporcione no son confidenciales y
-            se convertirán en nuestra propiedad exclusiva. Seremos propietarios
-            de los derechos exclusivos, incluidos todos los derechos de
-            propiedad intelectual, y tendremos derecho al uso y la difusión sin
-            restricciones de estos Envíos para cualquier fin lícito, comercial o
-            de otro tipo, sin reconocimiento ni compensación para usted. Por la
-            presente, renuncia a todos los derechos morales sobre dichos Envíos,
-            y por la presente garantiza que dichos Envíos son originales suyos o
-            que tiene derecho a enviar dichos Envíos. Usted acepta que no habrá
-            recurso contra nosotros por cualquier infracción o apropiación
-            indebida supuesta o real de cualquier derecho de propiedad en sus
-            Envíos.
+            con el Sitio (&quot;Envíos&quot;) que nos proporcione no son
+            confidenciales y se convertirán en nuestra propiedad exclusiva.
+            Seremos propietarios de los derechos exclusivos, incluidos todos los
+            derechos de propiedad intelectual, y tendremos derecho al uso y la
+            difusión sin restricciones de estos Envíos para cualquier fin
+            lícito, comercial o de otro tipo, sin reconocimiento ni compensación
+            para usted. Por la presente, renuncia a todos los derechos morales
+            sobre dichos Envíos, y por la presente garantiza que dichos Envíos
+            son originales suyos o que tiene derecho a enviar dichos Envíos.
+            Usted acepta que no habrá recurso contra nosotros por cualquier
+            infracción o apropiación indebida supuesta o real de cualquier
+            derecho de propiedad en sus Envíos.
           </Text>
         </>
       }
@@ -486,39 +465,39 @@ const TOS = () => (
         <>
           <Text>
             El Sitio puede contener (o se le puede enviar a través del Sitio)
-            enlaces a otros sitios web (&quot;Sitios web de terceros&quot;), así como
-            artículos, fotografías, texto, gráficos, imágenes, diseños, música,
-            sonido, video, información, aplicaciones , software y otro contenido
-            o elementos que pertenezcan a terceros o se originen en ellos
-            (&quot;Contenido de terceros&quot;). Dichos sitios web de terceros y contenido
-            de terceros no son investigados, monitoreados o verificados por
-            nuestra precisión, idoneidad o integridad, y no somos responsables
-            de ningún sitio web de terceros al que se acceda a través del sitio
-            o cualquier contenido de terceros publicado. en, disponible a través
-            de, o instalado desde el Sitio, incluido el contenido, la precisión,
-            lo ofensivo, las opiniones, la confiabilidad, las prácticas de
-            privacidad u otras políticas de o contenidas en los Sitios web de
-            terceros o el Contenido de terceros. La inclusión, el enlace o el
-            permiso para el uso o la instalación de sitios web de terceros o
-            cualquier contenido de terceros no implica su aprobación o respaldo
-            por nuestra parte. Si decide abandonar el Sitio y acceder a los
-            Sitios web de terceros o usar o instalar cualquier Contenido de
-            terceros, lo hace bajo su propio riesgo y debe tener en cuenta que
-            estos Términos de uso ya no rigen. Debe revisar los términos y
-            políticas aplicables, incluidas las prácticas de privacidad y
-            recopilación de datos, de cualquier sitio web al que navegue desde
-            el Sitio o en relación con cualquier aplicación que use o instale
-            desde el Sitio. Todas las compras que realice a través de sitios web
-            de terceros se realizarán a través de otros sitios web y de otras
-            empresas, y no asumimos ninguna responsabilidad en relación con
-            dichas compras, que son exclusivamente entre usted y el tercero
-            correspondiente. Usted acepta y reconoce que no respaldamos los
-            productos o servicios ofrecidos en los sitios web de terceros y nos
-            eximirá de cualquier daño causado por la compra de dichos productos
-            o servicios. Además, nos eximirá de cualquier pérdida sufrida por
-            usted o daño causado a usted en relación con o que resulte de alguna
-            manera de cualquier Contenido de terceros o cualquier contacto con
-            sitios web de terceros.
+            enlaces a otros sitios web (&quot;Sitios web de terceros&quot;), así
+            como artículos, fotografías, texto, gráficos, imágenes, diseños,
+            música, sonido, video, información, aplicaciones , software y otro
+            contenido o elementos que pertenezcan a terceros o se originen en
+            ellos (&quot;Contenido de terceros&quot;). Dichos sitios web de
+            terceros y contenido de terceros no son investigados, monitoreados o
+            verificados por nuestra precisión, idoneidad o integridad, y no
+            somos responsables de ningún sitio web de terceros al que se acceda
+            a través del sitio o cualquier contenido de terceros publicado. en,
+            disponible a través de, o instalado desde el Sitio, incluido el
+            contenido, la precisión, lo ofensivo, las opiniones, la
+            confiabilidad, las prácticas de privacidad u otras políticas de o
+            contenidas en los Sitios web de terceros o el Contenido de terceros.
+            La inclusión, el enlace o el permiso para el uso o la instalación de
+            sitios web de terceros o cualquier contenido de terceros no implica
+            su aprobación o respaldo por nuestra parte. Si decide abandonar el
+            Sitio y acceder a los Sitios web de terceros o usar o instalar
+            cualquier Contenido de terceros, lo hace bajo su propio riesgo y
+            debe tener en cuenta que estos Términos de uso ya no rigen. Debe
+            revisar los términos y políticas aplicables, incluidas las prácticas
+            de privacidad y recopilación de datos, de cualquier sitio web al que
+            navegue desde el Sitio o en relación con cualquier aplicación que
+            use o instale desde el Sitio. Todas las compras que realice a través
+            de sitios web de terceros se realizarán a través de otros sitios web
+            y de otras empresas, y no asumimos ninguna responsabilidad en
+            relación con dichas compras, que son exclusivamente entre usted y el
+            tercero correspondiente. Usted acepta y reconoce que no respaldamos
+            los productos o servicios ofrecidos en los sitios web de terceros y
+            nos eximirá de cualquier daño causado por la compra de dichos
+            productos o servicios. Además, nos eximirá de cualquier pérdida
+            sufrida por usted o daño causado a usted en relación con o que
+            resulte de alguna manera de cualquier Contenido de terceros o
+            cualquier contacto con sitios web de terceros.
           </Text>
         </>
       }
@@ -653,9 +632,10 @@ const TOS = () => (
           <Text>
             Para acelerar la resolución y controlar el costo de cualquier
             disputa, controversia o reclamo relacionado con estos Términos de
-            uso (cada &quot;Disputa&quot; y colectivamente, las &quot;Disputas&quot;) presentada por
-            usted o por nosotros (individualmente, una &quot;Parte&quot; y colectivamente,
-            las &quot;Partes&quot;), las Partes acuerdan intentar primero negociar
+            uso (cada &quot;Disputa&quot; y colectivamente, las
+            &quot;Disputas&quot;) presentada por usted o por nosotros
+            (individualmente, una &quot;Parte&quot; y colectivamente, las
+            &quot;Partes&quot;), las Partes acuerdan intentar primero negociar
             cualquier Disputa (excepto las Disputas que se indican expresamente
             a continuación) de manera informal durante al menos treinta (30)
             días antes de iniciar el arbitraje. Tales negociaciones informales
@@ -792,21 +772,22 @@ const TOS = () => (
             responsabilidad, incluidas nuestras subsidiarias, afiliadas y todos
             nuestros respectivos funcionarios, agentes, socios y empleados, de y
             contra cualquier pérdida, daño, responsabilidad, reclamo o demanda,
-            incluidos los razonables honorarios y gastos de los abogados, hechos por
-            cualquier tercero debido a o que surjan de: (1) sus Contribuciones;
-            (2) uso del Sitio; (3) incumplimiento de estos Términos de uso; (4)
-            cualquier incumplimiento de sus representaciones y garantías
-            establecidas en estos Términos de uso; (5) su violación de los
-            derechos de un tercero, incluidos, entre otros, los derechos de
-            propiedad intelectual; o (6) cualquier acto dañino manifiesto hacia
-            cualquier otro usuario del Sitio con el que se haya conectado a
-            través del Sitio. Sin perjuicio de lo anterior, nos reservamos el
-            derecho, a su cargo, de asumir la defensa y el control exclusivos de
-            cualquier asunto por el cual deba indemnizarnos, y usted acepta
-            cooperar, a su cargo, con nuestra defensa de dichas reclamaciones.
-            Haremos todos los esfuerzos razonables para notificarle cualquier
-            reclamo, acción o procedimiento que esté sujeto a esta indemnización
-            al tomar conocimiento de ello.
+            incluidos los razonables honorarios y gastos de los abogados, hechos
+            por cualquier tercero debido a o que surjan de: (1) sus
+            Contribuciones; (2) uso del Sitio; (3) incumplimiento de estos
+            Términos de uso; (4) cualquier incumplimiento de sus
+            representaciones y garantías establecidas en estos Términos de uso;
+            (5) su violación de los derechos de un tercero, incluidos, entre
+            otros, los derechos de propiedad intelectual; o (6) cualquier acto
+            dañino manifiesto hacia cualquier otro usuario del Sitio con el que
+            se haya conectado a través del Sitio. Sin perjuicio de lo anterior,
+            nos reservamos el derecho, a su cargo, de asumir la defensa y el
+            control exclusivos de cualquier asunto por el cual deba
+            indemnizarnos, y usted acepta cooperar, a su cargo, con nuestra
+            defensa de dichas reclamaciones. Haremos todos los esfuerzos
+            razonables para notificarle cualquier reclamo, acción o
+            procedimiento que esté sujeto a esta indemnización al tomar
+            conocimiento de ello.
           </Text>
         </>
       }
@@ -907,7 +888,7 @@ const TOS = () => (
         </>
       }
     />
-  </BaseContainer>
+  </Container>
 );
 
 export default TOS;
