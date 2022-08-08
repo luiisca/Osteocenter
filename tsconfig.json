@@ -32,7 +32,8 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/static/*": ["static/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/pages/*": ["pages/*"]
     },
     "types": [
       "./node_modules/user-agent-data-types"

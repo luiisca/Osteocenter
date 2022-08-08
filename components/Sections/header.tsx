@@ -5,8 +5,8 @@ import { Turn as Hamburger } from "hamburger-react";
 import { useSpring, animated } from "react-spring";
 import { useScroll } from "framer-motion";
 import { LogoJsonLd } from "next-seo";
-
 import tw, { styled, css, theme } from "twin.macro";
+
 import Nav from "../Nav";
 
 const Container = styled(animated.header)(() => [

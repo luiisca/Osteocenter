@@ -23,7 +23,7 @@ const NavLink = ({
 }: Props): JSX.Element => {
   if (!destination?.includes("/")) {
     return (
-      <StyledNavLink href={destination} onClick={toggle(false)}>
+      <StyledNavLink href={destination} onClick={() => toggle(false)}>
         {children}
       </StyledNavLink>
     );

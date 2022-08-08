@@ -4,6 +4,8 @@ import { Button } from "../Elements";
 import NavLink from "./NavLink";
 import { animated } from "react-spring";
 
+import { LoginBttn } from "@/pages/platform/login";
+
 const Container = styled(animated.nav)(
   ({ device }: { device: "mobile" | "desktop" }) => [
     tw`w-full px-8 pb-5 list-none bg-primary-tint-3 shadow-sm z-[-1]`,
@@ -59,9 +61,7 @@ const Nav = ({
             Reserva una cita
           </Button>
         </li>
-        <NavLink nextLink destination="/platform/login" toggle={toggle}>
-          Entrar
-        </NavLink>
+        <LoginBttn />
       </StyledNavList>
     </Container>
   );

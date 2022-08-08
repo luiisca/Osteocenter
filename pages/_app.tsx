@@ -16,12 +16,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ChakraProvider>
+          <SessionProvider session={session}>
           <Layout preview={pageProps.preview}>
             <GlobalStyles />
-            <SessionProvider session={session}>
               <Component {...pageProps} />
-            </SessionProvider>
           </Layout>
+        </SessionProvider>
         </ChakraProvider>
       </Hydrate>
       <ReactQueryDevtools />

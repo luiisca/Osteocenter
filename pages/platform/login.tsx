@@ -1,5 +1,4 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import NextLink from "next/link";
 import { BaseLink } from "@/components/BaseStyle";
 import tw, { styled } from "twin.macro";
 
@@ -13,11 +12,9 @@ export const LoginBttn = () => {
   const { data: session } = useSession();
 
   return (
-    <NextLink passHref href="/platform/login">
-      <StyledNavLink onClick={() => (session ? signOut() : signIn())}>
-        {session ? "Salir" : "Entrar"}
-      </StyledNavLink>
-    </NextLink>
+    <StyledNavLink onClick={() => (session ? signOut() : signIn())}>
+      {session ? "Salir" : "Entrar"}
+    </StyledNavLink>
   );
 };
 
