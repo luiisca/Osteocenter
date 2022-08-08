@@ -10,7 +10,7 @@ import { usePreviewSubscription } from "../../utils/sanity/sanity";
 import {
   postSlugsQuery,
   postQuery,
-  postsByCategoryQuery,
+relatedPostsByCategoryQuery,
   featuredPostsQuery,
 } from "../../utils/sanity/queries";
 import type { PostType } from "./index";
@@ -152,7 +152,7 @@ export const getStaticProps: GetStaticProps<{
   const postData = await getClient(preview).fetch(postQuery, {
     slug: params?.slug,
   });
-  const relatedPosts = await getClient(preview).fetch(postsByCategoryQuery, {
+  const relatedPosts = await getClient(preview).fetch(relatedPostsByCategoryQuery, {
     postTitle: postData?.title,
     categoryTitle: postData?.category,
   });

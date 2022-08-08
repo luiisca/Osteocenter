@@ -37,7 +37,12 @@ export const categoryBySlugQuery = `
   *[_type == 'category' && slug.current == $slug].title
 `;
 export const postsByCategoryQuery = `
-  *[_type == 'post' && title !== $postTitle && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
+  *[_type == 'post' && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
+    ${postFields}
+  }
+`;
+export const relatedPostsByCategoryQuery = `
+  *[_type == 'post' && title != $postTitle && category._ref in *[_type == 'category' && title == $categoryTitle]._id] | order(date desc, _updatedAt desc) {
     ${postFields}
   }
 `;
@@ -109,7 +114,8 @@ export const getPostData = async (preview: boolean, slug: any) =>
   });
 
 export const getRelatedPosts = async (preview: boolean, postData: any) =>
-  getClient(preview).fetch(postsByCategoryQuery, {
+  getClient(preview).fetch(relatedPostsByCategoryQuery, {
+    postTitle: postData?.title,
     categoryTitle: postData?.category,
   });
 

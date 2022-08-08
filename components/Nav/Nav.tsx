@@ -59,7 +59,9 @@ const Nav = ({
             Reserva una cita
           </Button>
         </li>
-        <NavLink toggle={toggle}>Entrar</NavLink>
+        <NavLink nextLink destination="/platform/login" toggle={toggle}>
+          Entrar
+        </NavLink>
       </StyledNavList>
     </Container>
   );
