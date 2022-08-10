@@ -54,7 +54,7 @@ const Home: NextPage = (): JSX.Element => {
           <Section hero>
             <Hero />
           </Section>
-          <Section valuesSection>
+          <Section valuesSection id="valores">
             <Values />
           </Section>
           <Section biography>

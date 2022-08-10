@@ -22,12 +22,14 @@ const Hero = (): JSX.Element => {
           fracturas, reconstrucciones óseas, Prótesis de caderas, tumores óseos
           y músculo esquelético.
         </p>
-        <Button elType="text" cta hero href="#" tw="mr-4 text-lg">
-          Reserva una cita
-        </Button>
-        <Button elType="text" outline href="#biography">
-          Más sobre mí &darr;
-        </Button>
+        <div tw="flex justify-center flex-col gap-4 items-center mob-me:flex-row">
+          <Button elType="text" cta hero href="#" tw="text-lg">
+            Reserva una cita
+          </Button>
+          <Button elType="text" outline href="#valores">
+            Más información &darr;
+          </Button>
+        </div>
         <CustomerPictures />
       </div>
       <HeroImage />

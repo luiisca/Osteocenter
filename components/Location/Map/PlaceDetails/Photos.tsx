@@ -86,8 +86,9 @@ const Photos = ({
     null,
     1,
     10,
-    ArrowButton,
-    true
+    imgs.length > 1 ? ArrowButton : null,
+    imgs.length > 1,
+    false
   );
 
   return (
@@ -99,4 +100,3 @@ const Photos = ({
 };
 
 export default Photos;
-

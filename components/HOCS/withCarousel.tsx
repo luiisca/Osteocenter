@@ -60,7 +60,8 @@ const withCarousel =
     slides: number = 1,
     spaceBetween: number = 30,
     CustomButton: any = null,
-    custom: boolean = false
+    custom: boolean = false,
+    loop: boolean = true
   ) =>
   /* eslint-disable react/display-name */
   () => {
@@ -72,7 +73,7 @@ const withCarousel =
           spaceBetween={spaceBetween}
           speed={400}
           grabCursor
-          loop
+          loop={loop}
         >
           {elementsData.map((elData: any) => (
             <SwiperSlide key={v4()}>
@@ -84,11 +85,13 @@ const withCarousel =
               <SlidePrevButton Custom={CustomButton} />
               <SlideNextButton Custom={CustomButton} />
             </>
-          ) : (
+          ) : ButtonsContainer ? (
             <ButtonsContainer>
               <SlidePrevButton Custom={CustomButton} />
               <SlideNextButton Custom={CustomButton} />
             </ButtonsContainer>
+          ) : (
+            <></>
           )}
         </Swiper>
       </Container>

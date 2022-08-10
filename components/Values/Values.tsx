@@ -7,7 +7,7 @@ const Container = tw(BaseContainer)``;
 
 const Values = (): JSX.Element => {
   return (
-    <Container>
+    <Container >
       <Heading as="h2" secondary>
         Cirugía ortopédica y traumatología.
       </Heading>
