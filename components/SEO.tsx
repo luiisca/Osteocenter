@@ -1,9 +1,9 @@
-import { withRouter } from "next/router";
+import { NextRouter, withRouter } from "next/router";
 import Head from "next/head";
-import { ArticleJsonLd} from "next-seo";
+import { ArticleJsonLd } from "next-seo";
 
 import { formatDate } from "@/components/Blog/Date";
-import {AUTHOR} from '@/static/ts/constants'
+import { AUTHOR } from "@/static/ts/constants";
 
 const SEO = ({
   title,
@@ -13,7 +13,15 @@ const SEO = ({
   keywords,
   router,
   children,
-}: any) => {
+}: {
+  title: string;
+  description?: string;
+  image?: string;
+  date?: string;
+  keywords?: string;
+  router: NextRouter;
+  children: React.ReactNode;
+}) => {
   const url = router && router.asPath ? router.asPath : undefined;
 
   return (
@@ -84,15 +92,15 @@ const SEO = ({
       {children}
       {date && (
         <ArticleJsonLd
-          authorName="Dr. Ronal Cadillo Medina"
+          authorName={AUTHOR}
           dateModified={formatDate(date)}
           datePublished={formatDate(date)}
-          description={description}
-          images={[image]}
+          description={description || ""}
+          images={[image as string]}
           publisherLogo="https://osteocenter.vercel.app/favicons/android-chrome-192x192.png"
           publisherName="Clinica ortopédica en chimbote - Osteocenter"
           title={title}
-          url={url}
+          url={url || ""}
         />
       )}
     </>

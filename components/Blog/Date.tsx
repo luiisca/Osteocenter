@@ -17,8 +17,8 @@ setGlobalDateI18n({
   ],
 });
 
-export const formatDate = (dateString: any) => {
-  const date = parse(dateString, "isoDateTime")!;
+export const formatDate = (dateString: string) => {
+  const date = parse(dateString, "isoDateTime") as Date;
   return format(date, "DD [de] MMMM, YYYY");
 };
 

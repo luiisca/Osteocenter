@@ -12,7 +12,7 @@ export const LoginBttn = () => {
   const { data: session } = useSession();
 
   return (
-    <StyledNavLink onClick={() => (session ? signOut() : signIn())}>
+    <StyledNavLink onClick={() => (session ? signOut() : signIn("google"))}>
       {session ? "Salir" : "Entrar"}
     </StyledNavLink>
   );
