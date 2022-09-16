@@ -88,13 +88,13 @@ export const allPostsByCategory = async (categories: any) =>
       category: Record<string, string>
     ) => {
       const posts = await sanityClient.fetch(postsByCategoryQuery, {
-        categoryTitle: category.title,
+        categoryTitle: category.title as string,
       });
       const prevPosts = await promisedPost;
 
       return {
         ...prevPosts,
-        [category.title]: posts,
+        [category.title as string]: posts,
       };
     },
     {}

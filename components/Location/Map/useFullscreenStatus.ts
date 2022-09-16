@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 
 const useFullscreenStatus: (
-  elRef: any
+  elRef: React.RefObject<HTMLDivElement>
 ) => [isFullscreen: boolean, setFullscreen: () => void] = (elRef) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 

@@ -4,10 +4,13 @@ import tw, { styled } from "twin.macro";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { CorporateContactJsonLd, LocalBusinessJsonLd } from "next-seo";
+import { BsWhatsapp } from "react-icons/bs";
 
 import SEO from "@/components/SEO";
+import useIsMobile from "@/components/hooks/useIsMobile";
 import { SITE_TITLE, WEB_LINK, PHONE1, PHONE2 } from "@/static/ts/constants";
 import { featuredPostsQuery } from "@/utils/sanity/queries";
+import { getWhatsappLink } from "@/static/ts/constants";
 
 import Hero from "@/components/Hero";
 import Values from "@/components/Values";
@@ -37,6 +40,8 @@ const Section = styled.section((props: SectionProps) => [
 ]);
 
 const Home: NextPage = (): JSX.Element => {
+  const isMobile = useIsMobile();
+
   return (
     <>
       <SEO
@@ -77,6 +82,11 @@ const Home: NextPage = (): JSX.Element => {
               <DynamicArticles />
             </Suspense>
           </Section>
+          <a href={getWhatsappLink(isMobile)} target="_blank" rel="noreferrer">
+            <div tw="fixed md:w-[3.75rem] md:h-[3.75rem] leading-[63px] bottom-6 left-6 bg-primary hover:bg-primary-shade-1 text-white rounded-full text-center text-[35px] shadow-sm hover:shadow-md z-10 transition-all sm:w-16 sm:h-16 flex items-center justify-center">
+              <BsWhatsapp />
+            </div>
+          </a>
         </main>
       </SEO>
       <CorporateContactJsonLd

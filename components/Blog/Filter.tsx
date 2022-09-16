@@ -171,9 +171,10 @@ const Filter = ({
               key={v4()}
               tw="grid gap-[3.75rem] blog-lg:grid-cols-2 p-0"
             >
-              {allPostsByCategory[cat.title].map((post: PostType) => (
-                <Post post={post} key={v4()} />
-              ))}
+              {cat.title &&
+                allPostsByCategory[cat?.title].map((post: PostType) => (
+                  <Post post={post} key={v4()} />
+                ))}
             </TabPanel>
           ))}
         </TabPanels>

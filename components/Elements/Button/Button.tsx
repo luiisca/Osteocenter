@@ -39,8 +39,10 @@ interface SubmitProps extends ButtonProps {
 type Props = TextProps | IconProps | SubmitProps;
 
 const CarouselNavBttn = (props: any) => {
+  const {elType, ...passThrough} = props
+
   return (
-    <button {...props}>
+    <button {...passThrough}>
       {props.prev && <BsArrowLeft />}
       {props.next && <BsArrowRight />}
     </button>
@@ -97,6 +99,7 @@ const getIconStyles = (props: any) => [
   `,
 ];
 
+// @ts-ignore
 const Icon = styled(animated.button)<IconProps>(getIconStyles);
 const CarouselBttn = styled(CarouselNavBttn)<IconProps>(getIconStyles);
 
