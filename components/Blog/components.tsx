@@ -47,17 +47,21 @@ const components = {
     image: getImgComponent,
   },
   block: {
-    h1: ({ children }: any) => (
+    h2: ({ children }: any) => (
       <Heading
-        as="h1"
+        as="h2"
         secondary
-        tw="mb-5 text-3xl text-primary-shade-3 md:mb-7 md:text-4xl"
+        tw="mb-5 text-[1.8rem] text-primary-shade-3 md:mb-7 md:text-[2rem]"
       >
         {children}
       </Heading>
     ),
-    h2: ({ children }: any) => (
-      <Heading as="h2" tertiary tw="mb-5 text-2xl text-primary-shade-3 md:mb-7">
+    h3: ({ children }: any) => (
+      <Heading
+        as="h3"
+        tertiary
+        tw="mb-5 text-[1.6rem] md:text-[1.8rem] text-primary-shade-3 md:mb-7"
+      >
         {children}
       </Heading>
     ),
@@ -93,17 +97,21 @@ const components = {
     },
   },
   list: {
-    bullet: ({ children }: any) => <ul>{children}</ul>,
-    number: ({ children }: any) => <ol>{children}</ol>,
+    bullet: ({ children }: any) => (
+      <ul tw="ml-5 mb-4 md:mb-6 list-disc">{children}</ul>
+    ),
+    number: ({ children }: any) => (
+      <ol tw="ml-5 mb-4 md:mb-6 list-decimal">{children}</ol>
+    ),
   },
   listItem: {
     bullet: ({ children }: any) => (
-      <Text as="li" tw="" key={v4()}>
+      <Text as="li" tw="mb-1" key={v4()}>
         {children}
       </Text>
     ),
     number: ({ children }: any) => (
-      <Text as="li" tw="" key={v4()}>
+      <Text as="li" tw="mb-1" key={v4()}>
         {children}
       </Text>
     ),

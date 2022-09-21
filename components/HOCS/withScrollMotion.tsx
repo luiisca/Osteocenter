@@ -7,12 +7,10 @@ const withScrollMotion =
     Element,
     direction = "y",
     variants = [60, 30, 0],
-    duration = 1,
   }: {
     Element: any;
     direction?: string;
     variants?: Array<number>;
-    duration?: number;
   }) =>
   /* eslint-disable react/display-name */
   ({ ...props }) => {
@@ -24,7 +22,7 @@ const withScrollMotion =
       <motion.div
         initial={{ opacity: 0, [direction]: 40 }}
         whileInView={animation}
-        transition={{ duration: duration, ease: "easeInOut" }}
+        transition={{ ease: "easeInOut" }}
         viewport={{ once: true }}
       >
         <Element {...props} />

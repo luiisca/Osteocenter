@@ -17,20 +17,20 @@ const Aside = ({ recommendedPosts }: { recommendedPosts: any }) => {
       </Heading>
       <Stack direction="column" spacing="0">
         {recommendedPosts.map((post: any) => (
-          <>
+          <div key={v4()}>
             <LinkBox as="div" tw="relative first:pt-0">
               <Heading
                 secondary
                 as="h2"
                 tw="py-6 m-0 text-xl cursor-pointer  text-primary-shade-3 hover:text-primary"
               >
-                <NextLink href={`/blog/${post.slug}`} passHref key={v4()}>
+                <NextLink href={`/blog/${post.slug}`} passHref>
                   <LinkOverlay>{post.title}</LinkOverlay>
                 </NextLink>
               </Heading>
             </LinkBox>
             <Divider />
-          </>
+          </div>
         ))}
       </Stack>
     </Container>

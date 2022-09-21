@@ -6,6 +6,7 @@ import { animated } from "react-spring";
 
 import { LoginBttn } from "@/pages/platform/login";
 
+// @ts-ignore
 const Container = styled(animated.nav)(
   ({ device }: { device: "mobile" | "desktop" }) => [
     tw`w-full px-8 pb-5 list-none bg-primary-tint-3 shadow-sm z-[-1]`,

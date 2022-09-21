@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
 const useFullscreenStatus: (
   elRef: React.RefObject<HTMLDivElement>
@@ -22,7 +22,7 @@ const useFullscreenStatus: (
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const onFullscreenChange = () =>
       setIsFullscreen(document.fullscreenElement !== null);
 

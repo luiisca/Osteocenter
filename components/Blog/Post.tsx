@@ -127,17 +127,23 @@ const Post = ({ post, top, intro }: Post) => {
             </Heading>
           )}
           {/*Title*/}
-          <Heading secondary as="h2" tw="m-0">
-            <StyledPostTitle top={top}>
-              {intro ? (
-                <>{post.title}</>
-              ) : (
+          {intro ? (
+            <Heading
+              primary
+              as="h1"
+              tw="m-0 text-2xl md:mb-7 md:text-4xl md:mb-7"
+            >
+              {post.title}
+            </Heading>
+          ) : (
+            <Heading secondary as="h2" tw="m-0">
+              <StyledPostTitle top={top}>
                 <NextLink href={`/blog/${post.slug}`} passHref>
                   <LinkOverlay>{post.title}</LinkOverlay>
                 </NextLink>
-              )}
-            </StyledPostTitle>
-          </Heading>
+              </StyledPostTitle>
+            </Heading>
+          )}
           {/*Excerpt*/}
           {intro ? (
             <div>

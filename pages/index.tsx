@@ -4,23 +4,22 @@ import tw, { styled } from "twin.macro";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { CorporateContactJsonLd, LocalBusinessJsonLd } from "next-seo";
-import { BsWhatsapp } from "react-icons/bs";
 
 import SEO from "@/components/SEO";
-import useIsMobile from "@/components/hooks/useIsMobile";
 import { SITE_TITLE, WEB_LINK, PHONE1, PHONE2 } from "@/static/ts/constants";
 import { featuredPostsQuery } from "@/utils/sanity/queries";
-import { getWhatsappLink } from "@/static/ts/constants";
 
 import Hero from "@/components/Hero";
 import Values from "@/components/Values";
 import Biography from "@/components/Biography";
 import Steps from "@/components/Steps";
 import Testimonials from "@/components/Testimonials";
-import Location from "@/components/Location";
 import CallToAction from "@/components/CallToAction";
 
 const DynamicArticles = dynamic(() => import("@/components/Articles"), {
+  suspense: true,
+});
+const DynamicLocation = dynamic(() => import("@/components/Location"), {
   suspense: true,
 });
 
@@ -40,8 +39,6 @@ const Section = styled.section((props: SectionProps) => [
 ]);
 
 const Home: NextPage = (): JSX.Element => {
-  const isMobile = useIsMobile();
-
   return (
     <>
       <SEO
@@ -49,10 +46,10 @@ const Home: NextPage = (): JSX.Element => {
           "Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu medico todo desde nuestra plataforma en linea."
         }
         image={`${WEB_LINK}/img/osteocenter-logo.png`}
-        title={`Traumatología y ortopedia en Chimbote - Reserva tu cita en
-          linea | ${SITE_TITLE}`}
+        title="Traumatología y ortopedia en Chimbote - Reserva tu cita en
+          linea"
         keywords={
-          "Medicina, Traumatologia, Ortopedia, Cita medica online, Telemedicina, Chimbote, Peru, Artroscopia, Consulta medica presencial, atencion a domicilio, terapia con ondas de choque, cirugia, tratamiento de secuelas y deformidades, ortopedia infantil, lesiones deportivas"
+          "Medico tramatologo en Chimbote, Medico Ortopedico en Chimbote, Medicina, Traumatologia en Chimbote, Ortopedia, Cita medica online, Telemedicina, Chimbote, Peru, Artroscopia, Consulta medica presencial, atencion a domicilio, terapia con ondas de choque, cirugia, tratamiento de secuelas y deformidades, ortopedia infantil, lesiones deportivas"
         }
       >
         <main>
@@ -72,7 +69,9 @@ const Home: NextPage = (): JSX.Element => {
             <Testimonials />
           </Section>
           <Section>
-            <Location />
+            <Suspense fallback={`Cargando mapa...`}>
+              <DynamicLocation />
+            </Suspense>
           </Section>
           <Section cta>
             <CallToAction />
@@ -82,11 +81,6 @@ const Home: NextPage = (): JSX.Element => {
               <DynamicArticles />
             </Suspense>
           </Section>
-          <a href={getWhatsappLink(isMobile)} target="_blank" rel="noreferrer">
-            <div tw="fixed md:w-[3.75rem] md:h-[3.75rem] leading-[63px] bottom-6 left-6 bg-primary hover:bg-primary-shade-1 text-white rounded-full text-center text-[35px] shadow-sm hover:shadow-md z-10 transition-all sm:w-16 sm:h-16 flex items-center justify-center">
-              <BsWhatsapp />
-            </div>
-          </a>
         </main>
       </SEO>
       <CorporateContactJsonLd

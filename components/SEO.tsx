@@ -31,6 +31,7 @@ const SEO = ({
         <meta charSet="utf-8" />
         <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta name="robots" content="all" />
         {description && <meta content={description} name="description" />}
         {keywords && <meta content={keywords} name="keywords" />}
         <meta content="follow, index" name="robots" />
@@ -98,7 +99,7 @@ const SEO = ({
           description={description || ""}
           images={[image as string]}
           publisherLogo="https://osteocenter.vercel.app/favicons/android-chrome-192x192.png"
-          publisherName="Clinica ortopédica en chimbote - Osteocenter"
+          publisherName="Traumatología y ortopedia en Chimbote - Clínica Osteocenter"
           title={title}
           url={url || ""}
         />

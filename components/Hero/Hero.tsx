@@ -22,7 +22,7 @@ const Hero = (): JSX.Element => {
           fracturas, reconstrucciones óseas, Prótesis de caderas, tumores óseos
           y músculo esquelético.
         </p>
-        <div tw="flex justify-center flex-col gap-4 items-center mob-me:flex-row">
+        <div tw="flex blog-lg:justify-start justify-center flex-col gap-4 items-center mob-me:flex-row">
           <Button elType="text" cta hero href="#" tw="text-lg">
             Reserva una cita
           </Button>

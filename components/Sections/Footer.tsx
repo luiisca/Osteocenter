@@ -140,7 +140,7 @@ const Footer = () => {
       </Column>
 
       <Column>
-        <Title>Clinica</Title>
+        <Title>Clínica</Title>
         <FlexList>
           <li>
             <Link href="#">Sobre Osteocenter</Link>

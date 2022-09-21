@@ -2,7 +2,7 @@ import tw, { css, styled } from "twin.macro";
 import { animated } from "react-spring";
 import { BaseLink } from "../../BaseStyle";
 
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight, BsArrowUp } from "react-icons/bs";
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -10,6 +10,7 @@ interface ButtonProps {
   style?: {};
   fullscreen?: boolean;
   loadingRoute?: boolean;
+  disabled?: boolean;
 }
 
 interface IconProps extends ButtonProps {
@@ -19,6 +20,7 @@ interface IconProps extends ButtonProps {
   elRef?: any;
   prev?: boolean;
   next?: boolean;
+  up?: boolean;
 }
 interface TextProps extends ButtonProps {
   elType: "text";
@@ -39,13 +41,15 @@ interface SubmitProps extends ButtonProps {
 type Props = TextProps | IconProps | SubmitProps;
 
 const CarouselNavBttn = (props: any) => {
-  const {elType, ...passThrough} = props
+  const { elType, inactive, top, elRef, prev, next, up, ...passThrough } =
+    props;
 
   return (
-    <button {...passThrough}>
-      {props.prev && <BsArrowLeft />}
-      {props.next && <BsArrowRight />}
-    </button>
+    <animated.button {...passThrough}>
+      {prev && <BsArrowLeft />}
+      {next && <BsArrowRight />}
+      {up && <BsArrowUp />}
+    </animated.button>
   );
 };
 
@@ -100,8 +104,8 @@ const getIconStyles = (props: any) => [
 ];
 
 // @ts-ignore
-const Icon = styled(animated.button)<IconProps>(getIconStyles);
-const CarouselBttn = styled(CarouselNavBttn)<IconProps>(getIconStyles);
+const Icon = styled(animated.button)(getIconStyles);
+const CarouselBttn = styled(CarouselNavBttn)(getIconStyles);
 
 const Button = (props: Props): JSX.Element => {
   if (props.elType === "icon") {
