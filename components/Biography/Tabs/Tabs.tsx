@@ -1,17 +1,44 @@
-import tw, { styled } from "twin.macro";
-import { useState, useRef, useEffect } from "react";
+import tw, { styled, css } from "twin.macro";
+import { useState, useRef, forwardRef } from "react";
 
 import Card from "./Card";
 
-const Grid = tw.div`grid justify-center md:justify-start grid-cols-[repeat(2, minmax(0, 30ch))] gap-x-12 gap-y-16`;
-const Tab = styled.div((props: { overflow: boolean }) => [
-  tw`pb-4 overflow-hidden`,
+const Tab = styled.div((props: { overflow: boolean; height: number }) => [
+  tw`w-full pb-4 overflow-hidden`,
   props.overflow && tw`overflow-y-scroll`,
+  css`
+    height: ${props.height}px;
+  `,
 ]);
 
-const Education = (): JSX.Element => {
+const Grid = forwardRef<
+  HTMLDivElement,
+  {
+    children: React.ReactNode;
+    isOverflow: boolean;
+    height: number | null;
+  }
+>(function Grid({ children, isOverflow, height }, forwardedRef) {
+  const tabRef = useRef<HTMLDivElement>(null);
+
   return (
-    <Grid>
+    <Tab
+      overflow={isOverflow}
+      height={height || (tabRef?.current?.clientHeight as number)}
+    >
+      <div
+        tw="grid justify-center md:justify-start grid-cols-[repeat(2, minmax(0, 30ch))] gap-x-12 gap-y-16"
+        ref={forwardedRef}
+      >
+        {children}
+      </div>
+    </Tab>
+  );
+});
+
+const Education = () => {
+  return (
+    <>
       <Card
         image="hospital"
         period="1997 - 2003"
@@ -23,12 +50,12 @@ const Education = (): JSX.Element => {
         name="Foreign Student Exchange Year"
       />
       <Card image="hospital" period="2005 - 2007" name="Cursos de Doctorado" />
-    </Grid>
+    </>
   );
 };
-const Experience = (): JSX.Element => {
+const Experience = () => {
   return (
-    <Grid>
+    <>
       <Card
         image="hospital"
         period="2010 - 2013"
@@ -49,7 +76,7 @@ const Experience = (): JSX.Element => {
       >
         Lorem ipsum, dolor sit amet consectetur adipisicing elit.
       </Card>
-    </Grid>
+    </>
   );
 };
 
@@ -61,43 +88,42 @@ const TabButton = styled.button(({ active }: { active: boolean }) => [
     tw`text-[#010d17] border-[#172632] border-b-[1.9px] md:border-b-0 md:border-l-[1.9px]`,
 ]);
 
-const Tabs = (): JSX.Element => {
+const Tabs = forwardRef<
+  HTMLDivElement,
+  { isOverflow: boolean; height: number | null; setChangeTab: any }
+>(function Tabs({ isOverflow, height, setChangeTab }, forwardedRef) {
   const [activeBttn, setActiveBttn] = useState<number>(1);
-  const [isOverflow, setIsOverflow] = useState<boolean>(false);
   const handleToggle = (bttn: number): void => setActiveBttn(bttn);
-  const tabRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const { current } = tabRef;
-
-    if (current) {
-      const trigger = () => {
-        setIsOverflow(current.scrollHeight > current.clientHeight);
-      };
-
-      if ("ResizeObserver" in window) {
-        new ResizeObserver(trigger).observe(current);
-      }
-    }
-  }, [tabRef]);
 
   return (
     <div tw="flex gap-8 md:gap-24 flex-col md:flex-row">
       <div tw="flex flex-row md:flex-col">
-        <TabButton onClick={() => handleToggle(1)} active={activeBttn === 1}>
+        <TabButton
+          onClick={() => {
+            handleToggle(1);
+            setChangeTab(1);
+          }}
+          active={activeBttn === 1}
+        >
           Estudios
         </TabButton>
-        <TabButton onClick={() => handleToggle(2)} active={activeBttn === 2}>
+        <TabButton
+          onClick={() => {
+            handleToggle(2);
+            setChangeTab(2);
+          }}
+          active={activeBttn === 2}
+        >
           Experiencia
         </TabButton>
       </div>
 
-      <Tab overflow={isOverflow} ref={tabRef}>
+      <Grid isOverflow={isOverflow} height={height} ref={forwardedRef}>
         {activeBttn === 1 && <Education />}
         {activeBttn === 2 && <Experience />}
-      </Tab>
+      </Grid>
     </div>
   );
-};
+});
 
 export default Tabs;

@@ -14,7 +14,7 @@ const Text = styled.p(() => [tw`text-lg font-medium leading-6`]);
 
 const Card = ({ period, name, image, children }: Props): JSX.Element => {
   return (
-    <div>
+    <div tw="max-w-[30ch]">
       <div tw="w-[50px] mb-4">
         <Image
           src={`/img/icons/${image}.svg`}
