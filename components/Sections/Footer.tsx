@@ -79,7 +79,7 @@ const Footer = () => {
   const isMobile = useIsMobile();
 
   return (
-    <Container>
+    <Container id="footer">
       <LogoColumn>
         <NextLink href="/">
           <LogoWrapper>

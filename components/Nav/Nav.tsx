@@ -43,13 +43,10 @@ const Nav = ({
   return (
     <Container ref={navRef} style={style} device={device}>
       <StyledNavList>
-        <NavLink destination="#" toggle={toggle}>
+        <NavLink destination="/servicios" toggle={toggle}>
           Servicios
         </NavLink>
-        <NavLink destination="#" toggle={toggle}>
-          Por que elegirnos?
-        </NavLink>
-        <NavLink destination="#" toggle={toggle}>
+        <NavLink destination="#footer" toggle={toggle}>
           Contáctanos
         </NavLink>
         <NavLink nextLink destination="/blog" toggle={toggle}>
@@ -62,7 +59,13 @@ const Nav = ({
             Reserva una cita
           </Button>
         </li>
-        <LoginBttn />
+        <NavLink
+          nextLink
+          destination="/https://osteocenter-scheduling.herokuapp.com/auth/login"
+          toggle={toggle}
+        >
+          Entrar
+        </NavLink>
       </StyledNavList>
     </Container>
   );
