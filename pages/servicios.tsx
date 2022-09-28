@@ -1,6 +1,5 @@
 import { useState } from "react";
 import tw, { styled, css } from "twin.macro";
-import { TabPanel } from "@chakra-ui/react";
 import Image from "next/image";
 import { Text } from "@chakra-ui/react";
 
@@ -175,8 +174,17 @@ const Title = ({ children }: { children: React.ReactNode }) => (
   </StyledHeading>
 );
 
+const CoverWrap = styled.div(() => [
+  tw`rounded-md overflow-hidden w-full h-full h-[clamp(250px, 25vh, 400px)]`,
+  css`
+    & > span {
+      ${tw`rounded-md`}
+    }
+  `,
+]);
 const LogoWrap = styled.div(() => [
   tw`absolute top-full left-1/2 translate-x-[-50%] translate-y-[-50%]`,
+  tw`w-24 h-24 bg-center bg-no-repeat bg-contain p-7`,
   css`
     background-image: url("../static/img/shapes/center-bubble.png");
   `,
@@ -184,18 +192,16 @@ const LogoWrap = styled.div(() => [
 
 const Service = ({ content }: { content: Content }) => {
   return (
-    <div tw="p-3 hover:shadow-md rounded-md">
-      <div tw="relative">
-        <div tw="rounded-sm">
+    <div tw="p-4 hover:translate-y-[-5px] transition ease-in-out duration-300">
+      <div tw="relative mb-16">
+        <CoverWrap>
           <Image
             src={`/img/services/cover/${content.coverImage}`}
             alt={`${content.title}`}
-            layout="responsive"
-            sizes="10vw"
-            width="1"
-            height="1"
+            layout="fill"
+            objectFit="cover"
           />
-        </div>
+        </CoverWrap>
         <LogoWrap>
           <Image
             src={`/img/services/icons/${content.icon}`}
@@ -208,10 +214,10 @@ const Service = ({ content }: { content: Content }) => {
         </LogoWrap>
       </div>
       <div tw="text-center">
-        <Heading subHeading as="span">
+        <Heading subHeading as="span" tw="mb-5 md:mb-[1.5rem]">
           {content.category}
         </Heading>
-        <Heading tertiary as="h2" tw="text-primary-shade-3">
+        <Heading tertiary as="h2" tw="text-2xl md:text-3xl mb-4 md:mb-5">
           {content.title}
         </Heading>
         {content.description && (
@@ -225,9 +231,7 @@ const Service = ({ content }: { content: Content }) => {
 };
 const CustomTabPanel = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div tw="grid gap-[3.75rem] blog-lg:grid-cols-3 p-0">
-      {children}
-    </div>
+    <div tw="grid gap-8 md:grid-cols-2 blog-lg:grid-cols-3 p-0">{children}</div>
   );
 };
 
