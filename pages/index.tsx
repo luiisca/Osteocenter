@@ -30,7 +30,7 @@ interface SectionProps {
   cta?: boolean;
 }
 
-const Section = styled.section((props: SectionProps) => [
+export const Section = styled.section((props: SectionProps) => [
   tw`py-24`,
   props.hero && tw`pt-12 bg-primary-tint-3`,
   props.valuesSection && tw`text-center`,
@@ -43,7 +43,7 @@ const Home: NextPage = (): JSX.Element => {
     <>
       <SEO
         description={
-          "Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu medico todo desde nuestra plataforma en linea."
+          "Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu médico todo desde nuestra plataforma en linea."
         }
         image={`${WEB_LINK}/img/osteocenter-logo.png`}
         title="Traumatología y ortopedia en Chimbote - Reserva tu cita en
@@ -105,7 +105,7 @@ const Home: NextPage = (): JSX.Element => {
         id={WEB_LINK}
         url={WEB_LINK}
         name={SITE_TITLE}
-        description="Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu medico todo desde nuestra plataforma en linea."
+        description="Empresa dedicada a la prevención, atención y recuperación de patologías que afectan al sistema músculo esquelético. Contamos con especialistas altamente capacitados. Separa citas, recibe tratamiento, prescripciones y haz consultas a tu médico todo desde nuestra plataforma en linea."
         telephone={PHONE1}
         address={{
           streetAddress: "",

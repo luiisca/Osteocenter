@@ -1,7 +1,7 @@
 import Image from "next/image";
 import tw, { styled } from "twin.macro";
 
-import { Heading } from "../../Elements";
+import { Heading } from "@/components/Elements";
 
 interface Props {
   period: string;

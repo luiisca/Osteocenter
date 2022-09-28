@@ -17,8 +17,11 @@ import { WEB_LINK, AUTHOR } from "@/static/ts/constants";
 import SEO from "@/components/SEO";
 import withCarousel from "@/components/HOCS/withCarousel";
 import { Heading } from "../../components/Elements";
-import Post from "../../components/Blog/Post";
-import IndexLayout from "../../components/Blog/IndexLayout";
+import { BaseContainer as Container} from "@/components/BaseStyle";
+import { ContentGrid, Divider } from "../../components/Blog/layout";
+import Filter from "../../components/Blog/Filter";
+import Aside from "../../components/Blog/Aside";
+import Post from "@/components/Blog/Post";
 
 // styled components
 const StyledCarousel = styled.div(() => [
@@ -59,7 +62,7 @@ const StyledButtons = ({ children }: { children: React.ReactNode }) => (
     {children}
   </div>
 );
-const CarouselPost = ({ data }: { data: any }) => <Post top post={data} />;
+const CarouselPost = ({ data }: { data: any }) => <Post top content={data} />;
 
 const Blog = () => {
   const posts = useQuery<PostType[]>(["allPosts"], allPosts);
@@ -95,11 +98,7 @@ const Blog = () => {
         title={"Osteocenter blog"}
         keywords={"Blog, medicina, Traumatologia, Ortopedia"}
       >
-        <IndexLayout
-          allPosts={posts.data || []}
-          allCategories={categories.data}
-          allPostsByCategory={postsByCategory.data}
-        >
+        <Container tw="mt-12">
           {/*Carousel */}
           <div tw="mb-20">
             <Heading as="div" subHeading>
@@ -107,7 +106,31 @@ const Blog = () => {
             </Heading>
             <Carousel />
           </div>
-        </IndexLayout>
+          <Divider tw="mb-20" />
+
+          <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
+            <ContentGrid>
+              {/* Filtered Articles */}
+              <Filter
+                categories={[
+                  {
+                    title: "Todos",
+                  },
+                  ...categories?.data,
+                ]}
+                elements={posts?.data as Record<string, any>[]}
+                filteredElements={postsByCategory?.data}
+                Component={Post}
+              />
+              {/* Recommended aside*/}
+              <Aside
+                recommendedPosts={posts?.data?.filter(
+                  (post: any) => post.featured
+                )}
+              />
+            </ContentGrid>
+          </div>
+        </Container>
       </SEO>
       <ArticleJsonLd
         type="Blog"

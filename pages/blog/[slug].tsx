@@ -73,7 +73,7 @@ const Article = ({
     >
       <Container tw="mt-12 md:mt-20">
         {/*Intro*/}
-        <Post post={post} top intro />
+        <Post content={post} top intro />
         <Divider tw="my-9 md:mt-14 md:mb-24 blog-lg:mt-16 blog-lg:mb-14" />
         {/*Content*/}
         <ContentGrid>
@@ -125,7 +125,7 @@ const Article = ({
             </Heading>
             <div tw="grid gap-12 grid-cols-1 md:grid-cols-2 md:gap-7 blog-lg:grid-cols-3 blog-lg:gap-x-14 blog-lg:gap-y-4">
               {relatedPosts.map((related: any) => {
-                return <Post post={related} key={v4()} />;
+                return <Post content={related} key={v4()} />;
               })}
             </div>
           </div>

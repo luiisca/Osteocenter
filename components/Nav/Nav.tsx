@@ -43,7 +43,7 @@ const Nav = ({
   return (
     <Container ref={navRef} style={style} device={device}>
       <StyledNavList>
-        <NavLink destination="/servicios" toggle={toggle}>
+        <NavLink nextLink destination="/servicios" toggle={toggle}>
           Servicios
         </NavLink>
         <NavLink destination="#footer" toggle={toggle}>
@@ -61,7 +61,7 @@ const Nav = ({
         </li>
         <NavLink
           nextLink
-          destination="/https://osteocenter-scheduling.herokuapp.com/auth/login"
+          destination="https://osteocenter-scheduling.herokuapp.com/auth/login"
           toggle={toggle}
         >
           Entrar

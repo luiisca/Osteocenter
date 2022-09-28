@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import tw from "twin.macro";
 import { sanityClient } from "../../../utils/sanity/sanity.server";
@@ -14,9 +15,13 @@ import type { PostType } from "pages/blog";
 import { WEB_LINK } from "@/static/ts/constants";
 
 import SEO from "@/components/SEO";
-import IndexLayout from "../../../components/Blog/IndexLayout";
 import { Heading } from "../../../components/Elements";
+import { BaseContainer as Container } from "@/components/BaseStyle";
+import { ContentGrid, Divider } from "@/components/Blog/layout";
+import Filter from "@/components/Blog/Filter";
+import Aside from "@/components/Blog/Aside";
 import withScrollMotion from "@/components/HOCS/withScrollMotion";
+import Post from "@/components/Blog/Post";
 
 const StyledHeading = tw(
   Heading
@@ -33,6 +38,7 @@ const Category = ({ title }: any) => {
   const postsByCategory = useQuery(["allPostsByCategory"], () =>
     allPostsByCategory(categories.data)
   );
+
   const isLoading =
     posts.isLoading || categories.isLoading || postsByCategory.isLoading;
   const isError =
@@ -52,14 +58,28 @@ const Category = ({ title }: any) => {
       image={`${WEB_LINK}/img/osteocenter-logo.png`}
       date={"2022-08-06T15:41:12Z"}
     >
-      <IndexLayout
-        allPosts={posts.data || []}
-        allCategories={categories.data}
-        allPostsByCategory={postsByCategory.data}
-        categoryPage
-      >
+      <Container tw="mt-0">
         <AnimatedTitle>{title}</AnimatedTitle>
-      </IndexLayout>
+        <Divider tw="mb-20" />
+        <div tw="mb-20 md:mb-24 blog-lg:mb-[7.5rem]">
+          <ContentGrid>
+            {/* Filtered Articles */}
+            <Filter
+              categories={categories?.data}
+              elements={posts?.data as Record<string, any>[]}
+              filteredElements={postsByCategory?.data}
+              categoryAsLink
+              Component={Post}
+            />
+            {/* Recommended aside*/}
+            <Aside
+              recommendedPosts={posts?.data?.filter(
+                (post: any) => post.featured
+              )}
+            />
+          </ContentGrid>
+        </div>
+      </Container>
     </SEO>
   );
 };

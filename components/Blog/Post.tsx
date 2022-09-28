@@ -47,42 +47,42 @@ const StyledPostTitle = styled.div(({ top }: { top?: boolean }) => [
 ]);
 
 interface Post {
-  post: any;
+  content: any;
   top?: boolean;
   intro?: boolean;
 }
 
 const Category = ({
   top,
-  post,
+  content,
   intro,
 }: {
-  post: any;
+  content: any;
   top?: boolean;
   intro?: boolean;
 }) => (
   <StyledPostCategory top={top} intro={intro}>
-    <NextLink href={`/blog/categorias/${post.categorySlug}`} passHref>
+    <NextLink href={`/blog/categorias/${content.categorySlug}`} passHref>
       <Link
         _hover={{
           textDecoration: "none",
         }}
         tw="relative z-10 hover:text-primary-shade-1"
       >
-        {post.category}
+        {content.category}
       </Link>
     </NextLink>
   </StyledPostCategory>
 );
 
-const Post = ({ post, top, intro }: Post) => {
+const Post = ({ content, top, intro }: Post) => {
   return (
     <LinkBox as="div">
       <StyledPostContainer top={top} intro={intro}>
         <StyledPostImgContainer intro={intro}>
           {/*Image*/}
           {getImgComponent({
-            value: post.coverImage,
+            value: content.coverImage,
             isInline: false,
             top,
             intro,
@@ -112,18 +112,18 @@ const Post = ({ post, top, intro }: Post) => {
               </BreadcrumbItem>
               <BreadcrumbItem textDecoration="none">
                 <BreadcrumbLink
-                  href={`/blog/categorias/${post.categorySlug}`}
+                  href={`/blog/categorias/${content.categorySlug}`}
                   _hover={{
                     textDecoration: "none",
                   }}
                 >
-                  <Category post={post} top={top} intro={intro} />
+                  <Category content={content} top={top} intro={intro} />
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
           ) : (
             <Heading subHeading as="span" tw="m-0">
-              <Category post={post} top={top} tw="mb-[10px] md:mb-3 " />
+              <Category content={content} top={top} tw="mb-[10px] md:mb-3 " />
             </Heading>
           )}
           {/*Title*/}
@@ -133,13 +133,13 @@ const Post = ({ post, top, intro }: Post) => {
               as="h1"
               tw="m-0 text-2xl md:mb-7 md:text-4xl md:mb-7"
             >
-              {post.title}
+              {content.title}
             </Heading>
           ) : (
             <Heading secondary as="h2" tw="m-0">
               <StyledPostTitle top={top}>
-                <NextLink href={`/blog/${post.slug}`} passHref>
-                  <LinkOverlay>{post.title}</LinkOverlay>
+                <NextLink href={`/blog/${content.slug}`} passHref>
+                  <LinkOverlay>{content.title}</LinkOverlay>
                 </NextLink>
               </StyledPostTitle>
             </Heading>
@@ -148,7 +148,7 @@ const Post = ({ post, top, intro }: Post) => {
           {intro ? (
             <div>
               <div tw="text-sm text-[rgb(117, 117, 117)] mb-[10px] md:mb-[5px]">
-                Actualizado el <Date dateString={post._updatedAt} />
+                Actualizado el <Date dateString={content._updatedAt} />
               </div>
               <Flex tw="text-sm text-[rgb(195, 195, 194)]">
                 <AiOutlineClockCircle tw="text-lg" />
@@ -157,7 +157,7 @@ const Post = ({ post, top, intro }: Post) => {
             </div>
           ) : (
             <Text tw="text-sm leading-6 blog-lg:mb-7 text-accent-555">
-              {post.excerpt}
+              {content.excerpt}
             </Text>
           )}
         </StyledPostDetails>
