@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import customTheme from "theme";
 
 import Layout from "../components/Layout";
 import GlobalStyles from "../components/GlobalStyles";
@@ -15,7 +16,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <ChakraProvider>
+        <ChakraProvider theme={customTheme}>
           <SessionProvider session={session}>
             <Layout preview={pageProps.preview}>
               <GlobalStyles />

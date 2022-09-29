@@ -1,9 +1,19 @@
 import { useState } from "react";
 import tw, { styled, css } from "twin.macro";
 import Image from "next/image";
-import { Text } from "@chakra-ui/react";
+import { Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 import { BaseContainer as Container } from "@/components/BaseStyle";
+import { Button } from "@/components/Elements";
 import withScrollMotion from "@/components/HOCS/withScrollMotion";
 import SEO from "@/components/SEO";
 import { WEB_LINK } from "@/static/ts/constants";
@@ -191,42 +201,81 @@ const LogoWrap = styled.div(() => [
 ]);
 
 const Service = ({ content }: { content: Content }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <div tw="p-4 hover:translate-y-[-5px] transition ease-in-out duration-300">
-      <div tw="relative mb-16">
-        <CoverWrap>
-          <Image
-            src={`/img/services/cover/${content.coverImage}`}
-            alt={`${content.title}`}
-            layout="fill"
-            objectFit="cover"
-          />
-        </CoverWrap>
-        <LogoWrap>
-          <Image
-            src={`/img/services/icons/${content.icon}`}
-            alt={`${content.icon.split(".")[0]} icon`}
-            layout="responsive"
-            sizes="5vw"
-            width="1"
-            height="1"
-          />
-        </LogoWrap>
+    <>
+      <div
+        onClick={onOpen}
+        tw="p-4 hover:translate-y-[-5px] transition ease-in-out duration-300"
+      >
+        <div tw="relative mb-16">
+          <CoverWrap>
+            <Image
+              src={`/img/services/cover/${content.coverImage}`}
+              alt={`${content.title}`}
+              layout="fill"
+              objectFit="cover"
+            />
+          </CoverWrap>
+          <LogoWrap>
+            <Image
+              src={`/img/services/icons/${content.icon}`}
+              alt={`${content.icon.split(".")[0]} icon`}
+              layout="responsive"
+              sizes="5vw"
+              width="1"
+              height="1"
+            />
+          </LogoWrap>
+        </div>
+        <div tw="text-center">
+          <Heading subHeading as="span" tw="mb-5 md:mb-[1.5rem]">
+            {content.category}
+          </Heading>
+          <Heading tertiary as="h2" tw="text-2xl md:text-3xl mb-4 md:mb-5">
+            {content.title}
+          </Heading>
+          {content.description && (
+            <Text tw="text-sm md:text-base leading-6 blog-lg:mb-7 text-accent-555">
+              {content.description}
+            </Text>
+          )}
+        </div>
       </div>
-      <div tw="text-center">
-        <Heading subHeading as="span" tw="mb-5 md:mb-[1.5rem]">
-          {content.category}
-        </Heading>
-        <Heading tertiary as="h2" tw="text-2xl md:text-3xl mb-4 md:mb-5">
-          {content.title}
-        </Heading>
-        {content.description && (
-          <Text tw="text-sm md:text-base leading-6 blog-lg:mb-7 text-accent-555">
-            {content.description}
-          </Text>
-        )}
-      </div>
-    </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="scale"
+        size="7xl"
+      >
+        <ModalOverlay />
+        <ModalContent overflow="hidden">
+          <ModalBody p={0} tw="grid grid-cols-2 p-0">
+            <div tw="w-full h-full relative">
+              <Image
+                src={`/img/services/cover/${content.coverImage}`}
+                alt={`${content.title}`}
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+              />
+            </div>
+            <div tw="ml-12 px-4 py-2">
+              <Heading primary as="h2">
+                {content.title}
+              </Heading>
+              <>{content.details}</>
+              <Button elType="text" nav cta href="#">
+                Reserva una cita
+              </Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 const CustomTabPanel = ({ children }: { children: React.ReactNode }) => {
