@@ -2,15 +2,8 @@ import { useState } from "react";
 import tw, { styled, css } from "twin.macro";
 import Image from "next/image";
 import { Text, useDisclosure } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalBody } from "@chakra-ui/react";
+import { VscClose } from "react-icons/vsc";
 
 import { BaseContainer as Container } from "@/components/BaseStyle";
 import { Button } from "@/components/Elements";
@@ -39,6 +32,15 @@ interface Content {
   description?: string;
   details?: React.ReactNode;
 }
+const Ul = tw.ul`ml-5 mb-4 md:mb-6 list-disc`;
+const Ol = tw.ol`ml-5 mb-4 md:mb-6 list-decimal`;
+const Li = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <li tw="mb-1 text-[#525252] text-[.95rem] leading-[1.575rem] tracking-[0.02px] font-normal max-w-[75ch] md:text-lg md:leading-[1.875rem]">
+      {children}
+    </li>
+  </>
+);
 const SERVICES_CONTENT: Array<Content> = [
   {
     title: "Consulta médica presencial",
@@ -48,9 +50,9 @@ const SERVICES_CONTENT: Array<Content> = [
     description: `Reciba atencion personalizada en nuestra clinica ubicada en ${ADDRESS}`,
     details: (
       <>
-        <ul>
-          <li>Puede pedir su cita en línea o en la clínica</li>
-        </ul>
+        <Ul>
+          <Li>Puede pedir su cita en línea o en la clínica</Li>
+        </Ul>
       </>
     ),
   },
@@ -63,11 +65,11 @@ const SERVICES_CONTENT: Array<Content> = [
       "Valoramos su tiempo asi que le damos la opcion de tener una videollamada con nuestro especialista para evaluar su situacion.",
     details: (
       <>
-        <ol>
-          <li>Pida su cita en línea</li>
-          <li>Seleccione el día y la hora que mejor se ajuste a su horario</li>
-          <li>Acceda a una videollamada con su doctor en el día pactado</li>
-        </ol>
+        <Ol>
+          <Li>Pida su cita en línea</Li>
+          <Li>Seleccione el día y la hora que mejor se ajuste a su horario</Li>
+          <Li>Acceda a una videollamada con su doctor en el día pactado</Li>
+        </Ol>
       </>
     ),
   },
@@ -88,14 +90,14 @@ const SERVICES_CONTENT: Array<Content> = [
       "Alivia el dolor y promueve la reparación de sus músculos dañados",
     details: (
       <>
-        <ul>
-          <li>
+        <Ul>
+          <Li>
             Promueve la regeneración y procesos reparativos de los tendones,
             músculos y otros tejidos blandos.
-          </li>
-          <li>Cura la inflamación crónica</li>
-          <li>Alivia el dolor crónico</li>
-        </ul>
+          </Li>
+          <Li>Cura la inflamación crónica</Li>
+          <Li>Alivia el dolor crónico</Li>
+        </Ul>
       </>
     ),
   },
@@ -128,11 +130,11 @@ const SERVICES_CONTENT: Array<Content> = [
     description: "Vuelva a sentirse bien gracias a nuestro equipo de ciruganos",
     details: (
       <>
-        <ul>
-          <li>Prótesis de cadera</li>
-          <li>Artroscopia de rodilla</li>
-          <li>Cirugía de tumores óseos y musculares</li>
-        </ul>
+        <Ul>
+          <Li>Prótesis de cadera</Li>
+          <Li>Artroscopia de rodilla</Li>
+          <Li>Cirugía de tumores óseos y musculares</Li>
+        </Ul>
       </>
     ),
   },
@@ -148,14 +150,14 @@ const SERVICES_CONTENT: Array<Content> = [
     coverImage: "ortopedia-infantil.jpg",
     icon: "toys.png",
     description:
-      "Ayudamos a tu nino a tener una infancia feliz y llena de juego",
+      "Ayudamos a tu niño a tener una infancia feliz y llena de juego",
     details: (
       <>
-        <ul>
-          <li>Displacia de cadera</li>
-          <li>Pie plano</li>
-          <li>Deformidades angulares, etc</li>
-        </ul>
+        <Ul>
+          <Li>Displacia de cadera</Li>
+          <Li>Pie plano</Li>
+          <Li>Deformidades angulares, etc</Li>
+        </Ul>
       </>
     ),
   },
@@ -199,6 +201,17 @@ const LogoWrap = styled.div(() => [
     background-image: url("../static/img/shapes/center-bubble.png");
   `,
 ]);
+const ModalImgWrap = styled.div(() => [
+  tw`h-full overflow-hidden rounded-t-md mob-me:rounded-l-md`,
+  css`
+    & > span {
+      ${tw`relative! overflow-auto! h-full!`}
+      & > img {
+        ${tw`relative! max-h-[90vh]! mob-me:max-h-[70vh]! w-auto! h-auto!`}
+      }
+    }
+  `,
+]);
 
 const Service = ({ content }: { content: Content }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -216,6 +229,7 @@ const Service = ({ content }: { content: Content }) => {
               alt={`${content.title}`}
               layout="fill"
               objectFit="cover"
+              objectPosition="center"
             />
           </CoverWrap>
           <LogoWrap>
@@ -249,26 +263,59 @@ const Service = ({ content }: { content: Content }) => {
         onClose={onClose}
         isCentered
         motionPreset="scale"
-        size="7xl"
+        variant={{ base: "base", lg: "lg", xl: "xl", "2xl": "2xl" }}
       >
         <ModalOverlay />
-        <ModalContent overflow="hidden">
-          <ModalBody p={0} tw="grid grid-cols-2 p-0">
-            <div tw="w-full h-full relative">
-              <Image
-                src={`/img/services/cover/${content.coverImage}`}
-                alt={`${content.title}`}
-                layout="fill"
-                objectFit="contain"
-                objectPosition="center"
-              />
+        <ModalContent overflow="hidden relative">
+          <Button
+            elType="icon"
+            tw="absolute right-3 top-3 z-10 w-10 xl:w-14 xl:h-14 h-10 p-2"
+            onClick={onClose}
+            Icon={() => (
+              <>
+                <VscClose />
+              </>
+            )}
+          />
+          <ModalBody
+            p={0}
+            tw="grid grid-rows-2 mob-me:grid-rows-1 mob-me:grid-cols-2 p-0"
+          >
+            <div tw="relative">
+              <ModalImgWrap>
+                <Image
+                  src={`/img/services/cover/${content.coverImage}`}
+                  alt={`${content.title}`}
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              </ModalImgWrap>
+              <LogoWrap tw="top-3 left-6 translate-x-0 translate-y-0">
+                <Image
+                  src={`/img/services/icons/${content.icon}`}
+                  alt={`${content.icon.split(".")[0]} icon`}
+                  layout="responsive"
+                  sizes="5vw"
+                  width="1"
+                  height="1"
+                />
+              </LogoWrap>
             </div>
-            <div tw="ml-12 px-4 py-2">
-              <Heading primary as="h2">
+            <div tw="ml-12 pr-16 xl:pr-20 pt-12 pb-16 overflow-y-scroll max-h-[90vh] mob-me:max-h-[70vh]">
+              <Heading subHeading as="span">
+                {content.category}
+              </Heading>
+              <Heading secondary as="h2" tw="mb-6">
                 {content.title}
               </Heading>
+              {content.description && (
+                <Text tw="text-sm md:text-base leading-6 blog-lg:mb-7 text-accent-555">
+                  {content.description}
+                </Text>
+              )}
               <>{content.details}</>
-              <Button elType="text" nav cta href="#">
+              <Button elType="text" nav cta href="#" tw="absolute bottom-3 p-4">
                 Reserva una cita
               </Button>
             </div>

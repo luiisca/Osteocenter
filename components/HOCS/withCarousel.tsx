@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { styled, css } from "twin.macro";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
@@ -16,8 +17,28 @@ const SlidePrevButton = (props: { Custom?: any }) => {
     swiper?.slidePrev();
   };
   if (props.Custom)
-    return <props.Custom elType="icon" onClick={handlePrev} top prev />;
-  return <Button elType="icon" onClick={handlePrev} top prev />;
+    return (
+      <props.Custom
+        elType="icon"
+        onClick={handlePrev}
+        Icon={() => (
+          <>
+            <BsArrowLeft />
+          </>
+        )}
+      />
+    );
+  return (
+    <Button
+      elType="icon"
+      onClick={handlePrev}
+      Icon={() => (
+        <>
+          <BsArrowLeft />
+        </>
+      )}
+    />
+  );
 };
 const SlideNextButton = (props: { Custom?: any }) => {
   const swiper = useSwiper();
@@ -26,8 +47,28 @@ const SlideNextButton = (props: { Custom?: any }) => {
     swiper?.slideNext();
   };
   if (props.Custom)
-    return <props.Custom elType="icon" onClick={handleNext} top next />;
-  return <Button elType="icon" onClick={handleNext} top next />;
+    return (
+      <props.Custom
+        elType="icon"
+        onClick={handleNext}
+        Icon={() => (
+          <>
+            <BsArrowRight />
+          </>
+        )}
+      />
+    );
+  return (
+    <Button
+      elType="icon"
+      onClick={handleNext}
+      Icon={() => (
+        <>
+          <BsArrowRight />
+        </>
+      )}
+    />
+  );
 };
 
 export const BaseContainer = styled.div(() => [

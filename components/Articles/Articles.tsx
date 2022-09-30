@@ -4,6 +4,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { LinkBox, LinkOverlay, Link } from "@chakra-ui/react";
+import { BsArrowLeft } from "react-icons/bs";
 
 import { urlForImage } from "@/utils/sanity/sanity";
 import { sanityClient } from "@/utils/sanity/sanity.server";
@@ -142,12 +143,26 @@ const Articles = (): JSX.Element => {
           <WrapLink tw="mb-0">Ver todos</WrapLink>
         </PageLink>
         <PlaceholderStyledButtons tw="hidden md:block">
-          <Button elType="icon" top prev />
+          <Button
+            elType="icon"
+            Icon={() => (
+              <>
+                <BsArrowLeft />
+              </>
+            )}
+          />
         </PlaceholderStyledButtons>
       </div>
       <Carousel />
       <PlaceholderStyledButtons tw="md:hidden">
-        <Button elType="icon" top prev />
+        <Button
+          elType="icon"
+          Icon={() => (
+            <>
+              <BsArrowLeft />
+            </>
+          )}
+        />
       </PlaceholderStyledButtons>
     </Container>
   );

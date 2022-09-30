@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useScroll } from "framer-motion";
 import { useSpring } from "react-spring";
 import tw, { styled, css } from "twin.macro";
-import { BsWhatsapp } from "react-icons/bs";
+import { BsWhatsapp, BsArrowUp } from "react-icons/bs";
 
 import { Button } from "@/components/Elements";
 import useIsMobile from "@/components/hooks/useIsMobile";
@@ -57,15 +57,18 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
         </a>
         <TopBttnContainer visible={isInView}>
           <Button
+            elType="icon"
             disabled={!isInView}
             tw="fixed bottom-6 right-6"
             style={topBttnSpring}
-            elType="icon"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            top
-            up
+            Icon={() => (
+              <>
+                <BsArrowUp />
+              </>
+            )}
           />
         </TopBttnContainer>
       </Main>
