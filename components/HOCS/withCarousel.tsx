@@ -26,6 +26,7 @@ const SlidePrevButton = (props: { Custom?: any }) => {
             <BsArrowLeft />
           </>
         )}
+        prev
       />
     );
   return (
@@ -56,6 +57,7 @@ const SlideNextButton = (props: { Custom?: any }) => {
             <BsArrowRight />
           </>
         )}
+        next
       />
     );
   return (
