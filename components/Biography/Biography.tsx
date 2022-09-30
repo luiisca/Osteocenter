@@ -136,7 +136,7 @@ const Biography = (): JSX.Element => {
 
           {/*Tabs*/}
           <div tw="flex gap-8 md:gap-24 flex-col md:flex-row">
-            <div tw="flex flex-row md:flex-col">
+            <div tw="flex flex-row md:flex-col pr-8 md:pr-0">
               <TabButton
                 onClick={() => {
                   handleToggle(1);
