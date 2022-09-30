@@ -51,7 +51,7 @@ const Layout = ({ preview, children }: Props): JSX.Element => {
         <Divider />
         <Footer />
         <a href={getWhatsappLink(isMobile)} target="_blank" rel="noreferrer">
-          <div tw="fixed md:w-[3.75rem] md:h-[3.75rem] leading-[63px] bottom-6 left-6 bg-primary hover:bg-primary-shade-1 text-white rounded-full text-center text-[35px] shadow-sm hover:shadow-md z-10 transition-all sm:w-16 sm:h-16 flex items-center justify-center">
+          <div tw="fixed md:w-[3.75rem] md:h-[3.75rem] leading-[63px] bottom-6 left-6 bg-primary hover:bg-primary-shade-1 text-white rounded-full text-center text-[35px] shadow-sm hover:shadow-md z-10 transition-all w-16 h-16 flex items-center justify-center">
             <BsWhatsapp />
           </div>
         </a>
