@@ -17,13 +17,6 @@ import CallToAction from "@/components/CallToAction";
 import { Section } from "../pages";
 import { ADDRESS } from "@/static/ts/constants";
 
-const CATEGORIES: Array<{ title: string }> = [
-  "Consulta",
-  "Tratamiento",
-  "Cirugía",
-  "Ortopedia",
-].map((el) => ({ title: el }));
-
 interface Content {
   title: string;
   category: string;
@@ -32,11 +25,18 @@ interface Content {
   description?: string;
   details?: React.ReactNode;
 }
+const CATEGORIES: Array<{ title: string }> = [
+  "Consulta",
+  "Tratamiento",
+  "Cirugía",
+  "Ortopedia",
+].map((el) => ({ title: el }));
+
 const Ul = tw.ul`ml-5 mb-4 md:mb-6 list-disc`;
 const Ol = tw.ol`ml-5 mb-4 md:mb-6 list-decimal`;
 const Li = ({ children }: { children: React.ReactNode }) => (
   <>
-    <li tw="mb-1 text-[#525252] text-[.95rem] leading-[1.575rem] tracking-[0.02px] font-normal max-w-[75ch] md:text-lg md:leading-[1.875rem]">
+    <li tw="mb-1 text-[#525252] text-base md:text-lg leading-[1.575rem] tracking-[0.02px] font-normal max-w-[75ch] md:leading-[1.875rem]">
       {children}
     </li>
   </>
@@ -202,12 +202,11 @@ const LogoWrap = styled.div(() => [
   `,
 ]);
 const ModalImgWrap = styled.div(() => [
-  tw`h-full overflow-hidden rounded-t-md mob-me:rounded-l-md`,
+  tw`h-full overflow-hidden `,
   css`
     & > span {
-      ${tw`relative! overflow-auto! h-full!`}
       & > img {
-        ${tw`relative! max-h-[90vh]! mob-me:max-h-[70vh]! w-auto! h-auto!`}
+        ${tw`rounded-t-md! mob-me:rounded-t-none! mob-me:rounded-l-md!`}
       }
     }
   `,
@@ -251,7 +250,7 @@ const Service = ({ content }: { content: Content }) => {
             {content.title}
           </Heading>
           {content.description && (
-            <Text tw="text-sm md:text-base leading-6 blog-lg:mb-7 text-accent-555">
+            <Text tw="text-sm md:text-base leading-6 mb-4 md:mb-6 text-accent-555">
               {content.description}
             </Text>
           )}
@@ -263,10 +262,10 @@ const Service = ({ content }: { content: Content }) => {
         onClose={onClose}
         isCentered
         motionPreset="scale"
-        variant={{ base: "base", lg: "lg", xl: "xl", "2xl": "2xl" }}
+        variant={{ base: "base", lg: "lg", xl: "xl" }}
       >
         <ModalOverlay />
-        <ModalContent overflow="hidden relative">
+        <ModalContent overflow="hidden relative ">
           <Button
             elType="icon"
             tw="absolute right-3 top-3 z-10 w-10 xl:w-14 xl:h-14 h-10 p-2"
@@ -279,7 +278,7 @@ const Service = ({ content }: { content: Content }) => {
           />
           <ModalBody
             p={0}
-            tw="grid grid-rows-2 mob-me:grid-rows-1 mob-me:grid-cols-2 p-0"
+            tw="grid grid-rows-2 mob-me:grid-rows-1 mob-me:grid-cols-2 p-0 min-h-[30vh] lg:min-h-[40vh] max-h-[85vh]"
           >
             <div tw="relative">
               <ModalImgWrap>
@@ -291,7 +290,7 @@ const Service = ({ content }: { content: Content }) => {
                   objectPosition="center"
                 />
               </ModalImgWrap>
-              <LogoWrap tw="top-3 left-6 translate-x-0 translate-y-0">
+              <LogoWrap tw="w-20 h-20 p-6 blog-lg:p-7 blog-lg:w-24 blog-lg:h-24 top-3 left-6 translate-x-0 translate-y-0">
                 <Image
                   src={`/img/services/icons/${content.icon}`}
                   alt={`${content.icon.split(".")[0]} icon`}
@@ -302,22 +301,26 @@ const Service = ({ content }: { content: Content }) => {
                 />
               </LogoWrap>
             </div>
-            <div tw="ml-12 pr-16 xl:pr-20 pt-12 pb-16 overflow-y-scroll max-h-[90vh] mob-me:max-h-[70vh]">
-              <Heading subHeading as="span">
-                {content.category}
-              </Heading>
-              <Heading secondary as="h2" tw="mb-6">
-                {content.title}
-              </Heading>
-              {content.description && (
-                <Text tw="text-sm md:text-base leading-6 blog-lg:mb-7 text-accent-555">
-                  {content.description}
-                </Text>
-              )}
-              <>{content.details}</>
-              <Button elType="text" nav cta href="#" tw="absolute bottom-3 p-4">
-                Reserva una cita
-              </Button>
+            <div tw="rounded-b-md mob-me:rounded-b-none mob-me:rounded-r-md overflow-hidden relative">
+              <div tw="ml-12 pr-16 xl:pr-20 pt-8 pb-20 overflow-y-scroll max-h-[45vh] mob-me:max-h-[85vh]">
+                <Heading subHeading as="span">
+                  {content.category}
+                </Heading>
+                <Heading secondary as="h2" tw="mb-6">
+                  {content.title}
+                </Heading>
+                {content.description && (
+                  <Text tw="text-base md:text-lg mb-4 md:mb-6 leading-6 text-accent-555">
+                    {content.description}
+                  </Text>
+                )}
+                <>{content.details}</>
+                <div tw="absolute left-12 bottom-0 bg-white w-[80%]">
+                  <Button elType="text" nav cta href="#" tw="m-6 ml-0 mt-0">
+                    Reserva una cita
+                  </Button>
+                </div>
+              </div>
             </div>
           </ModalBody>
         </ModalContent>
@@ -327,7 +330,9 @@ const Service = ({ content }: { content: Content }) => {
 };
 const CustomTabPanel = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div tw="grid gap-8 md:grid-cols-2 blog-lg:grid-cols-3 p-0">{children}</div>
+    <div tw="grid gap-8 mob-me:grid-cols-2 blog-lg:grid-cols-3 p-0">
+      {children}
+    </div>
   );
 };
 

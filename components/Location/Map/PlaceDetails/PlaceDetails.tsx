@@ -138,9 +138,12 @@ const PlaceDetails = (): JSX.Element | null => {
             elType="icon"
             style={hideBttnSpring}
             onClick={() => dispatchMap({ type: "HIDE" })}
-          >
-            <MdClose />
-          </HideBttn>
+            Icon={() => (
+              <>
+                <MdClose />
+              </>
+            )}
+          />
         </Container>
 
         {map.openBttn && (
@@ -148,9 +151,10 @@ const PlaceDetails = (): JSX.Element | null => {
             style={openBttnSpring}
             onClick={() => dispatchMap({ type: "TOGGLE_OPEN" })}
           >
-            <OpenBttn elType="icon">
-              {map.open ? <MdArrowLeft /> : <MdArrowRight />}
-            </OpenBttn>
+            <OpenBttn
+              elType="icon"
+              Icon={() => <>{map.open ? <MdArrowLeft /> : <MdArrowRight />}</>}
+            />
           </OpenBttnContainer>
         )}
       </Fragment>

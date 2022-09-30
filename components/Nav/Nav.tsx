@@ -4,8 +4,6 @@ import { Button } from "../Elements";
 import NavLink from "./NavLink";
 import { animated } from "react-spring";
 
-import { LoginBttn } from "@/pages/platform/login";
-
 // @ts-ignore
 const Container = styled(animated.nav)(
   ({ device }: { device: "mobile" | "desktop" }) => [

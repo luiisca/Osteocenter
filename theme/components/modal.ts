@@ -11,17 +11,12 @@ const modalTheme: ComponentStyleConfig = {
     },
     lg: {
       dialog: {
-        maxW: "750px",
+        maxW: "850px",
       },
     },
     xl: {
       dialog: {
         maxW: "1000px",
-      },
-    },
-    "2xl": {
-      dialog: {
-        maxW: "1300px",
       },
     },
   },

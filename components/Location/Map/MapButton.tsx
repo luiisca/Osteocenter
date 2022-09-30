@@ -54,26 +54,29 @@ const MapButton = ({
       }
       fullscreen={fullscreen}
       loadingRoute={loadingRoute}
-    >
-      {loadingRoute ? (
-        <Spinner
-          thickness="3px"
-          speed="1.3s"
-          emptyColor="gray.200"
-          color={`${theme<string>`colors.primary`}`}
-          size="lg"
-        />
-      ) : (
-        <Tooltip
-          label={location.routeActive ? "Ocultar ruta" : "Mostrar ruta"}
-          fontSize="sm"
-        >
-          <span tw="flex w-full h-full items-center justify-center mb-2">
-            <FaRoute />
-          </span>
-        </Tooltip>
+      Icon={() => (
+        <>
+          {loadingRoute ? (
+            <Spinner
+              thickness="3px"
+              speed="1.3s"
+              emptyColor="gray.200"
+              color={`${theme<string>`colors.primary`}`}
+              size="lg"
+            />
+          ) : (
+            <Tooltip
+              label={location.routeActive ? "Ocultar ruta" : "Mostrar ruta"}
+              fontSize="sm"
+            >
+              <span tw="flex w-full h-full items-center justify-center mb-2">
+                <FaRoute />
+              </span>
+            </Tooltip>
+          )}
+        </>
       )}
-    </StyledButton>
+    />
   );
 };
 
