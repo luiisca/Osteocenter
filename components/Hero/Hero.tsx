@@ -7,7 +7,7 @@ import HeroImage from "./HeroImage";
 
 const Container = tw(
   BaseContainer
-)`max-w-screen-2xl grid grid-cols-2 gap-2.5 items-center justify-items-end grid grid-cols-1 text-center blog-lg:text-left blog-lg:grid-cols-2 gap-16 blog-lg:gap-12`;
+)`max-w-screen-2xl gap-2.5 items-center justify-items-end flex flex-col-reverse text-center blog-lg:text-left blog-lg:grid blog-lg:grid-cols-2 gap-16 blog-lg:gap-12`;
 
 const Hero = (): JSX.Element => {
   return (
