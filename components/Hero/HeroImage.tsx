@@ -14,9 +14,9 @@ const ImgWrap = styled.span(() => [
 ]);
 
 const HeroImage = () => {
-  const [blogLgBreakpoint, setBlogLgBreakpoint] = useState<boolean>(true);
+  const [mdBreakpoint, setMdBreakpoint] = useState<boolean>(true);
   const debouncedResizeFn = _.debounce(() =>
-    setBlogLgBreakpoint(window.innerWidth >= 992)
+    setMdBreakpoint(window.innerWidth >= 768)
   );
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const HeroImage = () => {
       window.addEventListener("resize", debouncedResizeFn);
     }
     return () => window.removeEventListener("resize", debouncedResizeFn);
-  }, [blogLgBreakpoint, debouncedResizeFn]);
+  }, [mdBreakpoint, debouncedResizeFn]);
 
   return (
     <div tw="blog-lg:w-3/5 h-auto mx-auto max-w-[450px] blog-lg:mx-0 blog-lg:w-4/5 blog-lg:h-full">
@@ -35,7 +35,7 @@ const HeroImage = () => {
           sizes="50vw"
           width="384"
           height="588"
-          src={blogLgBreakpoint ? "/img/hero.png" : "/img/hero-mob.png"}
+          src={mdBreakpoint ? "/img/hero.png" : "/img/hero-mob.png"}
           alt="Doctor cirujano Ronal Cadillo"
         />
       </ImgWrap>
