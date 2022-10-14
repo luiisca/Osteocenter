@@ -10,6 +10,7 @@ import { SITE_TITLE, WEB_LINK, PHONE1, PHONE2 } from "@/static/ts/constants";
 import { featuredPostsQuery } from "@/utils/sanity/queries";
 
 import Hero from "@/components/Hero";
+import Services from "@/components/Services"
 import Values from "@/components/Values";
 import Biography from "@/components/Biography";
 import Steps from "@/components/Steps";
@@ -55,6 +56,9 @@ const Home: NextPage = (): JSX.Element => {
         <main>
           <Section hero>
             <Hero />
+          </Section>
+          <Section>
+            <Services />
           </Section>
           <Section valuesSection id="valores">
             <Values />

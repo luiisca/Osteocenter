@@ -212,14 +212,14 @@ const ModalImgWrap = styled.div(() => [
   `,
 ]);
 
-const Service = ({ content }: { content: Content }) => {
+export const Service = ({ content }: { content: Content }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       <div
         onClick={onOpen}
-        tw="p-4 hover:translate-y-[-5px] transition ease-in-out duration-300"
+        tw="p-4 hover:cursor-pointer hover:translate-y-[-5px] transition ease-in-out duration-300"
       >
         <div tw="relative mb-16">
           <CoverWrap>
@@ -328,6 +328,7 @@ const Service = ({ content }: { content: Content }) => {
     </>
   );
 };
+
 const CustomTabPanel = ({ children }: { children: React.ReactNode }) => {
   return (
     <div tw="grid gap-8 mob-me:grid-cols-2 blog-lg:grid-cols-3 p-0">
